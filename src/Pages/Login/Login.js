@@ -11,18 +11,18 @@ export default function Login() {
 
   const loginSuccess = async (successResponse) => {
     //Fields stored in DataBase
-    const googleId = successResponse.wa;
+    const googleId = successResponse.googleId;
     const email = successResponse.profileObj.email;
     const fullName = successResponse.profileObj.name;
     const firstName = successResponse.profileObj.givenName;
     const imageUrl = successResponse.profileObj.imageUrl.slice(8);
 
     //Adding to Local Storage
-    localStorage.setItem("google_id", successResponse.wa);
+    localStorage.setItem("google_id", successResponse.googleId);
     localStorage.setItem("name", successResponse.profileObj.givenName);
     localStorage.setItem("image", successResponse.profileObj.imageUrl);
 
-    await fetch("https://tiffingrades-api.herokuapp.com/signup", {
+    await fetch("/signup", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
