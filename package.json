@@ -2,7 +2,6 @@
   "name": "tiffingrades",
   "version": "0.1.0",
   "private": true,
-  "proxy": "http://tiffingrades-api.herokuapp.com",
   "dependencies": {
     "@chakra-ui/react": "^1.6.10",
     "@mui/material": "^5.0.6",

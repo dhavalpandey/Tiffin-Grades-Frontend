@@ -22,7 +22,7 @@ export default function Login() {
     localStorage.setItem("name", successResponse.profileObj.givenName);
     localStorage.setItem("image", successResponse.profileObj.imageUrl);
 
-    await fetch("/signup", {
+    await fetch("http://tiffingrades-api.herokuapp.com/signup", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
