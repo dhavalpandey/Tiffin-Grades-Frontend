@@ -5,3 +5,11 @@ export const getStatus = () => {
     return false;
   }
 };
+
+export const getUploaded = () => {
+  if (localStorage.getItem("adjectives_submitted")) {
+    return true;
+  } else {
+    return false;
+  }
+};

@@ -1,26 +1,21 @@
 import { useState } from "react";
 
-import { LoginContext } from "./Global/Context";
-import { getStatus } from "./Global/Constants";
+import { getStatus, getUploaded } from "./Global/Constants";
 
 import Dashboard from "./Pages/Dashboard/Dashboard";
+import Adjectives from "./Pages/Adjectives/Adjectives";
 import Login from "./Pages/Login/Login";
 
 function App() {
   const [loggedIn, setLoggedIn] = useState(getStatus);
+  const [adjUploaded, setAdjUploaded] = useState(getUploaded);
 
-  if (loggedIn) {
-    return (
-      <LoginContext.Provider value={{ loggedIn, setLoggedIn }}>
-        <Dashboard />
-      </LoginContext.Provider>
-    );
+  if (loggedIn && !adjUploaded) {
+    return <Adjectives />;
+  } else if (loggedIn && adjUploaded) {
+    return <Dashboard />;
   } else {
-    return (
-      <LoginContext.Provider value={{ loggedIn, setLoggedIn }}>
-        <Login />
-      </LoginContext.Provider>
-    );
+    return <Login />;
   }
 }
 
