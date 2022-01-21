@@ -10,6 +10,9 @@ function App() {
   const [loggedIn, setLoggedIn] = useState(getStatus);
   const [adjUploaded, setAdjUploaded] = useState(getUploaded);
 
+  setLoggedIn(getStatus);
+  setAdjUploaded(getUploaded);
+
   if (loggedIn && !adjUploaded) {
     return <Adjectives />;
   } else if (loggedIn && adjUploaded) {
