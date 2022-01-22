@@ -7,11 +7,10 @@ import Adjectives from "./Pages/Adjectives/Adjectives";
 import Login from "./Pages/Login/Login";
 
 function App() {
+  // eslint-disable-next-line
   const [loggedIn, setLoggedIn] = useState(getStatus);
+  // eslint-disable-next-line
   const [adjUploaded, setAdjUploaded] = useState(getUploaded);
-
-  setLoggedIn(getStatus);
-  setAdjUploaded(getUploaded);
 
   if (loggedIn && !adjUploaded) {
     return <Adjectives />;
