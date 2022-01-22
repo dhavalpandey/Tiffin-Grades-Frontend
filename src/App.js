@@ -5,6 +5,8 @@ import { getStatus, getUploaded } from "./Global/Constants";
 import Dashboard from "./Pages/Dashboard/Dashboard";
 import Adjectives from "./Pages/Adjectives/Adjectives";
 import Login from "./Pages/Login/Login";
+import Options from "./Pages/Options/Options";
+import Discover from "./Pages/Discover/Discover";
 
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 
@@ -20,8 +22,11 @@ function App() {
     return (
       <Router>
         <Switch>
-          <Route path="/popular-subjects">
-            <h1>Popular Subject</h1>
+          <Route path="/options">
+            <Options />
+          </Route>
+          <Route path="/discover">
+            <Discover />
           </Route>
           <Route path="/">
             <Dashboard />
