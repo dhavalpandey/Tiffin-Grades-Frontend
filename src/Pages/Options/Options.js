@@ -115,82 +115,82 @@ export default function Options() {
   const [rpChecked, setrpChecked] = useState(false);
 
   let artPercentage =
-    ((artAbility / 5) * 0.2 +
+    ((artAbility / 5) * 0.4 +
       (artInterest / 5) * 0.4 +
       (artTeachers / 5) * 0.05 +
-      (artTrips / 5) * 0.3 +
+      (artTrips / 5) * 0.1 +
       (artFriends / 2) * 0.05) *
     100;
 
   let dtPercentage =
-    ((dtAbility / 5) * 0.2 +
+    ((dtAbility / 5) * 0.4 +
       (dtInterest / 5) * 0.4 +
       (dtTeachers / 5) * 0.05 +
-      (dtTrips / 5) * 0.3 +
+      (dtTrips / 5) * 0.1 +
       (dtFriends / 2) * 0.05) *
     100;
 
   let dramaPercentage =
-    ((dramaAbility / 5) * 0.2 +
+    ((dramaAbility / 5) * 0.4 +
       (dramaInterest / 5) * 0.4 +
       (dramaTeachers / 5) * 0.05 +
-      (dramaTrips / 5) * 0.3 +
+      (dramaTrips / 5) * 0.1 +
       (dramaFriends / 2) * 0.05) *
     100;
 
   let geoPercentage =
-    ((geoAbility / 5) * 0.2 +
+    ((geoAbility / 5) * 0.4 +
       (geoInterest / 5) * 0.4 +
       (geoTeachers / 5) * 0.05 +
-      (geoTrips / 5) * 0.3 +
+      (geoTrips / 5) * 0.1 +
       (geoFriends / 2) * 0.05) *
     100;
 
   let latinPercentage =
-    ((latinAbility / 5) * 0.2 +
+    ((latinAbility / 5) * 0.4 +
       (latinInterest / 5) * 0.4 +
       (latinTeachers / 5) * 0.05 +
-      (latinTrips / 5) * 0.3 +
+      (latinTrips / 5) * 0.1 +
       (latinFriends / 2) * 0.05) *
     100;
 
   let historyPercentage =
-    ((historyAbility / 5) * 0.2 +
+    ((historyAbility / 5) * 0.4 +
       (historyInterest / 5) * 0.4 +
       (historyTeachers / 5) * 0.05 +
-      (historyTrips / 5) * 0.3 +
+      (historyTrips / 5) * 0.1 +
       (historyFriends / 2) * 0.05) *
     100;
 
   let musicPercentage =
-    ((musicAbility / 5) * 0.2 +
+    ((musicAbility / 5) * 0.4 +
       (musicInterest / 5) * 0.4 +
       (musicTeachers / 5) * 0.05 +
-      (musicTrips / 5) * 0.3 +
+      (musicTrips / 5) * 0.1 +
       (musicFriends / 2) * 0.05) *
     100;
 
   let pePercentage =
-    ((peAbility / 5) * 0.2 +
+    ((peAbility / 5) * 0.4 +
       (peInterest / 5) * 0.4 +
       (peTeachers / 5) * 0.05 +
-      (peTrips / 5) * 0.3 +
+      (peTrips / 5) * 0.1 +
       (peFriends / 2) * 0.05) *
     100;
 
   let spanishPercentage =
-    ((spanishAbility / 5) * 0.2 +
+    ((spanishAbility / 5) * 0.4 +
       (spanishInterest / 5) * 0.4 +
       (spanishTeachers / 5) * 0.05 +
-      (spanishTrips / 5) * 0.3 +
+      (spanishTrips / 5) * 0.1 +
       (spanishFriends / 2) * 0.05) *
     100;
 
   let rpPercentage =
-    ((rpAbility / 5) * 0.2 +
+    ((rpAbility / 5) * 0.4 +
       (rpInterest / 5) * 0.4 +
       (rpTeachers / 5) * 0.05 +
-      (rpTrips / 5) * 0.3 +
+      (rpTrips / 5) * 0.1 +
       (rpFriends / 2) * 0.05) *
     100;
 
