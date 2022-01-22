@@ -6,6 +6,7 @@ import Switch from "@mui/material/Switch";
 import CircularProgress from "@mui/material/CircularProgress";
 import Typography from "@mui/material/Typography";
 import Box from "@mui/material/Box";
+import LoadingButton from "@mui/lab/LoadingButton";
 
 import "./Option.css";
 
@@ -34,9 +35,12 @@ function CircularProgressWithLabel(props) {
 }
 
 export default function Options() {
+  const [loading, setLoading] = useState(false);
+
   //Art
   const [artAbility, setArtAbility] = useState(0);
   const [artInterest, setArtInterest] = useState(0);
+  const [artEffort, setArtEffort] = useState(0);
   const [artTeachers, setArtTeachers] = useState(0);
   const [artTrips, setArtTrips] = useState(0);
   const [artFriends, setArtFriends] = useState(0);
@@ -45,6 +49,7 @@ export default function Options() {
   //DT
   const [dtAbility, setDtAbility] = useState(0);
   const [dtInterest, setDtInterest] = useState(0);
+  const [dtEffort, setdtEffort] = useState(0);
   const [dtTeachers, setDtTeachers] = useState(0);
   const [dtTrips, setDtTrips] = useState(0);
   const [dtFriends, setDtFriends] = useState(0);
@@ -53,6 +58,7 @@ export default function Options() {
   //Drama
   const [dramaAbility, setdramaAbility] = useState(0);
   const [dramaInterest, setdramaInterest] = useState(0);
+  const [dramaEffort, setdramaEffort] = useState(0);
   const [dramaTeachers, setdramaTeachers] = useState(0);
   const [dramaTrips, setdramaTrips] = useState(0);
   const [dramaFriends, setdramaFriends] = useState(0);
@@ -61,6 +67,7 @@ export default function Options() {
   //Geography
   const [geoAbility, setgeoAbility] = useState(0);
   const [geoInterest, setgeoInterest] = useState(0);
+  const [geoEffort, setgeoEffort] = useState(0);
   const [geoTeachers, setgeoTeachers] = useState(0);
   const [geoTrips, setgeoTrips] = useState(0);
   const [geoFriends, setgeoFriends] = useState(0);
@@ -69,6 +76,7 @@ export default function Options() {
   //latin
   const [latinAbility, setlatinAbility] = useState(0);
   const [latinInterest, setlatinInterest] = useState(0);
+  const [latinEffort, setlatinEffort] = useState(0);
   const [latinTeachers, setlatinTeachers] = useState(0);
   const [latinTrips, setlatinTrips] = useState(0);
   const [latinFriends, setlatinFriends] = useState(0);
@@ -77,6 +85,7 @@ export default function Options() {
   //History
   const [historyAbility, sethistoryAbility] = useState(0);
   const [historyInterest, sethistoryInterest] = useState(0);
+  const [historyEffort, sethistoryEffort] = useState(0);
   const [historyTeachers, sethistoryTeachers] = useState(0);
   const [historyTrips, sethistoryTrips] = useState(0);
   const [historyFriends, sethistoryFriends] = useState(0);
@@ -85,6 +94,7 @@ export default function Options() {
   //Music
   const [musicAbility, setmusicAbility] = useState(0);
   const [musicInterest, setmusicInterest] = useState(0);
+  const [musicEffort, setmusicEffort] = useState(0);
   const [musicTeachers, setmusicTeachers] = useState(0);
   const [musicTrips, setmusicTrips] = useState(0);
   const [musicFriends, setmusicFriends] = useState(0);
@@ -93,6 +103,7 @@ export default function Options() {
   //PE
   const [peAbility, setpeAbility] = useState(0);
   const [peInterest, setpeInterest] = useState(0);
+  const [peEffort, setpeEffort] = useState(0);
   const [peTeachers, setpeTeachers] = useState(0);
   const [peTrips, setpeTrips] = useState(0);
   const [peFriends, setpeFriends] = useState(0);
@@ -101,6 +112,7 @@ export default function Options() {
   //Spanish
   const [spanishAbility, setspanishAbility] = useState(0);
   const [spanishInterest, setspanishInterest] = useState(0);
+  const [spanishEffort, setspanishEffort] = useState(0);
   const [spanishTeachers, setspanishTeachers] = useState(0);
   const [spanishTrips, setspanishTrips] = useState(0);
   const [spanishFriends, setspanishFriends] = useState(0);
@@ -109,6 +121,7 @@ export default function Options() {
   //RP
   const [rpAbility, setrpAbility] = useState(0);
   const [rpInterest, setrpInterest] = useState(0);
+  const [rpEffort, setrpEffort] = useState(0);
   const [rpTeachers, setrpTeachers] = useState(0);
   const [rpTrips, setrpTrips] = useState(0);
   const [rpFriends, setrpFriends] = useState(0);
@@ -116,7 +129,8 @@ export default function Options() {
 
   let artPercentage =
     ((artAbility / 5) * 0.4 +
-      (artInterest / 5) * 0.4 +
+      (artInterest / 5) * 0.25 +
+      (artEffort / 5) * 0.15 +
       (artTeachers / 5) * 0.05 +
       (artTrips / 5) * 0.1 +
       (artFriends / 2) * 0.05) *
@@ -124,7 +138,8 @@ export default function Options() {
 
   let dtPercentage =
     ((dtAbility / 5) * 0.4 +
-      (dtInterest / 5) * 0.4 +
+      (dtInterest / 5) * 0.25 +
+      (dtEffort / 5) * 0.15 +
       (dtTeachers / 5) * 0.05 +
       (dtTrips / 5) * 0.1 +
       (dtFriends / 2) * 0.05) *
@@ -132,7 +147,8 @@ export default function Options() {
 
   let dramaPercentage =
     ((dramaAbility / 5) * 0.4 +
-      (dramaInterest / 5) * 0.4 +
+      (dramaInterest / 5) * 0.25 +
+      (dramaEffort / 5) * 0.15 +
       (dramaTeachers / 5) * 0.05 +
       (dramaTrips / 5) * 0.1 +
       (dramaFriends / 2) * 0.05) *
@@ -140,7 +156,8 @@ export default function Options() {
 
   let geoPercentage =
     ((geoAbility / 5) * 0.4 +
-      (geoInterest / 5) * 0.4 +
+      (geoInterest / 5) * 0.25 +
+      (geoEffort / 5) * 0.15 +
       (geoTeachers / 5) * 0.05 +
       (geoTrips / 5) * 0.1 +
       (geoFriends / 2) * 0.05) *
@@ -148,7 +165,8 @@ export default function Options() {
 
   let latinPercentage =
     ((latinAbility / 5) * 0.4 +
-      (latinInterest / 5) * 0.4 +
+      (latinInterest / 5) * 0.25 +
+      (latinEffort / 5) * 0.15 +
       (latinTeachers / 5) * 0.05 +
       (latinTrips / 5) * 0.1 +
       (latinFriends / 2) * 0.05) *
@@ -156,7 +174,8 @@ export default function Options() {
 
   let historyPercentage =
     ((historyAbility / 5) * 0.4 +
-      (historyInterest / 5) * 0.4 +
+      (historyInterest / 5) * 0.25 +
+      (historyEffort / 5) * 0.15 +
       (historyTeachers / 5) * 0.05 +
       (historyTrips / 5) * 0.1 +
       (historyFriends / 2) * 0.05) *
@@ -164,7 +183,8 @@ export default function Options() {
 
   let musicPercentage =
     ((musicAbility / 5) * 0.4 +
-      (musicInterest / 5) * 0.4 +
+      (musicInterest / 5) * 0.25 +
+      (musicEffort / 5) * 0.15 +
       (musicTeachers / 5) * 0.05 +
       (musicTrips / 5) * 0.1 +
       (musicFriends / 2) * 0.05) *
@@ -172,7 +192,8 @@ export default function Options() {
 
   let pePercentage =
     ((peAbility / 5) * 0.4 +
-      (peInterest / 5) * 0.4 +
+      (peInterest / 5) * 0.25 +
+      (peEffort / 5) * 0.15 +
       (peTeachers / 5) * 0.05 +
       (peTrips / 5) * 0.1 +
       (peFriends / 2) * 0.05) *
@@ -180,7 +201,8 @@ export default function Options() {
 
   let spanishPercentage =
     ((spanishAbility / 5) * 0.4 +
-      (spanishInterest / 5) * 0.4 +
+      (spanishInterest / 5) * 0.25 +
+      (spanishEffort / 5) * 0.15 +
       (spanishTeachers / 5) * 0.05 +
       (spanishTrips / 5) * 0.1 +
       (spanishFriends / 2) * 0.05) *
@@ -188,11 +210,66 @@ export default function Options() {
 
   let rpPercentage =
     ((rpAbility / 5) * 0.4 +
-      (rpInterest / 5) * 0.4 +
+      (rpInterest / 5) * 0.25 +
+      (rpEffort / 5) * 0.15 +
       (rpTeachers / 5) * 0.05 +
       (rpTrips / 5) * 0.1 +
       (rpFriends / 2) * 0.05) *
     100;
+
+  const handleSubmit = async () => {
+    setLoading(true);
+
+    let obj = {
+      art: Math.round((artPercentage + Number.EPSILON) * 100) / 100,
+      dt: Math.round((dtPercentage + Number.EPSILON) * 100) / 100,
+      drama: Math.round((dramaPercentage + Number.EPSILON) * 100) / 100,
+      geo: Math.round((geoPercentage + Number.EPSILON) * 100) / 100,
+      latin: Math.round((latinPercentage + Number.EPSILON) * 100) / 100,
+      history: Math.round((historyPercentage + Number.EPSILON) * 100) / 100,
+      music: Math.round((musicPercentage + Number.EPSILON) * 100) / 100,
+      pe: Math.round((pePercentage + Number.EPSILON) * 100) / 100,
+      spanish: Math.round((spanishPercentage + Number.EPSILON) * 100) / 100,
+      rp: Math.round((rpPercentage + Number.EPSILON) * 100) / 100,
+    };
+
+    let entries = Object.entries(obj);
+    let sorted = entries.sort((a, b) => b[1] - a[1]);
+    let data = Object.fromEntries(sorted);
+
+    const top3 =
+      Object.keys(data)[0].toString() +
+      ", " +
+      Object.keys(data)[1].toString() +
+      ", " +
+      Object.keys(data)[2].toString();
+    console.log(top3);
+
+    await fetch("https://tiffingrades-api.herokuapp.com/options", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        Accept: "application/json",
+      },
+      body: JSON.stringify({
+        googleId: localStorage.getItem("google_id"),
+        data,
+        topThreeSubjects: top3,
+      }),
+    })
+      .then((res) => {
+        return res.json();
+      })
+      .then((res) => {
+        alert("Your options were saved successfully.");
+        localStorage.setItem("top3", top3);
+        localStorage.setItem("options", data);
+        window.location.replace("/");
+      })
+      .catch((error) => {
+        console.log("failed");
+      });
+  };
 
   return (
     <div>
@@ -236,6 +313,17 @@ export default function Options() {
                 value={artAbility}
                 onChange={(event, newValue) => {
                   setArtAbility(newValue);
+                }}
+              />
+            </div>
+            <div>
+              <h3>How much effort are you willing to put in?</h3>
+              <Rating
+                name="half-rating-read"
+                precision={0.5}
+                value={artEffort}
+                onChange={(event, newValue) => {
+                  setArtEffort(newValue);
                 }}
               />
             </div>
@@ -316,6 +404,17 @@ export default function Options() {
               />
             </div>
             <div>
+              <h3>How much effort are you willing to put in?</h3>
+              <Rating
+                name="half-rating-read"
+                precision={0.5}
+                value={dtEffort}
+                onChange={(event, newValue) => {
+                  setdtEffort(newValue);
+                }}
+              />
+            </div>
+            <div>
               <h3>How are the teachers for this subject?</h3>
               <Rating
                 name="half-rating-read"
@@ -388,6 +487,17 @@ export default function Options() {
                 value={dramaAbility}
                 onChange={(event, newValue) => {
                   setdramaAbility(newValue);
+                }}
+              />
+            </div>
+            <div>
+              <h3>How much effort are you willing to put in?</h3>
+              <Rating
+                name="half-rating-read"
+                precision={0.5}
+                value={dramaEffort}
+                onChange={(event, newValue) => {
+                  setdramaEffort(newValue);
                 }}
               />
             </div>
@@ -468,6 +578,17 @@ export default function Options() {
               />
             </div>
             <div>
+              <h3>How much effort are you willing to put in?</h3>
+              <Rating
+                name="half-rating-read"
+                precision={0.5}
+                value={geoEffort}
+                onChange={(event, newValue) => {
+                  setgeoEffort(newValue);
+                }}
+              />
+            </div>
+            <div>
               <h3>How are the teachers for this subject?</h3>
               <Rating
                 name="half-rating-read"
@@ -540,6 +661,17 @@ export default function Options() {
                 value={latinAbility}
                 onChange={(event, newValue) => {
                   setlatinAbility(newValue);
+                }}
+              />
+            </div>
+            <div>
+              <h3>How much effort are you willing to put in?</h3>
+              <Rating
+                name="half-rating-read"
+                precision={0.5}
+                value={latinEffort}
+                onChange={(event, newValue) => {
+                  setlatinEffort(newValue);
                 }}
               />
             </div>
@@ -618,6 +750,17 @@ export default function Options() {
                   sethistoryAbility(newValue);
                 }}
               />
+              <div>
+                <h3>How much effort are you willing to put in?</h3>
+                <Rating
+                  name="half-rating-read"
+                  precision={0.5}
+                  value={historyEffort}
+                  onChange={(event, newValue) => {
+                    sethistoryEffort(newValue);
+                  }}
+                />
+              </div>
             </div>
             <div>
               <h3>How are the teachers for this subject?</h3>
@@ -692,6 +835,17 @@ export default function Options() {
                 value={musicAbility}
                 onChange={(event, newValue) => {
                   setmusicAbility(newValue);
+                }}
+              />
+            </div>
+            <div>
+              <h3>How much effort are you willing to put in?</h3>
+              <Rating
+                name="half-rating-read"
+                precision={0.5}
+                value={musicEffort}
+                onChange={(event, newValue) => {
+                  setmusicEffort(newValue);
                 }}
               />
             </div>
@@ -772,6 +926,17 @@ export default function Options() {
               />
             </div>
             <div>
+              <h3>How much effort are you willing to put in?</h3>
+              <Rating
+                name="half-rating-read"
+                precision={0.5}
+                value={peEffort}
+                onChange={(event, newValue) => {
+                  setpeEffort(newValue);
+                }}
+              />
+            </div>
+            <div>
               <h3>How are the teachers for this subject?</h3>
               <Rating
                 name="half-rating-read"
@@ -844,6 +1009,17 @@ export default function Options() {
                 value={spanishAbility}
                 onChange={(event, newValue) => {
                   setspanishAbility(newValue);
+                }}
+              />
+            </div>
+            <div>
+              <h3>How much effort are you willing to put in?</h3>
+              <Rating
+                name="half-rating-read"
+                precision={0.5}
+                value={spanishEffort}
+                onChange={(event, newValue) => {
+                  setspanishEffort(newValue);
                 }}
               />
             </div>
@@ -924,6 +1100,17 @@ export default function Options() {
               />
             </div>
             <div>
+              <h3>How much effort are you willing to put in?</h3>
+              <Rating
+                name="half-rating-read"
+                precision={0.5}
+                value={rpEffort}
+                onChange={(event, newValue) => {
+                  setrpEffort(newValue);
+                }}
+              />
+            </div>
+            <div>
               <h3>How are the teachers for this subject?</h3>
               <Rating
                 name="half-rating-read"
@@ -962,6 +1149,17 @@ export default function Options() {
             </div>
           </CardContent>
         </Card>
+      </div>
+      <div className="submitBtn">
+        <LoadingButton
+          variant="contained"
+          onClick={handleSubmit}
+          className="submitBtn"
+          size="large"
+          loading={loading}
+        >
+          Submit
+        </LoadingButton>
       </div>
     </div>
   );
