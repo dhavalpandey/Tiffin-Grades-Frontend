@@ -7,6 +7,7 @@ import Adjectives from "./Pages/Adjectives/Adjectives";
 import Login from "./Pages/Login/Login";
 import Options from "./Pages/Options/Options";
 import Discover from "./Pages/Discover/Discover";
+import Results from "./Pages/Results/Results";
 
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 
@@ -27,6 +28,9 @@ function App() {
           </Route>
           <Route path="/discover">
             <Discover />
+          </Route>
+          <Route path="/results">
+            <Results />
           </Route>
           <Route path="/">
             <Dashboard />

@@ -4,12 +4,14 @@
 }
 
 .cards {
-  display: flex;
-  justify-content: center;
   margin-top: 8%;
+  display: grid;
+  justify-content: center;
+  grid-auto-flow: column;
+  grid-column-gap: 4%;
 }
 
-.card1 {
+.card3 {
   margin-right: 10%;
 }
 

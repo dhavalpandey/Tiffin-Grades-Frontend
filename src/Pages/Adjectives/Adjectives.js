@@ -53,7 +53,7 @@ export default function Adjectives() {
           if (res.status === "OK") {
             alert(res.message);
             localStorage.setItem("adjectives_submitted", true);
-            window.location.reload();
+            window.location.replace("/");
           } else {
             alert(res.message);
             localStorage.clear();

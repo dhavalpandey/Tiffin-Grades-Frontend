@@ -7,6 +7,13 @@ import CircularProgress from "@mui/material/CircularProgress";
 import Typography from "@mui/material/Typography";
 import Box from "@mui/material/Box";
 import LoadingButton from "@mui/lab/LoadingButton";
+import Table from "@mui/material/Table";
+import TableBody from "@mui/material/TableBody";
+import TableCell from "@mui/material/TableCell";
+import TableContainer from "@mui/material/TableContainer";
+import TableHead from "@mui/material/TableHead";
+import TableRow from "@mui/material/TableRow";
+import Paper from "@mui/material/Paper";
 
 import "./Option.css";
 
@@ -217,6 +224,57 @@ export default function Options() {
       (rpFriends / 2) * 0.05) *
     100;
 
+  const [item1, setitem1] = useState([]);
+  const [item2, setitem2] = useState([]);
+  const [item3, setitem3] = useState([]);
+  const [item4, setitem4] = useState([]);
+  const [item5, setitem5] = useState([]);
+  const [item6, setitem6] = useState([]);
+  const [item7, setitem7] = useState([]);
+  const [item8, setitem8] = useState([]);
+  const [item9, setitem9] = useState([]);
+  const [item10, setitem10] = useState([]);
+
+  const [fetchingData, setFetchingData] = useState(false);
+
+  const fetchData = async () => {
+    setLoading(true);
+    await fetch("https://tiffingrades-api.herokuapp.com/results", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        Accept: "application/json",
+      },
+      body: JSON.stringify({
+        googleId: localStorage.getItem("google_id"),
+      }),
+    })
+      .then((res) => {
+        return res.json();
+      })
+      .then((res) => {
+        let entries = Object.entries(res.data);
+        setitem1(entries[0]);
+        setitem2(entries[1]);
+        setitem3(entries[2]);
+        setitem4(entries[3]);
+        setitem5(entries[4]);
+        setitem6(entries[5]);
+        setitem7(entries[6]);
+        setitem8(entries[7]);
+        setitem9(entries[8]);
+        setitem10(entries[9]);
+
+        setTimeout(() => {
+          setFetchingData(true);
+        }, 1500);
+      })
+      .catch((error) => {
+        alert("Failed to fetch your options.");
+        window.location.reload();
+      });
+  };
+
   const handleSubmit = async () => {
     setLoading(true);
 
@@ -224,7 +282,7 @@ export default function Options() {
       art: Math.round((artPercentage + Number.EPSILON) * 100) / 100,
       dt: Math.round((dtPercentage + Number.EPSILON) * 100) / 100,
       drama: Math.round((dramaPercentage + Number.EPSILON) * 100) / 100,
-      geo: Math.round((geoPercentage + Number.EPSILON) * 100) / 100,
+      geography: Math.round((geoPercentage + Number.EPSILON) * 100) / 100,
       latin: Math.round((latinPercentage + Number.EPSILON) * 100) / 100,
       history: Math.round((historyPercentage + Number.EPSILON) * 100) / 100,
       music: Math.round((musicPercentage + Number.EPSILON) * 100) / 100,
@@ -243,7 +301,6 @@ export default function Options() {
       Object.keys(data)[1].toString() +
       ", " +
       Object.keys(data)[2].toString();
-    console.log(top3);
 
     await fetch("https://tiffingrades-api.herokuapp.com/options", {
       method: "POST",
@@ -261,906 +318,998 @@ export default function Options() {
         return res.json();
       })
       .then((res) => {
-        alert("Your options were saved successfully.");
         localStorage.setItem("top3", top3);
         localStorage.setItem("options", data);
-        window.location.replace("/");
+        setTimeout(() => {
+          fetchData();
+        }, 1500);
       })
       .catch((error) => {
         console.log("failed");
       });
   };
 
-  return (
-    <div>
-      <div className="heading1">
-        <h1>
-          {localStorage.getItem("name")}, please fill out this information to
-          discover your options.
-        </h1>
-      </div>
-      <div className="view">
-        <Card className="card" sx={{ width: 400 }}>
-          <CardContent>
-            <div className="titles">
-              <h1>Art and Design</h1>
-              <div className="progress">
-                <CircularProgressWithLabel
-                  size={60}
-                  thickness={5}
-                  value={
-                    Math.round((artPercentage + Number.EPSILON) * 100) / 100
-                  }
-                />
-              </div>
-            </div>
-            <div>
-              <h3>Rate your interest in the subject:</h3>
-              <Rating
-                name="half-rating-read"
-                precision={0.5}
-                value={artInterest}
-                onChange={(event, newValue) => {
-                  setArtInterest(newValue);
-                }}
-              />
-            </div>
-            <div>
-              <h3>Rate your ability in the subject:</h3>
-              <Rating
-                name="half-rating-read"
-                precision={0.5}
-                value={artAbility}
-                onChange={(event, newValue) => {
-                  setArtAbility(newValue);
-                }}
-              />
-            </div>
-            <div>
-              <h3>How much effort are you willing to put in?</h3>
-              <Rating
-                name="half-rating-read"
-                precision={0.5}
-                value={artEffort}
-                onChange={(event, newValue) => {
-                  setArtEffort(newValue);
-                }}
-              />
-            </div>
-            <div>
-              <h3>How are the teachers for this subject?</h3>
-              <Rating
-                name="half-rating-read"
-                precision={0.5}
-                value={artTeachers}
-                onChange={(event, newValue) => {
-                  setArtTeachers(newValue);
-                }}
-              />
-            </div>
-            <div>
-              <h3>Rate the trips in the subject:</h3>
-              <Rating
-                name="half-rating-read"
-                precision={0.5}
-                value={artTrips}
-                onChange={(event, newValue) => {
-                  setArtTrips(newValue);
-                }}
-              />
-              <div>
-                <h3>Are your friends doing this subject?</h3>
-                <Switch
-                  checked={artChecked}
-                  onChange={(event) => {
-                    setArtChecked(event.target.checked);
-                    if (!artChecked) {
-                      setArtFriends(2);
-                    } else {
-                      setArtFriends(0);
+  if (!fetchingData) {
+    return (
+      <div>
+        <div className="heading1">
+          <h1>
+            {localStorage.getItem("name")}, please fill out this information to
+            discover your options.
+          </h1>
+        </div>
+        <div className="view">
+          <Card className="card" sx={{ width: 400 }}>
+            <CardContent>
+              <div className="titles">
+                <h1>Art and Design</h1>
+                <div className="progress">
+                  <CircularProgressWithLabel
+                    size={60}
+                    thickness={5}
+                    value={
+                      Math.round((artPercentage + Number.EPSILON) * 100) / 100
                     }
-                  }}
-                  inputProps={{ "aria-label": "controlled" }}
-                />
+                  />
+                </div>
               </div>
-            </div>
-          </CardContent>
-        </Card>
-
-        <Card className="card" sx={{ width: 400 }}>
-          <CardContent>
-            <div className="titles">
-              <h1>Design & Tech</h1>
-              <div className="progress">
-                <CircularProgressWithLabel
-                  size={60}
-                  thickness={5}
-                  value={
-                    Math.round((dtPercentage + Number.EPSILON) * 100) / 100
-                  }
-                />
-              </div>
-            </div>
-            <div>
-              <h3>Rate your interest in the subject:</h3>
-              <Rating
-                name="half-rating-read"
-                precision={0.5}
-                value={dtInterest}
-                onChange={(event, newValue) => {
-                  setDtInterest(newValue);
-                }}
-              />
-            </div>
-            <div>
-              <h3>Rate your ability in the subject:</h3>
-              <Rating
-                name="half-rating-read"
-                precision={0.5}
-                value={dtAbility}
-                onChange={(event, newValue) => {
-                  setDtAbility(newValue);
-                }}
-              />
-            </div>
-            <div>
-              <h3>How much effort are you willing to put in?</h3>
-              <Rating
-                name="half-rating-read"
-                precision={0.5}
-                value={dtEffort}
-                onChange={(event, newValue) => {
-                  setdtEffort(newValue);
-                }}
-              />
-            </div>
-            <div>
-              <h3>How are the teachers for this subject?</h3>
-              <Rating
-                name="half-rating-read"
-                precision={0.5}
-                value={dtTeachers}
-                onChange={(event, newValue) => {
-                  setDtTeachers(newValue);
-                }}
-              />
-            </div>
-            <div>
-              <h3>Rate the trips in the subject:</h3>
-              <Rating
-                name="half-rating-read"
-                precision={0.5}
-                value={dtTrips}
-                onChange={(event, newValue) => {
-                  setDtTrips(newValue);
-                }}
-              />
               <div>
-                <h3>Are your friends doing this subject?</h3>
-                <Switch
-                  checked={dtChecked}
-                  onChange={(event) => {
-                    setDtChecked(event.target.checked);
-                    if (!dtChecked) {
-                      setDtFriends(2);
-                    } else {
-                      setDtFriends(0);
-                    }
+                <h3>Rate your interest in the subject:</h3>
+                <Rating
+                  name="half-rating-read"
+                  precision={0.5}
+                  value={artInterest}
+                  onChange={(event, newValue) => {
+                    setArtInterest(newValue);
                   }}
-                  inputProps={{ "aria-label": "controlled" }}
                 />
               </div>
-            </div>
-          </CardContent>
-        </Card>
-
-        <Card className="card" sx={{ width: 400 }}>
-          <CardContent>
-            <div className="titles">
-              <h1>Drama</h1>
-              <div className="progress">
-                <CircularProgressWithLabel
-                  size={60}
-                  thickness={5}
-                  value={
-                    Math.round((dramaPercentage + Number.EPSILON) * 100) / 100
-                  }
-                />
-              </div>
-            </div>
-            <div>
-              <h3>Rate your interest in the subject:</h3>
-              <Rating
-                name="half-rating-read"
-                precision={0.5}
-                value={dramaInterest}
-                onChange={(event, newValue) => {
-                  setdramaInterest(newValue);
-                }}
-              />
-            </div>
-            <div>
-              <h3>Rate your ability in the subject:</h3>
-              <Rating
-                name="half-rating-read"
-                precision={0.5}
-                value={dramaAbility}
-                onChange={(event, newValue) => {
-                  setdramaAbility(newValue);
-                }}
-              />
-            </div>
-            <div>
-              <h3>How much effort are you willing to put in?</h3>
-              <Rating
-                name="half-rating-read"
-                precision={0.5}
-                value={dramaEffort}
-                onChange={(event, newValue) => {
-                  setdramaEffort(newValue);
-                }}
-              />
-            </div>
-            <div>
-              <h3>How are the teachers for this subject?</h3>
-              <Rating
-                name="half-rating-read"
-                precision={0.5}
-                value={dramaTeachers}
-                onChange={(event, newValue) => {
-                  setdramaTeachers(newValue);
-                }}
-              />
-            </div>
-            <div>
-              <h3>Rate the trips in the subject:</h3>
-              <Rating
-                name="half-rating-read"
-                precision={0.5}
-                value={dramaTrips}
-                onChange={(event, newValue) => {
-                  setdramaTrips(newValue);
-                }}
-              />
               <div>
-                <h3>Are your friends doing this subject?</h3>
-                <Switch
-                  checked={dramaChecked}
-                  onChange={(event) => {
-                    setdramaChecked(event.target.checked);
-                    if (!dramaChecked) {
-                      setdramaFriends(2);
-                    } else {
-                      setdramaFriends(0);
-                    }
+                <h3>Rate your ability in the subject:</h3>
+                <Rating
+                  name="half-rating-read"
+                  precision={0.5}
+                  value={artAbility}
+                  onChange={(event, newValue) => {
+                    setArtAbility(newValue);
                   }}
-                  inputProps={{ "aria-label": "controlled" }}
                 />
               </div>
-            </div>
-          </CardContent>
-        </Card>
-
-        <Card className="card" sx={{ width: 400 }}>
-          <CardContent>
-            <div className="titles">
-              <h1>Geography</h1>
-              <div className="progress">
-                <CircularProgressWithLabel
-                  size={60}
-                  thickness={5}
-                  value={
-                    Math.round((geoPercentage + Number.EPSILON) * 100) / 100
-                  }
-                />
-              </div>
-            </div>
-            <div>
-              <h3>Rate your interest in the subject:</h3>
-              <Rating
-                name="half-rating-read"
-                precision={0.5}
-                value={geoInterest}
-                onChange={(event, newValue) => {
-                  setgeoInterest(newValue);
-                }}
-              />
-            </div>
-            <div>
-              <h3>Rate your ability in the subject:</h3>
-              <Rating
-                name="half-rating-read"
-                precision={0.5}
-                value={geoAbility}
-                onChange={(event, newValue) => {
-                  setgeoAbility(newValue);
-                }}
-              />
-            </div>
-            <div>
-              <h3>How much effort are you willing to put in?</h3>
-              <Rating
-                name="half-rating-read"
-                precision={0.5}
-                value={geoEffort}
-                onChange={(event, newValue) => {
-                  setgeoEffort(newValue);
-                }}
-              />
-            </div>
-            <div>
-              <h3>How are the teachers for this subject?</h3>
-              <Rating
-                name="half-rating-read"
-                precision={0.5}
-                value={geoTeachers}
-                onChange={(event, newValue) => {
-                  setgeoTeachers(newValue);
-                }}
-              />
-            </div>
-            <div>
-              <h3>Rate the trips in the subject:</h3>
-              <Rating
-                name="half-rating-read"
-                precision={0.5}
-                value={geoTrips}
-                onChange={(event, newValue) => {
-                  setgeoTrips(newValue);
-                }}
-              />
-              <div>
-                <h3>Are your friends doing this subject?</h3>
-                <Switch
-                  checked={geoChecked}
-                  onChange={(event) => {
-                    setgeoChecked(event.target.checked);
-                    if (!geoChecked) {
-                      setgeoFriends(2);
-                    } else {
-                      setgeoFriends(0);
-                    }
-                  }}
-                  inputProps={{ "aria-label": "controlled" }}
-                />
-              </div>
-            </div>
-          </CardContent>
-        </Card>
-
-        <Card className="card" sx={{ width: 400 }}>
-          <CardContent>
-            <div className="titles">
-              <h1>Latin</h1>
-              <div className="progress">
-                <CircularProgressWithLabel
-                  size={60}
-                  thickness={5}
-                  value={
-                    Math.round((latinPercentage + Number.EPSILON) * 100) / 100
-                  }
-                />
-              </div>
-            </div>
-            <div>
-              <h3>Rate your interest in the subject:</h3>
-              <Rating
-                name="half-rating-read"
-                precision={0.5}
-                value={latinInterest}
-                onChange={(event, newValue) => {
-                  setlatinInterest(newValue);
-                }}
-              />
-            </div>
-            <div>
-              <h3>Rate your ability in the subject:</h3>
-              <Rating
-                name="half-rating-read"
-                precision={0.5}
-                value={latinAbility}
-                onChange={(event, newValue) => {
-                  setlatinAbility(newValue);
-                }}
-              />
-            </div>
-            <div>
-              <h3>How much effort are you willing to put in?</h3>
-              <Rating
-                name="half-rating-read"
-                precision={0.5}
-                value={latinEffort}
-                onChange={(event, newValue) => {
-                  setlatinEffort(newValue);
-                }}
-              />
-            </div>
-            <div>
-              <h3>How are the teachers for this subject?</h3>
-              <Rating
-                name="half-rating-read"
-                precision={0.5}
-                value={latinTeachers}
-                onChange={(event, newValue) => {
-                  setlatinTeachers(newValue);
-                }}
-              />
-            </div>
-            <div>
-              <h3>Rate the trips in the subject:</h3>
-              <Rating
-                name="half-rating-read"
-                precision={0.5}
-                value={latinTrips}
-                onChange={(event, newValue) => {
-                  setlatinTrips(newValue);
-                }}
-              />
-              <div>
-                <h3>Are your friends doing this subject?</h3>
-                <Switch
-                  checked={latinChecked}
-                  onChange={(event) => {
-                    setlatinChecked(event.target.checked);
-                    if (!latinChecked) {
-                      setlatinFriends(2);
-                    } else {
-                      setlatinFriends(0);
-                    }
-                  }}
-                  inputProps={{ "aria-label": "controlled" }}
-                />
-              </div>
-            </div>
-          </CardContent>
-        </Card>
-
-        <Card className="card" sx={{ width: 400 }}>
-          <CardContent>
-            <div className="titles">
-              <h1>History</h1>
-              <div className="progress">
-                <CircularProgressWithLabel
-                  size={60}
-                  thickness={5}
-                  value={
-                    Math.round((historyPercentage + Number.EPSILON) * 100) / 100
-                  }
-                />
-              </div>
-            </div>
-            <div>
-              <h3>Rate your interest in the subject:</h3>
-              <Rating
-                name="half-rating-read"
-                precision={0.5}
-                value={historyInterest}
-                onChange={(event, newValue) => {
-                  sethistoryInterest(newValue);
-                }}
-              />
-            </div>
-            <div>
-              <h3>Rate your ability in the subject:</h3>
-              <Rating
-                name="half-rating-read"
-                precision={0.5}
-                value={historyAbility}
-                onChange={(event, newValue) => {
-                  sethistoryAbility(newValue);
-                }}
-              />
               <div>
                 <h3>How much effort are you willing to put in?</h3>
                 <Rating
                   name="half-rating-read"
                   precision={0.5}
-                  value={historyEffort}
+                  value={artEffort}
                   onChange={(event, newValue) => {
-                    sethistoryEffort(newValue);
+                    setArtEffort(newValue);
                   }}
                 />
               </div>
-            </div>
-            <div>
-              <h3>How are the teachers for this subject?</h3>
-              <Rating
-                name="half-rating-read"
-                precision={0.5}
-                value={historyTeachers}
-                onChange={(event, newValue) => {
-                  sethistoryTeachers(newValue);
-                }}
-              />
-            </div>
-            <div>
-              <h3>Rate the trips in the subject:</h3>
-              <Rating
-                name="half-rating-read"
-                precision={0.5}
-                value={historyTrips}
-                onChange={(event, newValue) => {
-                  sethistoryTrips(newValue);
-                }}
-              />
               <div>
-                <h3>Are your friends doing this subject?</h3>
-                <Switch
-                  checked={historyChecked}
-                  onChange={(event) => {
-                    sethistoryChecked(event.target.checked);
-                    if (!historyChecked) {
-                      sethistoryFriends(2);
-                    } else {
-                      sethistoryFriends(0);
-                    }
+                <h3>How are the teachers for this subject?</h3>
+                <Rating
+                  name="half-rating-read"
+                  precision={0.5}
+                  value={artTeachers}
+                  onChange={(event, newValue) => {
+                    setArtTeachers(newValue);
                   }}
-                  inputProps={{ "aria-label": "controlled" }}
                 />
               </div>
-            </div>
-          </CardContent>
-        </Card>
+              <div>
+                <h3>Rate the trips in the subject:</h3>
+                <Rating
+                  name="half-rating-read"
+                  precision={0.5}
+                  value={artTrips}
+                  onChange={(event, newValue) => {
+                    setArtTrips(newValue);
+                  }}
+                />
+                <div>
+                  <h3>Are your friends doing this subject?</h3>
+                  <Switch
+                    checked={artChecked}
+                    onChange={(event) => {
+                      setArtChecked(event.target.checked);
+                      if (!artChecked) {
+                        setArtFriends(2);
+                      } else {
+                        setArtFriends(0);
+                      }
+                    }}
+                    inputProps={{ "aria-label": "controlled" }}
+                  />
+                </div>
+              </div>
+            </CardContent>
+          </Card>
 
-        <Card className="card" sx={{ width: 400 }}>
-          <CardContent>
-            <div className="titles">
-              <h1>Music</h1>
-              <div className="progress">
-                <CircularProgressWithLabel
-                  size={60}
-                  thickness={5}
-                  value={
-                    Math.round((musicPercentage + Number.EPSILON) * 100) / 100
-                  }
-                />
-              </div>
-            </div>
-            <div>
-              <h3>Rate your interest in the subject:</h3>
-              <Rating
-                name="half-rating-read"
-                precision={0.5}
-                value={musicInterest}
-                onChange={(event, newValue) => {
-                  setmusicInterest(newValue);
-                }}
-              />
-            </div>
-            <div>
-              <h3>Rate your ability in the subject:</h3>
-              <Rating
-                name="half-rating-read"
-                precision={0.5}
-                value={musicAbility}
-                onChange={(event, newValue) => {
-                  setmusicAbility(newValue);
-                }}
-              />
-            </div>
-            <div>
-              <h3>How much effort are you willing to put in?</h3>
-              <Rating
-                name="half-rating-read"
-                precision={0.5}
-                value={musicEffort}
-                onChange={(event, newValue) => {
-                  setmusicEffort(newValue);
-                }}
-              />
-            </div>
-            <div>
-              <h3>How are the teachers for this subject?</h3>
-              <Rating
-                name="half-rating-read"
-                precision={0.5}
-                value={musicTeachers}
-                onChange={(event, newValue) => {
-                  setmusicTeachers(newValue);
-                }}
-              />
-            </div>
-            <div>
-              <h3>Rate the trips in the subject:</h3>
-              <Rating
-                name="half-rating-read"
-                precision={0.5}
-                value={musicTrips}
-                onChange={(event, newValue) => {
-                  setmusicTrips(newValue);
-                }}
-              />
-              <div>
-                <h3>Are your friends doing this subject?</h3>
-                <Switch
-                  checked={musicChecked}
-                  onChange={(event) => {
-                    setmusicChecked(event.target.checked);
-                    if (!musicChecked) {
-                      setmusicFriends(2);
-                    } else {
-                      setmusicFriends(0);
+          <Card className="card" sx={{ width: 400 }}>
+            <CardContent>
+              <div className="titles">
+                <h1>Design & Tech</h1>
+                <div className="progress">
+                  <CircularProgressWithLabel
+                    size={60}
+                    thickness={5}
+                    value={
+                      Math.round((dtPercentage + Number.EPSILON) * 100) / 100
                     }
+                  />
+                </div>
+              </div>
+              <div>
+                <h3>Rate your interest in the subject:</h3>
+                <Rating
+                  name="half-rating-read"
+                  precision={0.5}
+                  value={dtInterest}
+                  onChange={(event, newValue) => {
+                    setDtInterest(newValue);
                   }}
-                  inputProps={{ "aria-label": "controlled" }}
                 />
               </div>
-            </div>
-          </CardContent>
-        </Card>
+              <div>
+                <h3>Rate your ability in the subject:</h3>
+                <Rating
+                  name="half-rating-read"
+                  precision={0.5}
+                  value={dtAbility}
+                  onChange={(event, newValue) => {
+                    setDtAbility(newValue);
+                  }}
+                />
+              </div>
+              <div>
+                <h3>How much effort are you willing to put in?</h3>
+                <Rating
+                  name="half-rating-read"
+                  precision={0.5}
+                  value={dtEffort}
+                  onChange={(event, newValue) => {
+                    setdtEffort(newValue);
+                  }}
+                />
+              </div>
+              <div>
+                <h3>How are the teachers for this subject?</h3>
+                <Rating
+                  name="half-rating-read"
+                  precision={0.5}
+                  value={dtTeachers}
+                  onChange={(event, newValue) => {
+                    setDtTeachers(newValue);
+                  }}
+                />
+              </div>
+              <div>
+                <h3>Rate the trips in the subject:</h3>
+                <Rating
+                  name="half-rating-read"
+                  precision={0.5}
+                  value={dtTrips}
+                  onChange={(event, newValue) => {
+                    setDtTrips(newValue);
+                  }}
+                />
+                <div>
+                  <h3>Are your friends doing this subject?</h3>
+                  <Switch
+                    checked={dtChecked}
+                    onChange={(event) => {
+                      setDtChecked(event.target.checked);
+                      if (!dtChecked) {
+                        setDtFriends(2);
+                      } else {
+                        setDtFriends(0);
+                      }
+                    }}
+                    inputProps={{ "aria-label": "controlled" }}
+                  />
+                </div>
+              </div>
+            </CardContent>
+          </Card>
 
-        <Card className="card" sx={{ width: 400 }}>
-          <CardContent>
-            <div className="titles">
-              <h1>PE</h1>
-              <div className="progress">
-                <CircularProgressWithLabel
-                  size={60}
-                  thickness={5}
-                  value={
-                    Math.round((pePercentage + Number.EPSILON) * 100) / 100
-                  }
-                />
-              </div>
-            </div>
-            <div>
-              <h3>Rate your interest in the subject:</h3>
-              <Rating
-                name="half-rating-read"
-                precision={0.5}
-                value={peInterest}
-                onChange={(event, newValue) => {
-                  setpeInterest(newValue);
-                }}
-              />
-            </div>
-            <div>
-              <h3>Rate your ability in the subject:</h3>
-              <Rating
-                name="half-rating-read"
-                precision={0.5}
-                value={peAbility}
-                onChange={(event, newValue) => {
-                  setpeAbility(newValue);
-                }}
-              />
-            </div>
-            <div>
-              <h3>How much effort are you willing to put in?</h3>
-              <Rating
-                name="half-rating-read"
-                precision={0.5}
-                value={peEffort}
-                onChange={(event, newValue) => {
-                  setpeEffort(newValue);
-                }}
-              />
-            </div>
-            <div>
-              <h3>How are the teachers for this subject?</h3>
-              <Rating
-                name="half-rating-read"
-                precision={0.5}
-                value={peTeachers}
-                onChange={(event, newValue) => {
-                  setpeTeachers(newValue);
-                }}
-              />
-            </div>
-            <div>
-              <h3>Rate the trips in the subject:</h3>
-              <Rating
-                name="half-rating-read"
-                precision={0.5}
-                value={peTrips}
-                onChange={(event, newValue) => {
-                  setpeTrips(newValue);
-                }}
-              />
-              <div>
-                <h3>Are your friends doing this subject?</h3>
-                <Switch
-                  checked={peChecked}
-                  onChange={(event) => {
-                    setpeChecked(event.target.checked);
-                    if (!peChecked) {
-                      setpeFriends(2);
-                    } else {
-                      setpeFriends(0);
+          <Card className="card" sx={{ width: 400 }}>
+            <CardContent>
+              <div className="titles">
+                <h1>Drama</h1>
+                <div className="progress">
+                  <CircularProgressWithLabel
+                    size={60}
+                    thickness={5}
+                    value={
+                      Math.round((dramaPercentage + Number.EPSILON) * 100) / 100
                     }
+                  />
+                </div>
+              </div>
+              <div>
+                <h3>Rate your interest in the subject:</h3>
+                <Rating
+                  name="half-rating-read"
+                  precision={0.5}
+                  value={dramaInterest}
+                  onChange={(event, newValue) => {
+                    setdramaInterest(newValue);
                   }}
-                  inputProps={{ "aria-label": "controlled" }}
                 />
               </div>
-            </div>
-          </CardContent>
-        </Card>
+              <div>
+                <h3>Rate your ability in the subject:</h3>
+                <Rating
+                  name="half-rating-read"
+                  precision={0.5}
+                  value={dramaAbility}
+                  onChange={(event, newValue) => {
+                    setdramaAbility(newValue);
+                  }}
+                />
+              </div>
+              <div>
+                <h3>How much effort are you willing to put in?</h3>
+                <Rating
+                  name="half-rating-read"
+                  precision={0.5}
+                  value={dramaEffort}
+                  onChange={(event, newValue) => {
+                    setdramaEffort(newValue);
+                  }}
+                />
+              </div>
+              <div>
+                <h3>How are the teachers for this subject?</h3>
+                <Rating
+                  name="half-rating-read"
+                  precision={0.5}
+                  value={dramaTeachers}
+                  onChange={(event, newValue) => {
+                    setdramaTeachers(newValue);
+                  }}
+                />
+              </div>
+              <div>
+                <h3>Rate the trips in the subject:</h3>
+                <Rating
+                  name="half-rating-read"
+                  precision={0.5}
+                  value={dramaTrips}
+                  onChange={(event, newValue) => {
+                    setdramaTrips(newValue);
+                  }}
+                />
+                <div>
+                  <h3>Are your friends doing this subject?</h3>
+                  <Switch
+                    checked={dramaChecked}
+                    onChange={(event) => {
+                      setdramaChecked(event.target.checked);
+                      if (!dramaChecked) {
+                        setdramaFriends(2);
+                      } else {
+                        setdramaFriends(0);
+                      }
+                    }}
+                    inputProps={{ "aria-label": "controlled" }}
+                  />
+                </div>
+              </div>
+            </CardContent>
+          </Card>
 
-        <Card className="card" sx={{ width: 400 }}>
-          <CardContent>
-            <div className="titles">
-              <h1>Spanish</h1>
-              <div className="progress">
-                <CircularProgressWithLabel
-                  size={60}
-                  thickness={5}
-                  value={
-                    Math.round((spanishPercentage + Number.EPSILON) * 100) / 100
-                  }
-                />
-              </div>
-            </div>
-            <div>
-              <h3>Rate your interest in the subject:</h3>
-              <Rating
-                name="half-rating-read"
-                precision={0.5}
-                value={spanishInterest}
-                onChange={(event, newValue) => {
-                  setspanishInterest(newValue);
-                }}
-              />
-            </div>
-            <div>
-              <h3>Rate your ability in the subject:</h3>
-              <Rating
-                name="half-rating-read"
-                precision={0.5}
-                value={spanishAbility}
-                onChange={(event, newValue) => {
-                  setspanishAbility(newValue);
-                }}
-              />
-            </div>
-            <div>
-              <h3>How much effort are you willing to put in?</h3>
-              <Rating
-                name="half-rating-read"
-                precision={0.5}
-                value={spanishEffort}
-                onChange={(event, newValue) => {
-                  setspanishEffort(newValue);
-                }}
-              />
-            </div>
-            <div>
-              <h3>How are the teachers for this subject?</h3>
-              <Rating
-                name="half-rating-read"
-                precision={0.5}
-                value={spanishTeachers}
-                onChange={(event, newValue) => {
-                  setspanishTeachers(newValue);
-                }}
-              />
-            </div>
-            <div>
-              <h3>Rate the trips in the subject:</h3>
-              <Rating
-                name="half-rating-read"
-                precision={0.5}
-                value={spanishTrips}
-                onChange={(event, newValue) => {
-                  setspanishTrips(newValue);
-                }}
-              />
-              <div>
-                <h3>Are your friends doing this subject?</h3>
-                <Switch
-                  checked={spanishChecked}
-                  onChange={(event) => {
-                    setspanishChecked(event.target.checked);
-                    if (!spanishChecked) {
-                      setspanishFriends(2);
-                    } else {
-                      setspanishFriends(0);
+          <Card className="card" sx={{ width: 400 }}>
+            <CardContent>
+              <div className="titles">
+                <h1>Geography</h1>
+                <div className="progress">
+                  <CircularProgressWithLabel
+                    size={60}
+                    thickness={5}
+                    value={
+                      Math.round((geoPercentage + Number.EPSILON) * 100) / 100
                     }
+                  />
+                </div>
+              </div>
+              <div>
+                <h3>Rate your interest in the subject:</h3>
+                <Rating
+                  name="half-rating-read"
+                  precision={0.5}
+                  value={geoInterest}
+                  onChange={(event, newValue) => {
+                    setgeoInterest(newValue);
                   }}
-                  inputProps={{ "aria-label": "controlled" }}
                 />
               </div>
-            </div>
-          </CardContent>
-        </Card>
+              <div>
+                <h3>Rate your ability in the subject:</h3>
+                <Rating
+                  name="half-rating-read"
+                  precision={0.5}
+                  value={geoAbility}
+                  onChange={(event, newValue) => {
+                    setgeoAbility(newValue);
+                  }}
+                />
+              </div>
+              <div>
+                <h3>How much effort are you willing to put in?</h3>
+                <Rating
+                  name="half-rating-read"
+                  precision={0.5}
+                  value={geoEffort}
+                  onChange={(event, newValue) => {
+                    setgeoEffort(newValue);
+                  }}
+                />
+              </div>
+              <div>
+                <h3>How are the teachers for this subject?</h3>
+                <Rating
+                  name="half-rating-read"
+                  precision={0.5}
+                  value={geoTeachers}
+                  onChange={(event, newValue) => {
+                    setgeoTeachers(newValue);
+                  }}
+                />
+              </div>
+              <div>
+                <h3>Rate the trips in the subject:</h3>
+                <Rating
+                  name="half-rating-read"
+                  precision={0.5}
+                  value={geoTrips}
+                  onChange={(event, newValue) => {
+                    setgeoTrips(newValue);
+                  }}
+                />
+                <div>
+                  <h3>Are your friends doing this subject?</h3>
+                  <Switch
+                    checked={geoChecked}
+                    onChange={(event) => {
+                      setgeoChecked(event.target.checked);
+                      if (!geoChecked) {
+                        setgeoFriends(2);
+                      } else {
+                        setgeoFriends(0);
+                      }
+                    }}
+                    inputProps={{ "aria-label": "controlled" }}
+                  />
+                </div>
+              </div>
+            </CardContent>
+          </Card>
 
-        <Card className="card" sx={{ width: 400 }}>
-          <CardContent>
-            <div className="titles">
-              <h1>RP</h1>
-              <div className="progress">
-                <CircularProgressWithLabel
-                  size={60}
-                  thickness={5}
-                  value={
-                    Math.round((rpPercentage + Number.EPSILON) * 100) / 100
-                  }
-                />
-              </div>
-            </div>
-            <div>
-              <h3>Rate your interest in the subject:</h3>
-              <Rating
-                name="half-rating-read"
-                precision={0.5}
-                value={rpInterest}
-                onChange={(event, newValue) => {
-                  setrpInterest(newValue);
-                }}
-              />
-            </div>
-            <div>
-              <h3>Rate your ability in the subject:</h3>
-              <Rating
-                name="half-rating-read"
-                precision={0.5}
-                value={rpAbility}
-                onChange={(event, newValue) => {
-                  setrpAbility(newValue);
-                }}
-              />
-            </div>
-            <div>
-              <h3>How much effort are you willing to put in?</h3>
-              <Rating
-                name="half-rating-read"
-                precision={0.5}
-                value={rpEffort}
-                onChange={(event, newValue) => {
-                  setrpEffort(newValue);
-                }}
-              />
-            </div>
-            <div>
-              <h3>How are the teachers for this subject?</h3>
-              <Rating
-                name="half-rating-read"
-                precision={0.5}
-                value={rpTeachers}
-                onChange={(event, newValue) => {
-                  setrpTeachers(newValue);
-                }}
-              />
-            </div>
-            <div>
-              <h3>Rate the trips in the subject:</h3>
-              <Rating
-                name="half-rating-read"
-                precision={0.5}
-                value={rpTrips}
-                onChange={(event, newValue) => {
-                  setrpTrips(newValue);
-                }}
-              />
-              <div>
-                <h3>Are your friends doing this subject?</h3>
-                <Switch
-                  checked={rpChecked}
-                  onChange={(event) => {
-                    setrpChecked(event.target.checked);
-                    if (!rpChecked) {
-                      setrpFriends(2);
-                    } else {
-                      setrpFriends(0);
+          <Card className="card" sx={{ width: 400 }}>
+            <CardContent>
+              <div className="titles">
+                <h1>Latin</h1>
+                <div className="progress">
+                  <CircularProgressWithLabel
+                    size={60}
+                    thickness={5}
+                    value={
+                      Math.round((latinPercentage + Number.EPSILON) * 100) / 100
                     }
+                  />
+                </div>
+              </div>
+              <div>
+                <h3>Rate your interest in the subject:</h3>
+                <Rating
+                  name="half-rating-read"
+                  precision={0.5}
+                  value={latinInterest}
+                  onChange={(event, newValue) => {
+                    setlatinInterest(newValue);
                   }}
-                  inputProps={{ "aria-label": "controlled" }}
                 />
               </div>
-            </div>
-          </CardContent>
-        </Card>
+              <div>
+                <h3>Rate your ability in the subject:</h3>
+                <Rating
+                  name="half-rating-read"
+                  precision={0.5}
+                  value={latinAbility}
+                  onChange={(event, newValue) => {
+                    setlatinAbility(newValue);
+                  }}
+                />
+              </div>
+              <div>
+                <h3>How much effort are you willing to put in?</h3>
+                <Rating
+                  name="half-rating-read"
+                  precision={0.5}
+                  value={latinEffort}
+                  onChange={(event, newValue) => {
+                    setlatinEffort(newValue);
+                  }}
+                />
+              </div>
+              <div>
+                <h3>How are the teachers for this subject?</h3>
+                <Rating
+                  name="half-rating-read"
+                  precision={0.5}
+                  value={latinTeachers}
+                  onChange={(event, newValue) => {
+                    setlatinTeachers(newValue);
+                  }}
+                />
+              </div>
+              <div>
+                <h3>Rate the trips in the subject:</h3>
+                <Rating
+                  name="half-rating-read"
+                  precision={0.5}
+                  value={latinTrips}
+                  onChange={(event, newValue) => {
+                    setlatinTrips(newValue);
+                  }}
+                />
+                <div>
+                  <h3>Are your friends doing this subject?</h3>
+                  <Switch
+                    checked={latinChecked}
+                    onChange={(event) => {
+                      setlatinChecked(event.target.checked);
+                      if (!latinChecked) {
+                        setlatinFriends(2);
+                      } else {
+                        setlatinFriends(0);
+                      }
+                    }}
+                    inputProps={{ "aria-label": "controlled" }}
+                  />
+                </div>
+              </div>
+            </CardContent>
+          </Card>
+
+          <Card className="card" sx={{ width: 400 }}>
+            <CardContent>
+              <div className="titles">
+                <h1>History</h1>
+                <div className="progress">
+                  <CircularProgressWithLabel
+                    size={60}
+                    thickness={5}
+                    value={
+                      Math.round((historyPercentage + Number.EPSILON) * 100) /
+                      100
+                    }
+                  />
+                </div>
+              </div>
+              <div>
+                <h3>Rate your interest in the subject:</h3>
+                <Rating
+                  name="half-rating-read"
+                  precision={0.5}
+                  value={historyInterest}
+                  onChange={(event, newValue) => {
+                    sethistoryInterest(newValue);
+                  }}
+                />
+              </div>
+              <div>
+                <h3>Rate your ability in the subject:</h3>
+                <Rating
+                  name="half-rating-read"
+                  precision={0.5}
+                  value={historyAbility}
+                  onChange={(event, newValue) => {
+                    sethistoryAbility(newValue);
+                  }}
+                />
+                <div>
+                  <h3>How much effort are you willing to put in?</h3>
+                  <Rating
+                    name="half-rating-read"
+                    precision={0.5}
+                    value={historyEffort}
+                    onChange={(event, newValue) => {
+                      sethistoryEffort(newValue);
+                    }}
+                  />
+                </div>
+              </div>
+              <div>
+                <h3>How are the teachers for this subject?</h3>
+                <Rating
+                  name="half-rating-read"
+                  precision={0.5}
+                  value={historyTeachers}
+                  onChange={(event, newValue) => {
+                    sethistoryTeachers(newValue);
+                  }}
+                />
+              </div>
+              <div>
+                <h3>Rate the trips in the subject:</h3>
+                <Rating
+                  name="half-rating-read"
+                  precision={0.5}
+                  value={historyTrips}
+                  onChange={(event, newValue) => {
+                    sethistoryTrips(newValue);
+                  }}
+                />
+                <div>
+                  <h3>Are your friends doing this subject?</h3>
+                  <Switch
+                    checked={historyChecked}
+                    onChange={(event) => {
+                      sethistoryChecked(event.target.checked);
+                      if (!historyChecked) {
+                        sethistoryFriends(2);
+                      } else {
+                        sethistoryFriends(0);
+                      }
+                    }}
+                    inputProps={{ "aria-label": "controlled" }}
+                  />
+                </div>
+              </div>
+            </CardContent>
+          </Card>
+
+          <Card className="card" sx={{ width: 400 }}>
+            <CardContent>
+              <div className="titles">
+                <h1>Music</h1>
+                <div className="progress">
+                  <CircularProgressWithLabel
+                    size={60}
+                    thickness={5}
+                    value={
+                      Math.round((musicPercentage + Number.EPSILON) * 100) / 100
+                    }
+                  />
+                </div>
+              </div>
+              <div>
+                <h3>Rate your interest in the subject:</h3>
+                <Rating
+                  name="half-rating-read"
+                  precision={0.5}
+                  value={musicInterest}
+                  onChange={(event, newValue) => {
+                    setmusicInterest(newValue);
+                  }}
+                />
+              </div>
+              <div>
+                <h3>Rate your ability in the subject:</h3>
+                <Rating
+                  name="half-rating-read"
+                  precision={0.5}
+                  value={musicAbility}
+                  onChange={(event, newValue) => {
+                    setmusicAbility(newValue);
+                  }}
+                />
+              </div>
+              <div>
+                <h3>How much effort are you willing to put in?</h3>
+                <Rating
+                  name="half-rating-read"
+                  precision={0.5}
+                  value={musicEffort}
+                  onChange={(event, newValue) => {
+                    setmusicEffort(newValue);
+                  }}
+                />
+              </div>
+              <div>
+                <h3>How are the teachers for this subject?</h3>
+                <Rating
+                  name="half-rating-read"
+                  precision={0.5}
+                  value={musicTeachers}
+                  onChange={(event, newValue) => {
+                    setmusicTeachers(newValue);
+                  }}
+                />
+              </div>
+              <div>
+                <h3>Rate the trips in the subject:</h3>
+                <Rating
+                  name="half-rating-read"
+                  precision={0.5}
+                  value={musicTrips}
+                  onChange={(event, newValue) => {
+                    setmusicTrips(newValue);
+                  }}
+                />
+                <div>
+                  <h3>Are your friends doing this subject?</h3>
+                  <Switch
+                    checked={musicChecked}
+                    onChange={(event) => {
+                      setmusicChecked(event.target.checked);
+                      if (!musicChecked) {
+                        setmusicFriends(2);
+                      } else {
+                        setmusicFriends(0);
+                      }
+                    }}
+                    inputProps={{ "aria-label": "controlled" }}
+                  />
+                </div>
+              </div>
+            </CardContent>
+          </Card>
+
+          <Card className="card" sx={{ width: 400 }}>
+            <CardContent>
+              <div className="titles">
+                <h1>PE</h1>
+                <div className="progress">
+                  <CircularProgressWithLabel
+                    size={60}
+                    thickness={5}
+                    value={
+                      Math.round((pePercentage + Number.EPSILON) * 100) / 100
+                    }
+                  />
+                </div>
+              </div>
+              <div>
+                <h3>Rate your interest in the subject:</h3>
+                <Rating
+                  name="half-rating-read"
+                  precision={0.5}
+                  value={peInterest}
+                  onChange={(event, newValue) => {
+                    setpeInterest(newValue);
+                  }}
+                />
+              </div>
+              <div>
+                <h3>Rate your ability in the subject:</h3>
+                <Rating
+                  name="half-rating-read"
+                  precision={0.5}
+                  value={peAbility}
+                  onChange={(event, newValue) => {
+                    setpeAbility(newValue);
+                  }}
+                />
+              </div>
+              <div>
+                <h3>How much effort are you willing to put in?</h3>
+                <Rating
+                  name="half-rating-read"
+                  precision={0.5}
+                  value={peEffort}
+                  onChange={(event, newValue) => {
+                    setpeEffort(newValue);
+                  }}
+                />
+              </div>
+              <div>
+                <h3>How are the teachers for this subject?</h3>
+                <Rating
+                  name="half-rating-read"
+                  precision={0.5}
+                  value={peTeachers}
+                  onChange={(event, newValue) => {
+                    setpeTeachers(newValue);
+                  }}
+                />
+              </div>
+              <div>
+                <h3>Rate the trips in the subject:</h3>
+                <Rating
+                  name="half-rating-read"
+                  precision={0.5}
+                  value={peTrips}
+                  onChange={(event, newValue) => {
+                    setpeTrips(newValue);
+                  }}
+                />
+                <div>
+                  <h3>Are your friends doing this subject?</h3>
+                  <Switch
+                    checked={peChecked}
+                    onChange={(event) => {
+                      setpeChecked(event.target.checked);
+                      if (!peChecked) {
+                        setpeFriends(2);
+                      } else {
+                        setpeFriends(0);
+                      }
+                    }}
+                    inputProps={{ "aria-label": "controlled" }}
+                  />
+                </div>
+              </div>
+            </CardContent>
+          </Card>
+
+          <Card className="card" sx={{ width: 400 }}>
+            <CardContent>
+              <div className="titles">
+                <h1>Spanish</h1>
+                <div className="progress">
+                  <CircularProgressWithLabel
+                    size={60}
+                    thickness={5}
+                    value={
+                      Math.round((spanishPercentage + Number.EPSILON) * 100) /
+                      100
+                    }
+                  />
+                </div>
+              </div>
+              <div>
+                <h3>Rate your interest in the subject:</h3>
+                <Rating
+                  name="half-rating-read"
+                  precision={0.5}
+                  value={spanishInterest}
+                  onChange={(event, newValue) => {
+                    setspanishInterest(newValue);
+                  }}
+                />
+              </div>
+              <div>
+                <h3>Rate your ability in the subject:</h3>
+                <Rating
+                  name="half-rating-read"
+                  precision={0.5}
+                  value={spanishAbility}
+                  onChange={(event, newValue) => {
+                    setspanishAbility(newValue);
+                  }}
+                />
+              </div>
+              <div>
+                <h3>How much effort are you willing to put in?</h3>
+                <Rating
+                  name="half-rating-read"
+                  precision={0.5}
+                  value={spanishEffort}
+                  onChange={(event, newValue) => {
+                    setspanishEffort(newValue);
+                  }}
+                />
+              </div>
+              <div>
+                <h3>How are the teachers for this subject?</h3>
+                <Rating
+                  name="half-rating-read"
+                  precision={0.5}
+                  value={spanishTeachers}
+                  onChange={(event, newValue) => {
+                    setspanishTeachers(newValue);
+                  }}
+                />
+              </div>
+              <div>
+                <h3>Rate the trips in the subject:</h3>
+                <Rating
+                  name="half-rating-read"
+                  precision={0.5}
+                  value={spanishTrips}
+                  onChange={(event, newValue) => {
+                    setspanishTrips(newValue);
+                  }}
+                />
+                <div>
+                  <h3>Are your friends doing this subject?</h3>
+                  <Switch
+                    checked={spanishChecked}
+                    onChange={(event) => {
+                      setspanishChecked(event.target.checked);
+                      if (!spanishChecked) {
+                        setspanishFriends(2);
+                      } else {
+                        setspanishFriends(0);
+                      }
+                    }}
+                    inputProps={{ "aria-label": "controlled" }}
+                  />
+                </div>
+              </div>
+            </CardContent>
+          </Card>
+
+          <Card className="card" sx={{ width: 400 }}>
+            <CardContent>
+              <div className="titles">
+                <h1>RP</h1>
+                <div className="progress">
+                  <CircularProgressWithLabel
+                    size={60}
+                    thickness={5}
+                    value={
+                      Math.round((rpPercentage + Number.EPSILON) * 100) / 100
+                    }
+                  />
+                </div>
+              </div>
+              <div>
+                <h3>Rate your interest in the subject:</h3>
+                <Rating
+                  name="half-rating-read"
+                  precision={0.5}
+                  value={rpInterest}
+                  onChange={(event, newValue) => {
+                    setrpInterest(newValue);
+                  }}
+                />
+              </div>
+              <div>
+                <h3>Rate your ability in the subject:</h3>
+                <Rating
+                  name="half-rating-read"
+                  precision={0.5}
+                  value={rpAbility}
+                  onChange={(event, newValue) => {
+                    setrpAbility(newValue);
+                  }}
+                />
+              </div>
+              <div>
+                <h3>How much effort are you willing to put in?</h3>
+                <Rating
+                  name="half-rating-read"
+                  precision={0.5}
+                  value={rpEffort}
+                  onChange={(event, newValue) => {
+                    setrpEffort(newValue);
+                  }}
+                />
+              </div>
+              <div>
+                <h3>How are the teachers for this subject?</h3>
+                <Rating
+                  name="half-rating-read"
+                  precision={0.5}
+                  value={rpTeachers}
+                  onChange={(event, newValue) => {
+                    setrpTeachers(newValue);
+                  }}
+                />
+              </div>
+              <div>
+                <h3>Rate the trips in the subject:</h3>
+                <Rating
+                  name="half-rating-read"
+                  precision={0.5}
+                  value={rpTrips}
+                  onChange={(event, newValue) => {
+                    setrpTrips(newValue);
+                  }}
+                />
+                <div>
+                  <h3>Are your friends doing this subject?</h3>
+                  <Switch
+                    checked={rpChecked}
+                    onChange={(event) => {
+                      setrpChecked(event.target.checked);
+                      if (!rpChecked) {
+                        setrpFriends(2);
+                      } else {
+                        setrpFriends(0);
+                      }
+                    }}
+                    inputProps={{ "aria-label": "controlled" }}
+                  />
+                </div>
+              </div>
+            </CardContent>
+          </Card>
+        </div>
+        <div className="submitBtn">
+          <LoadingButton
+            variant="contained"
+            onClick={handleSubmit}
+            className="submitBtn"
+            size="large"
+            loading={loading}
+          >
+            Submit
+          </LoadingButton>
+        </div>
       </div>
-      <div className="submitBtn">
-        <LoadingButton
-          variant="contained"
-          onClick={handleSubmit}
-          className="submitBtn"
-          size="large"
-          loading={loading}
+    );
+  } else {
+    return (
+      <div className="table">
+        <TableContainer
+          component={Paper}
+          sx={{ minWidth: 600, maxWidth: 1000 }}
         >
-          Submit
-        </LoadingButton>
+          <Table sx={{ minWidth: 600, maxWidth: 1000 }}>
+            <TableHead>
+              <TableRow>
+                <TableCell>
+                  <h1>Subject</h1>
+                </TableCell>
+                <TableCell align="right">
+                  <h1>Our recommendation</h1>
+                </TableCell>
+              </TableRow>
+            </TableHead>
+            <TableBody>
+              <TableRow
+                sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
+              >
+                <TableCell component="th" scope="row">
+                  {item1[0].toUpperCase()}
+                </TableCell>
+                <TableCell align="right">{item1[1]}%</TableCell>
+              </TableRow>
+              <TableRow>
+                <TableCell component="th" scope="row">
+                  {item2[0].toUpperCase()}
+                </TableCell>
+                <TableCell align="right">{item2[1]}%</TableCell>
+              </TableRow>
+              <TableRow>
+                <TableCell component="th" scope="row">
+                  {item3[0].toUpperCase()}
+                </TableCell>
+                <TableCell align="right">{item3[1]}%</TableCell>
+              </TableRow>
+              <TableRow>
+                <TableCell component="th" scope="row">
+                  {item4[0].toUpperCase()}
+                </TableCell>
+                <TableCell align="right">{item4[1]}%</TableCell>
+              </TableRow>
+              <TableRow>
+                <TableCell component="th" scope="row">
+                  {item5[0].toUpperCase()}
+                </TableCell>
+                <TableCell align="right">{item5[1]}%</TableCell>
+              </TableRow>
+              <TableRow>
+                <TableCell component="th" scope="row">
+                  {item6[0].toUpperCase()}
+                </TableCell>
+                <TableCell align="right">{item6[1]}%</TableCell>
+              </TableRow>
+              <TableRow>
+                <TableCell component="th" scope="row">
+                  {item7[0].toUpperCase()}
+                </TableCell>
+                <TableCell align="right">{item7[1]}%</TableCell>
+              </TableRow>
+              <TableRow>
+                <TableCell component="th" scope="row">
+                  {item8[0].toUpperCase()}
+                </TableCell>
+                <TableCell align="right">{item8[1]}%</TableCell>
+              </TableRow>
+              <TableRow>
+                <TableCell component="th" scope="row">
+                  {item9[0].toUpperCase()}
+                </TableCell>
+                <TableCell align="right">{item9[1]}%</TableCell>
+              </TableRow>
+              <TableRow>
+                <TableCell component="th" scope="row">
+                  {item10[0].toUpperCase()}
+                </TableCell>
+                <TableCell align="right">{item10[1]}%</TableCell>
+              </TableRow>
+            </TableBody>
+          </Table>
+        </TableContainer>
+        <div className="container"></div>
       </div>
-    </div>
-  );
+    );
+  }
 }
