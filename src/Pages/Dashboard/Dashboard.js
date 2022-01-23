@@ -8,14 +8,18 @@ import DisoverSvg from "./discover.svg";
 import Results from "./search.svg";
 import { CardActionArea } from "@mui/material";
 import "./Dashboard.css";
+import { Helmet } from "react-helmet";
 
 export default function Dashboard() {
   return (
     <div>
+      <Helmet>
+        <title>Home</title>
+      </Helmet>
       <h1 className="body-div">Hello, {localStorage.getItem("name")}</h1>
       <div className="cards">
         <div className="card1">
-          <Card color="black" sx={{ height: 360, width: 500 }}>
+          <Card color="black" sx={{ minHeight: 360, width: "25vw" }}>
             <CardActionArea>
               <CardMedia
                 component="img"
@@ -25,7 +29,7 @@ export default function Dashboard() {
                 image={WorkSvg}
               />
             </CardActionArea>
-            <h2 className="h2">Find your options</h2>
+            <h2 className="h2">Find your Options</h2>
             <CardActions>
               <div className="btn">
                 <Button
@@ -42,7 +46,7 @@ export default function Dashboard() {
           </Card>
         </div>
         <div>
-          <Card color="black" sx={{ height: 360, width: 500 }}>
+          <Card color="black" sx={{ minHeight: 360, width: "25vw" }}>
             <CardActionArea>
               <CardMedia
                 component="img"
@@ -52,7 +56,7 @@ export default function Dashboard() {
                 image={DisoverSvg}
               />
             </CardActionArea>
-            <h2 className="h2">Discover the most popular subjects</h2>
+            <h2 className="h2">Discover the most Popular Subjects</h2>
             <CardActions>
               <div className="btn">
                 <Button
@@ -69,7 +73,7 @@ export default function Dashboard() {
           </Card>
         </div>
         <div className="card3">
-          <Card color="black" sx={{ width: 500, height: 360 }}>
+          <Card color="black" sx={{ minHeight: 360, width: "25vw" }}>
             <CardActionArea>
               <CardMedia
                 component="img"
@@ -79,7 +83,7 @@ export default function Dashboard() {
                 image={Results}
               />
             </CardActionArea>
-            <h2 className="h2">Go back to your results</h2>
+            <h2 className="h2">Go back to your Results</h2>
             <CardActions>
               <div className="btn">
                 <Button

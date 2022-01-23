@@ -1,0 +1,25 @@
+.title1 {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.title2 {
+  padding-top: 3vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.adj {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-top: 5vh;
+}
+
+.content {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}

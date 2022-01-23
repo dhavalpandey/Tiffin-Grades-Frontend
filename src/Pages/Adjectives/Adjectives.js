@@ -6,6 +6,9 @@ import FormControlLabel from "@mui/material/FormControlLabel";
 import Checkbox from "@mui/material/Checkbox";
 import React from "react";
 import Button from "@mui/material/Button";
+import Card from "@mui/material/Card";
+import { Helmet } from "react-helmet";
+import "./Adjectives.css";
 
 export default function Adjectives() {
   const [state, setState] = React.useState({
@@ -51,7 +54,6 @@ export default function Adjectives() {
         })
         .then((res) => {
           if (res.status === "OK") {
-            alert(res.message);
             localStorage.setItem("adjectives_submitted", true);
             window.location.replace("/");
           } else {
@@ -70,79 +72,97 @@ export default function Adjectives() {
 
   return (
     <div>
-      <h1>Hello, {localStorage.getItem("name")}</h1>
-      <h1>Pick 2 words that best describe you:</h1>
-      <Box sx={{ display: "flex" }}>
-        <FormControl
-          required
-          error={error}
-          component="fieldset"
-          sx={{ m: 3 }}
-          variant="standard"
-        >
-          <FormLabel component="legend">Pick Two</FormLabel>
-          <FormGroup>
-            <FormControlLabel
-              control={
-                <Checkbox
-                  checked={creative}
-                  onChange={handleChange}
-                  onClick={handleClick}
-                  name="creative"
+      <Helmet>
+        <title>Complete Setup</title>
+      </Helmet>
+      <h1 className="title1">
+        Hello, {localStorage.getItem("name")}. Let's finish setting up your
+        account.
+      </h1>
+      <h2 className="title2">Pick 2 words that best describe you:</h2>
+      <div className="adj">
+        <Card sx={{ minWidth: 550, minHeight: 350 }}>
+          <Box sx={{ display: "flex" }} className="content">
+            <FormControl
+              required
+              error={error}
+              component="fieldset"
+              sx={{ m: 3 }}
+              variant="standard"
+            >
+              <FormLabel component="legend">Pick Two</FormLabel>
+              <FormGroup>
+                <FormControlLabel
+                  control={
+                    <Checkbox
+                      checked={creative}
+                      onChange={handleChange}
+                      onClick={handleClick}
+                      name="creative"
+                    />
+                  }
+                  label="Creative"
                 />
-              }
-              label="Creative"
-            />
-            <FormControlLabel
-              control={
-                <Checkbox
-                  checked={techincal}
-                  onChange={handleChange}
-                  onClick={handleClick}
-                  name="techincal"
+                <FormControlLabel
+                  control={
+                    <Checkbox
+                      checked={techincal}
+                      onChange={handleChange}
+                      onClick={handleClick}
+                      name="techincal"
+                    />
+                  }
+                  label="Techincal"
                 />
-              }
-              label="Techincal"
-            />
-            <FormControlLabel
-              control={
-                <Checkbox
-                  checked={hardWorking}
-                  onChange={handleChange}
-                  onClick={handleClick}
-                  name="hardWorking"
+                <FormControlLabel
+                  control={
+                    <Checkbox
+                      checked={hardWorking}
+                      onChange={handleChange}
+                      onClick={handleClick}
+                      name="hardWorking"
+                    />
+                  }
+                  label="Hard-Working"
                 />
-              }
-              label="Hard-Working"
-            />
-            <FormControlLabel
-              control={
-                <Checkbox
-                  checked={practical}
-                  onChange={handleChange}
-                  onClick={handleClick}
-                  name="practical"
+                <FormControlLabel
+                  control={
+                    <Checkbox
+                      checked={practical}
+                      onChange={handleChange}
+                      onClick={handleClick}
+                      name="practical"
+                    />
+                  }
+                  label="Practical"
                 />
-              }
-              label="Practical"
-            />
-            <FormControlLabel
-              control={
-                <Checkbox
-                  checked={intelligent}
-                  onChange={handleChange}
-                  onClick={handleClick}
-                  name="intelligent"
+                <FormControlLabel
+                  control={
+                    <Checkbox
+                      checked={intelligent}
+                      onChange={handleChange}
+                      onClick={handleClick}
+                      name="intelligent"
+                    />
+                  }
+                  label="Intelligent"
                 />
-              }
-              label="Intelligent"
-            />
-          </FormGroup>
-        </FormControl>
-      </Box>
-      <Button variant="contained" onClick={handleSubmit}>
-        Submit
-      </Button>
+              </FormGroup>
+            </FormControl>
+          </Box>
+          <div>
+            <Button
+              sx={{
+                marginLeft: "40%",
+              }}
+              variant="contained"
+              onClick={handleSubmit}
+            >
+              Submit
+            </Button>
+          </div>
+        </Card>
+      </div>
     </div>
   );
 }

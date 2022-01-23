@@ -7,6 +7,7 @@ import TableHead from "@mui/material/TableHead";
 import TableRow from "@mui/material/TableRow";
 import Paper from "@mui/material/Paper";
 import LoadingButton from "@mui/lab/LoadingButton";
+import { Helmet } from "react-helmet";
 import "./Results.css";
 
 export default function Results() {
@@ -64,6 +65,9 @@ export default function Results() {
   if (fetched) {
     return (
       <div className="table">
+        <Helmet>
+          <title>Results</title>
+        </Helmet>
         <TableContainer
           component={Paper}
           sx={{ minWidth: 600, maxWidth: 1000 }}
@@ -75,7 +79,7 @@ export default function Results() {
                   <h1>Subject</h1>
                 </TableCell>
                 <TableCell align="right">
-                  <h1>Our recommendation</h1>
+                  <h1>Our Recommendation</h1>
                 </TableCell>
               </TableRow>
             </TableHead>

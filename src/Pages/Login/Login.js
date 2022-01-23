@@ -1,4 +1,5 @@
 import { GoogleLogin } from "react-google-login";
+import { Helmet } from "react-helmet";
 
 import "./Login.css";
 
@@ -57,6 +58,9 @@ export default function Login() {
 
   return (
     <div className="login">
+      <Helmet>
+        <title>Login</title>
+      </Helmet>
       <GoogleLogin
         className="login-btn"
         clientId="1029185512831-qvr0he0tk57qv6t8mp35f7t200vnn8jb.apps.googleusercontent.com"

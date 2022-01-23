@@ -14,6 +14,7 @@ import TableContainer from "@mui/material/TableContainer";
 import TableHead from "@mui/material/TableHead";
 import TableRow from "@mui/material/TableRow";
 import Paper from "@mui/material/Paper";
+import { Helmet } from "react-helmet";
 
 import "./Option.css";
 
@@ -332,6 +333,9 @@ export default function Options() {
   if (!fetchingData) {
     return (
       <div>
+        <Helmet>
+          <title>Options Finder</title>
+        </Helmet>
         <div className="heading1">
           <h1>
             {localStorage.getItem("name")}, please fill out this information to
@@ -1227,6 +1231,9 @@ export default function Options() {
   } else {
     return (
       <div className="table">
+        <Helmet>
+          <title>Results</title>
+        </Helmet>
         <TableContainer
           component={Paper}
           sx={{ minWidth: 600, maxWidth: 1000 }}
