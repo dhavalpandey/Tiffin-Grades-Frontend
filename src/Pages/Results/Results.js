@@ -6,6 +6,7 @@ import TableContainer from "@mui/material/TableContainer";
 import TableHead from "@mui/material/TableHead";
 import TableRow from "@mui/material/TableRow";
 import Paper from "@mui/material/Paper";
+import Button from "@mui/material/Button";
 import LoadingButton from "@mui/lab/LoadingButton";
 import { Helmet } from "react-helmet";
 import "./Results.css";
@@ -149,7 +150,11 @@ export default function Results() {
             </TableBody>
           </Table>
         </TableContainer>
-        <div className="container"></div>
+        <div className="backButton">
+          <Button variant="contained" href="/">
+            Back to Home
+          </Button>
+        </div>
       </div>
     );
   } else {
@@ -161,7 +166,7 @@ export default function Results() {
           size="large"
           loading={loading}
         >
-          Fetch Data
+          Get your Options
         </LoadingButton>
       </div>
     );

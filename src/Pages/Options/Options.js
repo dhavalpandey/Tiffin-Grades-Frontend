@@ -15,6 +15,7 @@ import TableHead from "@mui/material/TableHead";
 import TableRow from "@mui/material/TableRow";
 import Paper from "@mui/material/Paper";
 import { Helmet } from "react-helmet";
+import Button from "@mui/material/Button";
 
 import "./Option.css";
 
@@ -1315,7 +1316,11 @@ export default function Options() {
             </TableBody>
           </Table>
         </TableContainer>
-        <div className="container"></div>
+        <div className="backButton">
+          <Button variant="contained" href="/">
+            Back to Home
+          </Button>
+        </div>
       </div>
     );
   }
