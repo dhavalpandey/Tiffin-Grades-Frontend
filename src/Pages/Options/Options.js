@@ -238,10 +238,13 @@ export default function Options() {
   const [item10, setitem10] = useState([]);
 
   const [fetchingData, setFetchingData] = useState(false);
+  const link = global.config.development.status
+    ? "http://localhost:5000"
+    : "https://tiffingrades-api.herokuapp.com";
 
   const fetchData = async () => {
     setLoading(true);
-    await fetch("https://tiffingrades-api.herokuapp.com/results", {
+    await fetch(link + "/results", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -304,7 +307,7 @@ export default function Options() {
       ", " +
       Object.keys(data)[2].toString();
 
-    await fetch("https://tiffingrades-api.herokuapp.com/options", {
+    await fetch(link + "/options", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -321,12 +324,13 @@ export default function Options() {
       })
       .then((res) => {
         localStorage.setItem("top3", top3);
-        localStorage.setItem("options", data);
+        localStorage.setItem("hasSubmittedOptions", true);
         setTimeout(() => {
           fetchData();
         }, 1500);
       })
       .catch((error) => {
+        localStorage.setItem("hasSubmittedOptions", false);
         console.log("failed");
       });
   };

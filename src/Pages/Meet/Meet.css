@@ -1,0 +1,15 @@
+.createBtn {
+  margin-left: 50%;
+  position: absolute;
+  top: 45%;
+  -ms-transform: translate(-50%, -50%);
+  transform: translate(-50%, -50%);
+}
+
+.joinBtn {
+  margin-left: 50%;
+  position: absolute;
+  top: 55%;
+  -ms-transform: translate(-50%, -50%);
+  transform: translate(-50%, -50%);
+}

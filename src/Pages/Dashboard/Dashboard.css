@@ -1,14 +1,21 @@
 .body-div {
   margin-top: 2%;
   text-align: center;
+  overflow: hidden;
 }
 
 .cards {
-  margin-top: 8%;
+  margin-top: 2%;
   display: grid;
   justify-content: center;
   grid-auto-flow: column;
   grid-column-gap: 4%;
+}
+
+.card4 {
+  margin-left: 50%;
+  position: absolute;
+  transform: translate(-50%, 8%);
 }
 
 .h2 {

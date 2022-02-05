@@ -29,9 +29,13 @@ export default function Discover() {
   const [fetched, setFetched] = useState(false);
   const [loading, setLoading] = useState(false);
 
+  const link = global.config.development.status
+    ? "http://localhost:5000"
+    : "https://tiffingrades-api.herokuapp.com";
+
   const fetchData = async () => {
     setLoading(true);
-    await fetch("https://tiffingrades-api.herokuapp.com/subject-ranking", {
+    await fetch(link + "/subject-ranking", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",

@@ -25,9 +25,13 @@ export default function Results() {
   const [fetched, setFetched] = useState(false);
   const [loading, setLoading] = useState(false);
 
+  const link = global.config.development.status
+    ? "http://localhost:5000"
+    : "https://tiffingrades-api.herokuapp.com";
+
   const fetchData = async () => {
     setLoading(true);
-    await fetch("https://tiffingrades-api.herokuapp.com/results", {
+    await fetch(link + "/results", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -63,112 +67,116 @@ export default function Results() {
       });
   };
 
-  if (fetched) {
-    return (
-      <div className="table">
-        <Helmet>
-          <title>Results</title>
-        </Helmet>
-        <TableContainer
-          component={Paper}
-          sx={{ minWidth: 600, maxWidth: 1000 }}
-        >
-          <Table sx={{ minWidth: 600, maxWidth: 1000 }}>
-            <TableHead>
-              <TableRow>
-                <TableCell>
-                  <h1>Subject</h1>
-                </TableCell>
-                <TableCell align="right">
-                  <h1>Our Recommendation</h1>
-                </TableCell>
-              </TableRow>
-            </TableHead>
-            <TableBody>
-              <TableRow
-                sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
-              >
-                <TableCell component="th" scope="row">
-                  {item1[0].toUpperCase()}
-                </TableCell>
-                <TableCell align="right">{item1[1]}%</TableCell>
-              </TableRow>
-              <TableRow>
-                <TableCell component="th" scope="row">
-                  {item2[0].toUpperCase()}
-                </TableCell>
-                <TableCell align="right">{item2[1]}%</TableCell>
-              </TableRow>
-              <TableRow>
-                <TableCell component="th" scope="row">
-                  {item3[0].toUpperCase()}
-                </TableCell>
-                <TableCell align="right">{item3[1]}%</TableCell>
-              </TableRow>
-              <TableRow>
-                <TableCell component="th" scope="row">
-                  {item4[0].toUpperCase()}
-                </TableCell>
-                <TableCell align="right">{item4[1]}%</TableCell>
-              </TableRow>
-              <TableRow>
-                <TableCell component="th" scope="row">
-                  {item5[0].toUpperCase()}
-                </TableCell>
-                <TableCell align="right">{item5[1]}%</TableCell>
-              </TableRow>
-              <TableRow>
-                <TableCell component="th" scope="row">
-                  {item6[0].toUpperCase()}
-                </TableCell>
-                <TableCell align="right">{item6[1]}%</TableCell>
-              </TableRow>
-              <TableRow>
-                <TableCell component="th" scope="row">
-                  {item7[0].toUpperCase()}
-                </TableCell>
-                <TableCell align="right">{item7[1]}%</TableCell>
-              </TableRow>
-              <TableRow>
-                <TableCell component="th" scope="row">
-                  {item8[0].toUpperCase()}
-                </TableCell>
-                <TableCell align="right">{item8[1]}%</TableCell>
-              </TableRow>
-              <TableRow>
-                <TableCell component="th" scope="row">
-                  {item9[0].toUpperCase()}
-                </TableCell>
-                <TableCell align="right">{item9[1]}%</TableCell>
-              </TableRow>
-              <TableRow>
-                <TableCell component="th" scope="row">
-                  {item10[0].toUpperCase()}
-                </TableCell>
-                <TableCell align="right">{item10[1]}%</TableCell>
-              </TableRow>
-            </TableBody>
-          </Table>
-        </TableContainer>
-        <div className="backButton">
-          <Button variant="contained" href="/">
-            Back to Home
-          </Button>
+  if (localStorage.getItem("top3")) {
+    if (fetched) {
+      return (
+        <div className="table">
+          <Helmet>
+            <title>Results</title>
+          </Helmet>
+          <TableContainer
+            component={Paper}
+            sx={{ minWidth: 600, maxWidth: 1000 }}
+          >
+            <Table sx={{ minWidth: 600, maxWidth: 1000 }}>
+              <TableHead>
+                <TableRow>
+                  <TableCell>
+                    <h1>Subject</h1>
+                  </TableCell>
+                  <TableCell align="right">
+                    <h1>Our Recommendation</h1>
+                  </TableCell>
+                </TableRow>
+              </TableHead>
+              <TableBody>
+                <TableRow
+                  sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
+                >
+                  <TableCell component="th" scope="row">
+                    {item1[0].toUpperCase()}
+                  </TableCell>
+                  <TableCell align="right">{item1[1]}%</TableCell>
+                </TableRow>
+                <TableRow>
+                  <TableCell component="th" scope="row">
+                    {item2[0].toUpperCase()}
+                  </TableCell>
+                  <TableCell align="right">{item2[1]}%</TableCell>
+                </TableRow>
+                <TableRow>
+                  <TableCell component="th" scope="row">
+                    {item3[0].toUpperCase()}
+                  </TableCell>
+                  <TableCell align="right">{item3[1]}%</TableCell>
+                </TableRow>
+                <TableRow>
+                  <TableCell component="th" scope="row">
+                    {item4[0].toUpperCase()}
+                  </TableCell>
+                  <TableCell align="right">{item4[1]}%</TableCell>
+                </TableRow>
+                <TableRow>
+                  <TableCell component="th" scope="row">
+                    {item5[0].toUpperCase()}
+                  </TableCell>
+                  <TableCell align="right">{item5[1]}%</TableCell>
+                </TableRow>
+                <TableRow>
+                  <TableCell component="th" scope="row">
+                    {item6[0].toUpperCase()}
+                  </TableCell>
+                  <TableCell align="right">{item6[1]}%</TableCell>
+                </TableRow>
+                <TableRow>
+                  <TableCell component="th" scope="row">
+                    {item7[0].toUpperCase()}
+                  </TableCell>
+                  <TableCell align="right">{item7[1]}%</TableCell>
+                </TableRow>
+                <TableRow>
+                  <TableCell component="th" scope="row">
+                    {item8[0].toUpperCase()}
+                  </TableCell>
+                  <TableCell align="right">{item8[1]}%</TableCell>
+                </TableRow>
+                <TableRow>
+                  <TableCell component="th" scope="row">
+                    {item9[0].toUpperCase()}
+                  </TableCell>
+                  <TableCell align="right">{item9[1]}%</TableCell>
+                </TableRow>
+                <TableRow>
+                  <TableCell component="th" scope="row">
+                    {item10[0].toUpperCase()}
+                  </TableCell>
+                  <TableCell align="right">{item10[1]}%</TableCell>
+                </TableRow>
+              </TableBody>
+            </Table>
+          </TableContainer>
+          <div className="backButton">
+            <Button variant="contained" href="/">
+              Back to Home
+            </Button>
+          </div>
         </div>
-      </div>
-    );
+      );
+    } else {
+      return (
+        <div className="fetchBtn">
+          <LoadingButton
+            variant="contained"
+            onClick={fetchData}
+            size="large"
+            loading={loading}
+          >
+            Get your Options
+          </LoadingButton>
+        </div>
+      );
+    }
   } else {
-    return (
-      <div className="fetchBtn">
-        <LoadingButton
-          variant="contained"
-          onClick={fetchData}
-          size="large"
-          loading={loading}
-        >
-          Get your Options
-        </LoadingButton>
-      </div>
-    );
+    window.location.replace("/");
   }
 }

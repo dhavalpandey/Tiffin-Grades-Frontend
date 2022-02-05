@@ -36,9 +36,13 @@ export default function Adjectives() {
     console.log("clicked");
   };
 
+  const link = global.config.development.status
+    ? "http://localhost:5000"
+    : "https://tiffingrades-api.herokuapp.com";
+
   const handleSubmit = async (event) => {
     if (!error) {
-      await fetch("https://tiffingrades-api.herokuapp.com/adjectives", {
+      await fetch(link + "/adjectives", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
