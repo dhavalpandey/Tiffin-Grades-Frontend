@@ -10,6 +10,7 @@ import LoadingButton from "@mui/lab/LoadingButton";
 import Tooltip from "@mui/material/Tooltip";
 import { Helmet } from "react-helmet";
 import Button from "@mui/material/Button";
+import { Link } from "react-router-dom";
 
 export default function Discover() {
   let data;
@@ -179,11 +180,11 @@ export default function Discover() {
             </TableBody>
           </Table>
         </TableContainer>
-        <div className="backButton">
-          <Button variant="contained" href="/">
-            Back to Home
-          </Button>
-        </div>
+        <Link to="/" style={{ color: "inherit", textDecoration: "inherit" }}>
+          <div className="backButton">
+            <Button variant="contained">Back to Home</Button>
+          </div>
+        </Link>
       </div>
     );
   } else {

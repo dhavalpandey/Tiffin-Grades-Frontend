@@ -9,6 +9,7 @@ import Paper from "@mui/material/Paper";
 import Button from "@mui/material/Button";
 import LoadingButton from "@mui/lab/LoadingButton";
 import { Helmet } from "react-helmet";
+import { Link } from "react-router-dom";
 import "./Results.css";
 
 export default function Results() {
@@ -156,9 +157,12 @@ export default function Results() {
             </Table>
           </TableContainer>
           <div className="backButton">
-            <Button variant="contained" href="/">
-              Back to Home
-            </Button>
+            <Link
+              to="/"
+              style={{ color: "inherit", textDecoration: "inherit" }}
+            >
+              <Button variant="contained">Back to Home</Button>
+            </Link>
           </div>
         </div>
       );

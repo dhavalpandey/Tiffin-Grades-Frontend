@@ -9,6 +9,7 @@ import Options from "./Pages/Options/Options";
 import Discover from "./Pages/Discover/Discover";
 import Results from "./Pages/Results/Results";
 import Meet from "./Pages/Meet/Meet";
+import ActiveMeets from "./Pages/Meet/ActiveMeets";
 
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 
@@ -32,6 +33,9 @@ function App() {
           </Route>
           <Route path="/results">
             <Results />
+          </Route>
+          <Route path="/meet/active-meets">
+            <ActiveMeets />
           </Route>
           <Route path="/meet">
             <Meet />

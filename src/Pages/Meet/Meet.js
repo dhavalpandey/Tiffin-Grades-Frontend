@@ -9,6 +9,7 @@ import DialogContentText from "@mui/material/DialogContentText";
 import Slide from "@mui/material/Slide";
 import MenuItem from "@mui/material/MenuItem";
 import "./Meet.css";
+import { Link } from "react-router-dom";
 
 const Transition = React.forwardRef(function Transition(props, ref) {
   return <Slide direction="up" ref={ref} {...props} />;
@@ -61,9 +62,21 @@ const subjects = [
   },
 ];
 
+const times = [
+  {
+    value: 1800000,
+    label: "In 30 mins",
+  },
+  {
+    value: 3600000,
+    label: "In 1 hour",
+  },
+];
+
 export default function Meet() {
   const [open, setOpen] = React.useState(false);
   const [meetName, setMeetName] = React.useState("");
+  const [isDisabled, setIsDisabled] = React.useState(0);
 
   const handleClickOpen = () => {
     setOpen(true);
@@ -74,6 +87,7 @@ export default function Meet() {
   };
 
   const [subject, setSubject] = React.useState("");
+  const [time, setTime] = React.useState("");
   const [code, setCode] = React.useState("");
 
   const handleChange = (event) => {
@@ -84,6 +98,13 @@ export default function Meet() {
     setCode(
       localStorage.getItem("name") + "s" + event.target.value + "Session",
     );
+    setIsDisabled(isDisabled >= 2 ? 2 : isDisabled + 1);
+  };
+
+  const handleChangeTime = (event) => {
+    setTime(event.target.value);
+    console.log(time);
+    setIsDisabled(isDisabled >= 2 ? 2 : isDisabled + 1);
   };
 
   const link = global.config.development.status
@@ -105,6 +126,8 @@ export default function Meet() {
         meetName: meetName,
         name: localStorage.getItem("name"),
         googleId: localStorage.getItem("google_id"),
+        createdAt: Date.now(),
+        expiringAt: time + Date.now(),
       }),
     })
       .then((res) => {
@@ -135,7 +158,7 @@ export default function Meet() {
         onClose={handleClose}
         aria-describedby="alert-dialog-slide-description"
       >
-        <h1>Start a Study Session</h1>
+        <h1 className="heading3">Start a Study Session</h1>
         <DialogContent>
           <DialogContentText id="alert-dialog-slide-description">
             <TextField
@@ -157,6 +180,24 @@ export default function Meet() {
               ))}
             </TextField>
             <TextField
+              required
+              width="100%"
+              id="filled-select"
+              select
+              label="Expiration Date"
+              autoFocus
+              value={time}
+              onChange={handleChangeTime}
+              helperText="Please select when your study session will finish"
+              variant="filled"
+            >
+              {times.map((option) => (
+                <MenuItem key={option.value} value={option.value}>
+                  {option.label}
+                </MenuItem>
+              ))}
+            </TextField>
+            <TextField
               value={meetName}
               required
               id="filled-name"
@@ -171,14 +212,24 @@ export default function Meet() {
         </DialogContent>
         <DialogActions>
           <Button onClick={handleClose}>Cancel</Button>
-          <Button onClick={handleCreate}>Create</Button>
+          <Button
+            disabled={isDisabled === 2 ? false : true}
+            onClick={handleCreate}
+          >
+            Create
+          </Button>
         </DialogActions>
       </Dialog>
 
       <div className="joinBtn">
-        <Button disabled variant="contained" color="secondary" size="large">
-          Join an existing Study Session
-        </Button>
+        <Link
+          to="/meet/active-meets"
+          style={{ color: "inherit", textDecoration: "inherit" }}
+        >
+          <Button variant="contained" color="secondary" size="large">
+            Join an active Study Session
+          </Button>
+        </Link>
       </div>
     </div>
   );
