@@ -272,7 +272,7 @@ export default function Options() {
 
         setTimeout(() => {
           setFetchingData(true);
-        }, 1500);
+        }, 1000);
       })
       .catch((error) => {
         alert("Failed to fetch your options.");
@@ -300,6 +300,7 @@ export default function Options() {
     let sorted = entries.sort((a, b) => b[1] - a[1]);
     let data = Object.fromEntries(sorted);
 
+    const hasSubmittedOptions = localStorage.getItem("hasSubmittedOptions");
     const top3 =
       Object.keys(data)[0].toString() +
       ", " +
@@ -317,6 +318,7 @@ export default function Options() {
         googleId: localStorage.getItem("google_id"),
         data,
         topThreeSubjects: top3,
+        hasSubmittedOptions,
       }),
     })
       .then((res) => {
@@ -330,7 +332,6 @@ export default function Options() {
         }, 1500);
       })
       .catch((error) => {
-        localStorage.setItem("hasSubmittedOptions", false);
         console.log("failed");
       });
   };

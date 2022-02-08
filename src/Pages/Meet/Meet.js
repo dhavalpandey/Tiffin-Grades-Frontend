@@ -71,6 +71,18 @@ const times = [
     value: 3600000,
     label: "In 1 hour",
   },
+  {
+    value: 10800000,
+    label: "In 3 hours",
+  },
+  {
+    value: 18000000,
+    label: "In 5 hours",
+  },
+  {
+    value: 86400000,
+    label: "In 1 day",
+  },
 ];
 
 export default function Meet() {
@@ -128,6 +140,7 @@ export default function Meet() {
         googleId: localStorage.getItem("google_id"),
         createdAt: Date.now(),
         expiringAt: time + Date.now(),
+        profilePicture: localStorage.getItem("image"),
       }),
     })
       .then((res) => {
