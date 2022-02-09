@@ -30,27 +30,17 @@ export default function ActiveMeets() {
     // eslint-disable-next-line
   }, []);
 
-  const timeDifference = (current, previous) => {
-    var msPerMinute = 60 * 1000;
-    var msPerHour = msPerMinute * 60;
-    var msPerDay = msPerHour * 24;
-    var msPerMonth = msPerDay * 30;
-    var msPerYear = msPerDay * 365;
-
-    var elapsed = current - previous;
-
-    if (elapsed < msPerMinute) {
-      return Math.round(elapsed / 1000) + " seconds";
-    } else if (elapsed < msPerHour) {
-      return Math.round(elapsed / msPerMinute) + " minutes";
-    } else if (elapsed < msPerDay) {
-      return Math.round(elapsed / msPerHour) + " hours";
-    } else if (elapsed < msPerMonth) {
-      return Math.round(elapsed / msPerDay) + " days";
-    } else if (elapsed < msPerYear) {
-      return Math.round(elapsed / msPerMonth) + " months";
-    } else {
-      return Math.round(elapsed / msPerYear) + " years";
+  const timeSince = (timeStamp) => {
+    let now = new Date(),
+      secondsPast = (timeStamp - now.getTime()) / 1000;
+    if (secondsPast < 60) {
+      return parseInt(secondsPast) + " seconds";
+    }
+    if (secondsPast < 3600) {
+      return parseInt(secondsPast / 60) + " minutes";
+    }
+    if (secondsPast <= 86400) {
+      return parseInt(secondsPast / 3600) + " hours";
     }
   };
 
@@ -83,9 +73,7 @@ export default function ActiveMeets() {
                 <div>
                   <h2>Subject: {meet.subject}</h2>
                 </div>
-                <h2>
-                  Ending in: {timeDifference(meet.expiringAt, meet.createdAt)}
-                </h2>
+                <h2>Ending in: {timeSince(meet.expiringAt)}</h2>
                 <img
                   style={{ float: "right", margin: "-18% 4% 15px 0px" }}
                   src={meet.profilePicture}
