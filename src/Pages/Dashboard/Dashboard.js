@@ -11,8 +11,10 @@ import { CardActionArea } from "@mui/material";
 import "./Dashboard.css";
 import Tooltip from "@mui/material/Tooltip";
 import { Helmet } from "react-helmet";
+import { useHistory } from "react-router-dom";
 
 export default function Dashboard() {
+  const history = useHistory();
   const hasOptions = localStorage.getItem("top3");
   const title = hasOptions
     ? ""
@@ -41,7 +43,7 @@ export default function Dashboard() {
               <div className="btn">
                 <Button
                   onClick={() => {
-                    window.location.replace("/options");
+                    history.push("/options");
                   }}
                   variant="contained"
                   color="primary"
@@ -68,7 +70,7 @@ export default function Dashboard() {
               <div className="btn">
                 <Button
                   onClick={() => {
-                    window.location.replace("/discover");
+                    history.push("/discover");
                   }}
                   variant="contained"
                   color="primary"
@@ -97,7 +99,7 @@ export default function Dashboard() {
                   <Button
                     disabled={!hasOptions}
                     onClick={() => {
-                      window.location.replace("/results");
+                      history.push("/results");
                     }}
                     variant="contained"
                     color="primary"
@@ -126,7 +128,7 @@ export default function Dashboard() {
             <div className="btn">
               <Button
                 onClick={() => {
-                  window.location.replace("/meet");
+                  history.push("/meet");
                 }}
                 variant="contained"
                 color="primary"
