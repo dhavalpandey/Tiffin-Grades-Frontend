@@ -1,0 +1,32 @@
+.panel-container {
+  margin-top: 3vh;
+  margin-left: 1.4%;
+}
+
+.panel {
+  font-family: var(--secondary-font);
+  color: var(--body-white);
+  font-weight: 500;
+  font-size: 20px;
+  background-color: var(--components);
+  width: 20vw;
+  height: 5.7vh;
+  border-radius: 6px;
+  padding-top: 1.4vh;
+  padding-top: 1.5vh;
+  transition-timing-function: ease-out;
+  transition: 20ms;
+  text-align: center;
+}
+
+.panel:hover {
+  background-color: var(--hover);
+}
+
+.enabled:hover {
+  cursor: pointer;
+}
+
+.disabled:hover {
+  cursor: not-allowed;
+}

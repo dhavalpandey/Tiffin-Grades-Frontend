@@ -1,0 +1,6 @@
+.nav-divider {
+  top: 10vh;
+  position: fixed;
+  width: 100vw;
+  height: 1px;
+}

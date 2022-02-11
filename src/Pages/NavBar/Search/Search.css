@@ -1,0 +1,107 @@
+.input-group {
+  margin-top: 1.5%;
+  margin-left: 2%;
+  display: block;
+  width: 300px;
+  height: 55px;
+  border: 0;
+  background-color: var(--components);
+  border-bottom-left-radius: 40px;
+  border-bottom-right-radius: 40px;
+  border-top-left-radius: 40px;
+  border-top-right-radius: 0;
+  box-shadow: 0 17px 40px 0 rgba(75, 128, 182, 0.07);
+  margin-bottom: 22px;
+  position: relative;
+  font-size: 17px;
+  color: var(--grey);
+  transition: opacity 0.2s ease-in-out, filter 0.2s ease-in-out,
+    box-shadow 0.1s ease-in-out;
+}
+
+.input-group:hover {
+  background-color: var(--hover);
+  box-shadow: none;
+  cursor: pointer;
+}
+
+.input-group input {
+  position: absolute;
+  border: 0;
+  box-shadow: 0 14px 44px 0 rgba(0, 0, 0, 0.077);
+  background-color: rgba(255, 255, 255, 0);
+  top: 0;
+  height: 50px;
+  width: 100%;
+  padding: 0 53px;
+  box-sizing: border-box;
+  z-index: 3;
+  display: block;
+  color: var(--grey);
+  font-size: 17px;
+  font-family: "Oxygen", sans-serif;
+  transition: top 0.1s ease-in-out;
+}
+
+.input-group input::placeholder {
+  color: rgba(0, 0, 0, 0);
+}
+
+.input-group input:focus {
+  top: 10px;
+  font-size: 23px;
+  cursor: pointer;
+  color: var(--white);
+}
+
+.input-group input:focus + label {
+  cursor: pointer;
+  bottom: 30px;
+  font-size: 12px;
+  font-family: var(--secondary-font);
+}
+
+.input-group input:not(:placeholder-shown) {
+  top: 10px;
+  font-size: 23px;
+  cursor: pointer;
+  color: var(--white);
+}
+
+.input-group input:not(:placeholder-shown) + label {
+  cursor: pointer;
+  bottom: 30px;
+  font-size: 12px;
+  font-family: var(--secondary-font);
+}
+
+.input-group label {
+  font-family: var(--secondary-font);
+  position: absolute;
+  border: 0;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: 2;
+  display: flex;
+  align-items: center;
+  padding: 0 53px;
+  box-sizing: border-box;
+  transition: all 0.1s ease-in-out;
+  cursor: pointer;
+}
+
+.search-icon {
+  margin-left: 83%;
+  margin-top: 4%;
+}
+
+.search-icon:hover {
+  cursor: pointer;
+  z-index: 100;
+}
+
+.input-label {
+  font-family: var(--secondary-font);
+}

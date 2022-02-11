@@ -15,6 +15,7 @@ import TableHead from "@mui/material/TableHead";
 import TableRow from "@mui/material/TableRow";
 import Paper from "@mui/material/Paper";
 import { Helmet } from "react-helmet";
+import { useHistory } from "react-router-dom";
 import Button from "@mui/material/Button";
 
 import "./Option.css";
@@ -44,6 +45,7 @@ function CircularProgressWithLabel(props) {
 }
 
 export default function Options() {
+  const history = useHistory();
   const [loading, setLoading] = useState(false);
 
   //Art
@@ -352,7 +354,7 @@ export default function Options() {
           <Card className="card" sx={{ width: 400 }}>
             <CardContent>
               <div className="titles">
-                <h1>Art and Design</h1>
+                <h1>Art</h1>
                 <div className="progress">
                   <CircularProgressWithLabel
                     size={60}
@@ -439,7 +441,7 @@ export default function Options() {
           <Card className="card" sx={{ width: 400 }}>
             <CardContent>
               <div className="titles">
-                <h1>Design & Tech</h1>
+                <h1>DT</h1>
                 <div className="progress">
                   <CircularProgressWithLabel
                     size={60}
@@ -1322,7 +1324,11 @@ export default function Options() {
           </Table>
         </TableContainer>
         <div className="backButton">
-          <Button variant="contained" href="/">
+          <Button
+            onClick={() => {
+              history.push("/options");
+            }}
+          >
             Back to Home
           </Button>
         </div>

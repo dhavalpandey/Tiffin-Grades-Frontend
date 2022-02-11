@@ -8,6 +8,8 @@ import React from "react";
 import Button from "@mui/material/Button";
 import Card from "@mui/material/Card";
 import { Helmet } from "react-helmet";
+import MenuItem from "@mui/material/MenuItem";
+import TextField from "@mui/material/TextField";
 import "./Adjectives.css";
 
 export default function Adjectives() {
@@ -41,7 +43,7 @@ export default function Adjectives() {
     : "https://tiffingrades-api.herokuapp.com";
 
   const handleSubmit = async (event) => {
-    if (!error) {
+    if (!error && year !== 0) {
       await fetch(link + "/adjectives", {
         method: "POST",
         headers: {
@@ -51,6 +53,7 @@ export default function Adjectives() {
         body: JSON.stringify({
           googleId: localStorage.getItem("google_id"),
           state,
+          yearGroup: year,
         }),
       })
         .then((res) => {
@@ -59,7 +62,8 @@ export default function Adjectives() {
         .then((res) => {
           if (res.status === "OK") {
             localStorage.setItem("adjectives_submitted", true);
-            window.location.replace("/");
+            localStorage.setItem("year", year);
+            window.location.reload();
           } else {
             alert(res.message);
             localStorage.clear();
@@ -70,8 +74,45 @@ export default function Adjectives() {
           console.log("failed");
         });
     } else {
-      alert("Please select 2 options.");
+      alert("Please ensure that you have filled out all the required fields.");
     }
+  };
+
+  const years = [
+    {
+      value: "7",
+      label: "7",
+    },
+    {
+      value: "8",
+      label: "8",
+    },
+    {
+      value: "9",
+      label: "9",
+    },
+    {
+      value: "10",
+      label: "10",
+    },
+    {
+      value: "11",
+      label: "11",
+    },
+    {
+      value: "12",
+      label: "12",
+    },
+    {
+      value: "13",
+      label: "13",
+    },
+  ];
+
+  const [year, setYears] = React.useState(0);
+
+  const handleYearChange = (event) => {
+    setYears(event.target.value);
   };
 
   return (
@@ -83,10 +124,35 @@ export default function Adjectives() {
         Hello, {localStorage.getItem("name")}. Let's finish setting up your
         account.
       </h1>
+      <h2 className="title2">Select your Year Group:</h2>
+      <TextField
+        style={{ backgroundColor: "#f8fafc", marginLeft: "45%" }}
+        required
+        width="100%"
+        id="filled-select"
+        select
+        label="Year"
+        autoFocus
+        value={year}
+        onChange={handleYearChange}
+        helperText="Please select your Year Group"
+        variant="filled"
+      >
+        {years.map((year) => (
+          <MenuItem key={year.value} value={year.value}>
+            {year.label}
+          </MenuItem>
+        ))}
+      </TextField>
       <h2 className="title2">Pick 2 words that best describe you:</h2>
       <div className="adj">
-        <Card sx={{ minWidth: 550, minHeight: 350 }}>
-          <Box sx={{ display: "flex" }} className="content">
+        <Card
+          sx={{ backgroundColor: "#f8fafc", minWidth: 450, minHeight: 100 }}
+        >
+          <Box
+            sx={{ backgroundColor: "#f8fafc", display: "flex" }}
+            className="content"
+          >
             <FormControl
               required
               error={error}
@@ -154,19 +220,20 @@ export default function Adjectives() {
               </FormGroup>
             </FormControl>
           </Box>
-          <div>
-            <Button
-              sx={{
-                marginLeft: "40%",
-              }}
-              variant="contained"
-              onClick={handleSubmit}
-            >
-              Submit
-            </Button>
-          </div>
+          <div></div>
         </Card>
       </div>
+      <Button
+        sx={{
+          marginTop: "2%",
+          marginLeft: "47.5%",
+        }}
+        size="large"
+        variant="contained"
+        onClick={handleSubmit}
+      >
+        Submit
+      </Button>
     </div>
   );
 }

@@ -17,6 +17,8 @@ export default function ActiveMeets() {
   // eslint-disable-next-line
   let dataReturn = [];
 
+  const [noMeets, setNoMeets] = React.useState(false);
+
   const link = global.config.development.status
     ? "http://localhost:5000"
     : "https://tiffingrades-api.herokuapp.com";
@@ -131,6 +133,9 @@ export default function ActiveMeets() {
       })
       .then((res) => {
         dataReturn = res.data;
+        if (res.data.length === 0) {
+          setNoMeets(true);
+        }
         setMeets(res.data);
       })
       .catch((error) => {
@@ -139,47 +144,75 @@ export default function ActiveMeets() {
       });
   };
 
-  return (
-    <div>
-      <Helmet>
-        <title>Active Study Sessions</title>
-      </Helmet>
-      <h1 className="body-div">
-        {localStorage.getItem("name")}, here are all the active Study Sessions
-      </h1>
-      {Meets.length === 0 ? (
-        <Box sx={{ width: "85vw", marginLeft: "5%" }}>
-          <Skeleton />
-          <Skeleton animation="wave" />
-          <Skeleton animation={true} />
-          <br></br>
-          <Skeleton animation="wave" />
-          <Skeleton animation={true} />
-          <br></br>
-          <Skeleton animation="wave" />
-          <Skeleton animation={true} />
-          <br></br>
-          <Skeleton animation="wave" />
-          <Skeleton animation={true} />
-          <br></br>
-          <CircularProgress />
-        </Box>
-      ) : (
-        <div>
-          <div className="container">
-            {
-              // eslint-disable-next-line
-              (meet, index) => {}
-            }
-            {renderCards}
+  if (noMeets === false) {
+    return (
+      <div>
+        <Helmet>
+          <title>Active Study Sessions</title>
+        </Helmet>
+        <h1 className="body-div">
+          {localStorage.getItem("name")}, here are all the active Study Sessions
+        </h1>
+
+        {Meets.length === 0 ? (
+          <Box sx={{ width: "85vw", marginLeft: "5%" }}>
+            <Skeleton />
+            <Skeleton animation="wave" />
+            <Skeleton animation={true} />
+            <br></br>
+            <Skeleton animation="wave" />
+            <Skeleton animation={true} />
+            <br></br>
+            <Skeleton animation="wave" />
+            <Skeleton animation={true} />
+            <br></br>
+            <Skeleton animation="wave" />
+            <Skeleton animation={true} />
+            <br></br>
+            <CircularProgress />
+          </Box>
+        ) : (
+          <div>
+            <div className="container">
+              {
+                // eslint-disable-next-line
+                (meet, index) => {}
+              }
+              {renderCards}
+            </div>
           </div>
-        </div>
-      )}
-      <div className="backButton1">
+        )}
+      </div>
+    );
+  } else {
+    return (
+      <div>
+        <Helmet>
+          <title>Active Study Sessions</title>
+        </Helmet>
+        <h1 className="body-div">
+          {localStorage.getItem("name")}, here are the results
+        </h1>
+        <h2
+          style={{ marginTop: "2%", textAlign: "center", overflow: "hidden" }}
+        >
+          There are no active meets
+        </h2>
         <Link to="/" style={{ color: "inherit", textDecoration: "inherit" }}>
-          <Button variant="contained">Back to Home</Button>
+          <Button
+            style={{
+              display: "flex",
+              alignItems: "center",
+              justifyContent: "center",
+              marginLeft: "47%",
+            }}
+            className="backButton1"
+            variant="contained"
+          >
+            Back to Home
+          </Button>
         </Link>
       </div>
-    </div>
-  );
+    );
+  }
 }

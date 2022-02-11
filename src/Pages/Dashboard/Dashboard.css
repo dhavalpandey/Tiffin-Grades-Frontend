@@ -2,10 +2,11 @@
   margin-top: 2%;
   text-align: center;
   overflow: hidden;
+  margin-top: 6.5%;
 }
 
 .cards {
-  margin-top: 2%;
+  margin-top: 13%;
   display: grid;
   justify-content: center;
   grid-auto-flow: column;

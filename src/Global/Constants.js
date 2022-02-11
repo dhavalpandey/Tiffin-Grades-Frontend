@@ -13,3 +13,11 @@ export const getUploaded = () => {
     return false;
   }
 };
+
+export const getYear = () => {
+  if (localStorage.getItem("year")) {
+    return true;
+  } else {
+    return false;
+  }
+};
