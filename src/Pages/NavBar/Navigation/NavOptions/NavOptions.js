@@ -46,7 +46,7 @@ export default function NavOptions() {
       <Tooltip
         className="tooltip"
         classes={{ tooltip: classes.tooltip }}
-        title="Chat"
+        title="Discussions"
       >
         <div
           className="icon-container"

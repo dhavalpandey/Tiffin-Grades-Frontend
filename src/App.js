@@ -1,5 +1,6 @@
 import { useState } from "react";
 import React, { Suspense } from "react";
+import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 
 import { getStatus, getUploaded, getYear } from "./Global/Constants";
 
@@ -14,9 +15,8 @@ import Meet from "./Pages/Meet/Meet";
 import ActiveMeets from "./Pages/Meet/ActiveMeets";
 import Navbar from "./Pages/NavBar/NavBar";
 import Error from "./Pages/Error/Error";
+import Join from "./Pages/Chat/Join";
 // import Sidebar from "./Pages/SideBar/SideBar";
-
-import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 
 function App() {
   // eslint-disable-next-line
@@ -58,6 +58,9 @@ function App() {
           </Route>
           <Route exact path="/meet">
             <Meet />
+          </Route>
+          <Route exact path="/chat">
+            <Join />
           </Route>
           <Route exact path="/">
             <Dashboard />

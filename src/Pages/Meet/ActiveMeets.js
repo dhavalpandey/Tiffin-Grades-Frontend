@@ -98,7 +98,7 @@ export default function ActiveMeets() {
                     rel="noreferrer"
                   >
                     <Button
-                      style={{ marginBottom: "1%" }}
+                      style={{ marginBottom: "1.5%" }}
                       variant="contained"
                       color="secondary"
                     >
