@@ -96,7 +96,7 @@ export default function Discover() {
         </Helmet>
         <TableContainer
           component={Paper}
-          sx={{ minWidth: 600, maxWidth: 1000 }}
+          sx={{ minWidth: 600, maxWidth: 1000, marginTop: "13%" }}
         >
           <Table sx={{ minWidth: 600, maxWidth: 1000 }}>
             <TableHead>

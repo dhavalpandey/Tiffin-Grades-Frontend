@@ -14,9 +14,10 @@
   justify-content: center;
   margin: 20px;
   height: 7.5vh;
-  width: 6.1vw;
+  width: 6vw;
   background-color: var(--components);
   border-radius: 12px;
+  transition: 150ms;
 }
 
 .icon-container:hover {

@@ -17,6 +17,7 @@
   color: var(--grey);
   transition: opacity 0.2s ease-in-out, filter 0.2s ease-in-out,
     box-shadow 0.1s ease-in-out;
+  transition: 150ms;
 }
 
 .input-group:hover {
@@ -41,6 +42,7 @@
   font-size: 17px;
   font-family: "Oxygen", sans-serif;
   transition: top 0.1s ease-in-out;
+  cursor: pointer;
 }
 
 .input-group input::placeholder {

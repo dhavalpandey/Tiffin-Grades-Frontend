@@ -62,20 +62,29 @@ export default function ActiveMeets() {
               }}
             >
               <Card
+                style={{ backgroundColor: "#14283b" }}
                 sx={{
                   marginLeft: "30%",
                   maxWidth: "50vw",
                   maxHeight: "60vh",
                   paddingTop: "0%",
                   paddingLeft: "2.5%",
+                  borderRadius: "35px",
                 }}
                 variant="outlined"
               >
-                <h2>Host: {meet.creatorName}</h2>
+                <h2 style={{ color: "#f8fafc" }}>
+                  Host:{" "}
+                  {meet.creatorName === localStorage.getItem("name")
+                    ? "You"
+                    : meet.creatorName}
+                </h2>
                 <div>
-                  <h2>Subject: {meet.subject}</h2>
+                  <h2 style={{ color: "#f8fafc" }}>Subject: {meet.subject}</h2>
                 </div>
-                <h2>Ending in: {timeSince(meet.expiringAt)}</h2>
+                <h2 style={{ color: "#f8fafc" }}>
+                  Ending in: {timeSince(meet.expiringAt)}
+                </h2>
                 <img
                   style={{ float: "right", margin: "-18% 4% 15px 0px" }}
                   src={meet.profilePicture}
