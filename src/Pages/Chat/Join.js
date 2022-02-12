@@ -10,7 +10,7 @@ import Button from "@mui/material/Button";
 import Slide from "@mui/material/Slide";
 import { Helmet } from "react-helmet";
 
-const socket = io.connect("https://tiffingrades-api.herokuapp.com");
+const socket = io.connect("https://tiffingrades-api.herokuapp.com/");
 
 const Transition = React.forwardRef(function Transition(props, ref) {
   return <Slide direction="up" ref={ref} {...props} />;
@@ -19,15 +19,12 @@ const Transition = React.forwardRef(function Transition(props, ref) {
 export default function Join() {
   const [open, setOpen] = React.useState(false);
   const [room, setRoom] = useState("");
-  const [hasJoinedRoom, setHasJoinedRoom] = useState(false);
 
   const joinRoom = () => {
     if (room !== "") {
-      setHasJoinedRoom(true);
       socket.emit("join-room", room);
+      localStorage.setItem("chat-room", room);
       handleClose();
-    } else {
-      setHasJoinedRoom(false);
     }
   };
 
@@ -39,7 +36,7 @@ export default function Join() {
     setOpen(false);
   };
 
-  if (hasJoinedRoom === false) {
+  if (!localStorage.getItem("chat-room")) {
     return (
       <div className="createBtn">
         <Helmet>
@@ -87,7 +84,11 @@ export default function Join() {
     );
   } else {
     return (
-      <Chat socket={socket} name={localStorage.getItem("name")} room={room} />
+      <Chat
+        socket={socket}
+        name={localStorage.getItem("name")}
+        room={localStorage.getItem("chat-room")}
+      />
     );
   }
 }

@@ -4,10 +4,15 @@ import TextField from "@mui/material/TextField";
 import ScrollToBottom from "react-scroll-to-bottom";
 import SendIcon from "@mui/icons-material/Send";
 import Button from "@mui/material/Button";
-
 import "./Chat.css";
 
 export default function Chat({ socket, name, room }) {
+  const joinRoom = () => {
+    socket.emit("join-room", localStorage.getItem("chat-room"));
+  };
+
+  joinRoom();
+
   const [currentMessage, setCurrentMessage] = useState("");
   const [messageList, setMessageList] = useState([]);
 
@@ -35,7 +40,7 @@ export default function Chat({ socket, name, room }) {
     <>
       <div className="chat-window">
         <Helmet>
-          <title>Discussions - Chat Room {room}</title>
+          <title>Discussions - {room}</title>
         </Helmet>
         <h1
           style={{
@@ -44,7 +49,7 @@ export default function Chat({ socket, name, room }) {
             alignItems: "center",
           }}
         >
-          Chat Room
+          Discussion - {room}
         </h1>
         <div className="chat-body">
           <ScrollToBottom className="message-container">
@@ -86,6 +91,7 @@ export default function Chat({ socket, name, room }) {
         <div className="chat-footer">
           <TextField
             required
+            autoComplete="off"
             id="filled-required"
             label="Your message"
             variant="filled"
@@ -112,6 +118,17 @@ export default function Chat({ socket, name, room }) {
             Send
           </Button>
         </div>
+        <Button
+          style={{ marginTop: "6%", marginLeft: "35%" }}
+          onClick={(event) => {
+            localStorage.removeItem("chat-room");
+            window.location.reload();
+          }}
+          variant="contained"
+          color="secondary"
+        >
+          Leave this Discussion
+        </Button>
       </div>
     </>
   );
