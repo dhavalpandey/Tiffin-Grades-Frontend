@@ -13,6 +13,7 @@ import isMobile from "./Mobile.config";
 import Meet from "./Pages/Meet/Meet";
 import ActiveMeets from "./Pages/Meet/ActiveMeets";
 import Navbar from "./Pages/NavBar/NavBar";
+import Error from "./Pages/Error/Error";
 // import Sidebar from "./Pages/SideBar/SideBar";
 
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
@@ -34,6 +35,8 @@ function App() {
         <Mobile />
       </Suspense>
     );
+  } else if (!loggedIn) {
+    return <Login />;
   } else if ((loggedIn && !adjUploaded) || !year) {
     return <Adjectives />;
   } else if (loggedIn && adjUploaded && year) {
@@ -41,29 +44,30 @@ function App() {
       <Router>
         <Navbar />
         <Switch>
-          <Route path="/options">
+          <Route exact path="/options">
             <Options />
           </Route>
-          <Route path="/discover">
+          <Route exact path="/discover">
             <Discover />
           </Route>
-          <Route path="/results">
+          <Route exact path="/results">
             <Results />
           </Route>
-          <Route path="/meet/active-meets">
+          <Route exact path="/meet/active-meets">
             <ActiveMeets />
           </Route>
-          <Route path="/meet">
+          <Route exact path="/meet">
             <Meet />
           </Route>
-          <Route path="/">
+          <Route exact path="/">
             <Dashboard />
+          </Route>
+          <Route path="*">
+            <Error />
           </Route>
         </Switch>
       </Router>
     );
-  } else {
-    return <Login />;
   }
 }
 
