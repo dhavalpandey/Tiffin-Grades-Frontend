@@ -8,6 +8,9 @@ import DialogContentText from "@mui/material/DialogContentText";
 import Button from "@mui/material/Button";
 import Slide from "@mui/material/Slide";
 import { Helmet } from "react-helmet";
+import Switch from "@mui/material/Switch";
+import FormControlLabel from "@mui/material/FormControlLabel";
+import { useHistory } from "react-router-dom";
 
 const Transition = React.forwardRef(function Transition(props, ref) {
   return <Slide direction="up" ref={ref} {...props} />;
@@ -16,10 +19,45 @@ const Transition = React.forwardRef(function Transition(props, ref) {
 export default function Join() {
   const [open, setOpen] = React.useState(false);
   const [room, setRoom] = useState("");
+  const [checked, setChecked] = React.useState(false);
+  const history = useHistory();
 
-  const joinRoom = () => {
-    localStorage.setItem("chat-room", room);
-    window.location.replace("/chat/" + room);
+  const link = global.config.development.status
+    ? "http://localhost:5000"
+    : "https://tiffingrades-api.herokuapp.com";
+
+  const joinRoom = async () => {
+    if (checked) {
+      await fetch(link + "/discussion", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          Accept: "application/json",
+        },
+        body: JSON.stringify({
+          link: `https://tiffingrades.netlify.app/chat/${room}`,
+          name: room,
+        }),
+      })
+        .then((res) => {
+          return res.json();
+        })
+        .then((res) => {
+          console.log("done");
+        })
+        .catch((error) => {
+          console.log("failed");
+        });
+      localStorage.setItem("chat-room", room);
+      window.location.replace("/chat/" + room);
+    } else {
+      localStorage.setItem("chat-room", room);
+      window.location.replace("/chat/" + room);
+    }
+  };
+
+  const handleSwitchChange = (event) => {
+    setChecked(event.target.checked);
   };
 
   const handleClickOpen = () => {
@@ -38,7 +76,10 @@ export default function Join() {
         <Helmet>
           <title>Join a Discussion</title>
         </Helmet>
-        <div className="joinDisscussion" style={{ marginTop: "60%" }}>
+        <div
+          className="joinDisscussion"
+          style={{ marginTop: "60%", marginLeft: "35%", width: "100%" }}
+        >
           <Button variant="contained" onClick={handleClickOpen} size="large">
             Join a Discussion
           </Button>
@@ -70,6 +111,13 @@ export default function Join() {
                   event.key === "Enter" && joinRoom();
                 }}
               />
+              <FormControlLabel
+                style={{ marginTop: "5%" }}
+                control={
+                  <Switch checked={checked} onChange={handleSwitchChange} />
+                }
+                label="Make it public"
+              />
             </DialogContentText>
           </DialogContent>
           <DialogActions>
@@ -79,6 +127,24 @@ export default function Join() {
             </Button>
           </DialogActions>
         </Dialog>
+        <Button
+          variant="contained"
+          color="secondary"
+          onClick={() => {
+            history.push("/public-discussions");
+          }}
+          size="large"
+          style={{
+            marginTop: "15%",
+            display: "flex",
+            justifyContent: "center",
+            alignItems: "center",
+            marginLeft: "25%",
+            width: "100%",
+          }}
+        >
+          Join a Public Discussion
+        </Button>
       </div>
     );
   } else {

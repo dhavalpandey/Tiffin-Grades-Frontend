@@ -17,6 +17,7 @@ import Navbar from "./Pages/NavBar/NavBar";
 import Error from "./Pages/Error/Error";
 import Join from "./Pages/Chat/Join";
 import Chat from "./Pages/Chat/Chat";
+import PublicChat from "./Pages/Chat/PublicChat";
 // import Sidebar from "./Pages/SideBar/SideBar";
 
 function App() {
@@ -72,6 +73,9 @@ function App() {
           </Route>
           <Route exact path="/chat">
             <Join />
+          </Route>
+          <Route exact path="/public-discussions">
+            <PublicChat />
           </Route>
           <Route exact path="/">
             <Dashboard />

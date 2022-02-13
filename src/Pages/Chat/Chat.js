@@ -6,10 +6,12 @@ import SendIcon from "@mui/icons-material/Send";
 import Button from "@mui/material/Button";
 import "./Chat.css";
 import io from "socket.io-client";
+import { useHistory } from "react-router-dom";
 
 const socketIO = io.connect("https://tiffingrades-api.herokuapp.com/");
 
 export default function Chat({ name, room }) {
+  const history = useHistory();
   const socket = socketIO;
   const joinRoom = () => {
     socket.emit("join-room", localStorage.getItem("chat-room"));
@@ -102,7 +104,7 @@ export default function Chat({ name, room }) {
             value={currentMessage}
             style={{
               borderColor: "white",
-              backgroundColor: "white",
+              backgroundColor: "#f8fafc",
               width: "78%",
               height: "100%",
             }}
@@ -117,14 +119,14 @@ export default function Chat({ name, room }) {
             disabled={currentMessage === "" ? true : false}
             variant="contained"
             onClick={(event) => sendMessage()}
-            style={{ width: "22%", height: "97%" }}
+            style={{ width: "22%", height: "100%" }}
             endIcon={<SendIcon />}
           >
             Send
           </Button>
         </div>
         <Button
-          style={{ marginTop: "6%", marginLeft: "35%" }}
+          style={{ marginTop: "5%", marginLeft: "35%" }}
           onClick={(event) => {
             localStorage.removeItem("chat-room");
             window.location.replace("/chat");
@@ -133,6 +135,16 @@ export default function Chat({ name, room }) {
           color="secondary"
         >
           Leave this Discussion
+        </Button>
+        <Button
+          style={{ marginTop: "4%", marginLeft: "33.5%" }}
+          onClick={(event) => {
+            history.push("/public-discussions");
+          }}
+          variant="contained"
+          color="primary"
+        >
+          Join a Public Discussion
         </Button>
       </div>
     </>
