@@ -5,8 +5,12 @@ import ScrollToBottom from "react-scroll-to-bottom";
 import SendIcon from "@mui/icons-material/Send";
 import Button from "@mui/material/Button";
 import "./Chat.css";
+import io from "socket.io-client";
 
-export default function Chat({ socket, name, room }) {
+const socketIO = io.connect("https://tiffingrades-api.herokuapp.com/");
+
+export default function Chat({ name, room }) {
+  const socket = socketIO;
   const joinRoom = () => {
     socket.emit("join-room", localStorage.getItem("chat-room"));
   };
@@ -100,6 +104,7 @@ export default function Chat({ socket, name, room }) {
               borderColor: "white",
               backgroundColor: "white",
               width: "78%",
+              height: "100%",
             }}
             onChange={(event) => {
               setCurrentMessage(event.target.value);
@@ -122,7 +127,7 @@ export default function Chat({ socket, name, room }) {
           style={{ marginTop: "6%", marginLeft: "35%" }}
           onClick={(event) => {
             localStorage.removeItem("chat-room");
-            window.location.reload();
+            window.location.replace("/chat");
           }}
           variant="contained"
           color="secondary"

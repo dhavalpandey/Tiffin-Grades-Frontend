@@ -119,6 +119,8 @@
 }
 
 .chat-window .chat-footer button {
+  height: 100%;
+  width: 100%;
   border: 0;
   cursor: pointer;
   flex: 15%;

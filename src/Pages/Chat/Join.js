@@ -1,6 +1,5 @@
 import React, { useState } from "react";
-import io from "socket.io-client";
-import Chat from "./Chat";
+
 import TextField from "@mui/material/TextField";
 import Dialog from "@mui/material/Dialog";
 import DialogActions from "@mui/material/DialogActions";
@@ -9,8 +8,6 @@ import DialogContentText from "@mui/material/DialogContentText";
 import Button from "@mui/material/Button";
 import Slide from "@mui/material/Slide";
 import { Helmet } from "react-helmet";
-
-const socket = io.connect("https://tiffingrades-api.herokuapp.com/");
 
 const Transition = React.forwardRef(function Transition(props, ref) {
   return <Slide direction="up" ref={ref} {...props} />;
@@ -21,11 +18,8 @@ export default function Join() {
   const [room, setRoom] = useState("");
 
   const joinRoom = () => {
-    if (room !== "") {
-      socket.emit("join-room", room);
-      localStorage.setItem("chat-room", room);
-      handleClose();
-    }
+    localStorage.setItem("chat-room", room);
+    window.location.replace("/chat/" + room);
   };
 
   const handleClickOpen = () => {
@@ -35,6 +29,8 @@ export default function Join() {
   const handleClose = () => {
     setOpen(false);
   };
+
+  localStorage.setItem("chat-room", localStorage.getItem("chat-room"));
 
   if (!localStorage.getItem("chat-room")) {
     return (
@@ -70,6 +66,9 @@ export default function Join() {
                 onChange={(event) => {
                   setRoom(event.target.value);
                 }}
+                onKeyPress={(event) => {
+                  event.key === "Enter" && joinRoom();
+                }}
               />
             </DialogContentText>
           </DialogContent>
@@ -83,12 +82,6 @@ export default function Join() {
       </div>
     );
   } else {
-    return (
-      <Chat
-        socket={socket}
-        name={localStorage.getItem("name")}
-        room={localStorage.getItem("chat-room")}
-      />
-    );
+    window.location.replace("/chat/" + localStorage.getItem("chat-room"));
   }
 }

@@ -16,6 +16,7 @@ import ActiveMeets from "./Pages/Meet/ActiveMeets";
 import Navbar from "./Pages/NavBar/NavBar";
 import Error from "./Pages/Error/Error";
 import Join from "./Pages/Chat/Join";
+import Chat from "./Pages/Chat/Chat";
 // import Sidebar from "./Pages/SideBar/SideBar";
 
 function App() {
@@ -58,6 +59,16 @@ function App() {
           </Route>
           <Route exact path="/meet">
             <Meet />
+          </Route>
+          <Route exact path="/chat/:id" id="id">
+            {localStorage.setItem(
+              "chat-room",
+              window.location.pathname.slice(6),
+            )}
+            <Chat
+              name={localStorage.getItem("name")}
+              room={localStorage.getItem("chat-room")}
+            />
           </Route>
           <Route exact path="/chat">
             <Join />
