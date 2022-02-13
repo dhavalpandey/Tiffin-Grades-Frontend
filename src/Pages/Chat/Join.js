@@ -69,6 +69,8 @@ export default function Join() {
   };
 
   localStorage.setItem("chat-room", localStorage.getItem("chat-room"));
+  
+  const regex = /^[a-zA-Z0-9]*$/gm;
 
   if (!localStorage.getItem("chat-room")) {
     return (
@@ -109,6 +111,12 @@ export default function Join() {
                 }}
                 onKeyPress={(event) => {
                   event.key === "Enter" && joinRoom();
+                  if (!regex.test(event.key)) {
+                      event.preventDefault();
+                  }
+                  if (room !== "") {
+                      event.key === "Enter" && joinRoom();
+                  }
                 }}
               />
               <FormControlLabel
