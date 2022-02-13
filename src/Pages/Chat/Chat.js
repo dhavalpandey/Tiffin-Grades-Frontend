@@ -7,6 +7,8 @@ import Button from "@mui/material/Button";
 import "./Chat.css";
 import io from "socket.io-client";
 import { useHistory } from "react-router-dom";
+import useSound from "use-sound";
+import notification from "./notification.mp3";
 
 const socketIO = io.connect("https://tiffingrades-api.herokuapp.com/");
 
@@ -36,11 +38,22 @@ export default function Chat({ name, room }) {
     }
   };
 
+  const [play] = useSound(notification, { volume: 0.45 });
+
   useEffect(() => {
     socket.on("receive-message", (data) => {
       setMessageList((list) => [...list, data]);
+      play();
     });
+    // eslint-disable-next-line
   }, [socket]);
+
+  useEffect(() => {
+    socket.on("receive-message", (data) => {
+      play();
+    });
+    // eslint-disable-next-line
+  }, [play]);
 
   return (
     <>
@@ -118,7 +131,9 @@ export default function Chat({ name, room }) {
           <Button
             disabled={currentMessage === "" ? true : false}
             variant="contained"
-            onClick={(event) => sendMessage()}
+            onClick={(event) => {
+              sendMessage();
+            }}
             style={{ width: "22%", height: "100%" }}
             endIcon={<SendIcon />}
           >
