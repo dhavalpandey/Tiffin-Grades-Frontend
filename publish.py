@@ -45,6 +45,8 @@ def frontend_deploy():
         os.system(f"git commit -m {git_commit_message}")
         os.system("git push")
 
+        add_extra_scripts()
+
         success()
     except:
         error()
