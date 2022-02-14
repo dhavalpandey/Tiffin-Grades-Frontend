@@ -20,6 +20,7 @@ export default function Chat({ name, room }) {
   );
 
   localStorage.setItem("chat-room", window.location.pathname.slice(6));
+
   const history = useHistory();
   const socket = socketIO;
   const joinRoom = () => {
@@ -75,7 +76,7 @@ export default function Chat({ name, room }) {
     <>
       <div className="chat-window">
         <Helmet>
-          <title>Discussions - {room}</title>
+          <title>Discussions - {localStorage.getItem("chat-room")}</title>
         </Helmet>
         <h1
           style={{
@@ -84,7 +85,7 @@ export default function Chat({ name, room }) {
             alignItems: "center",
           }}
         >
-          Discussion - {room}
+          Discussion - {localStorage.getItem("chat-room")}
         </h1>
         <div style={{ marginLeft: "40%", marginTop: "2%" }}>
           <FormControlLabel

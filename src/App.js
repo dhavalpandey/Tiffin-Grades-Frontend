@@ -119,26 +119,14 @@ function App() {
           <Route exact path="/meet">
             <Meet />
           </Route>
+          <Route exact path="/chat">
+            <Join />
+          </Route>
           <Route exact path="/chat/:id" id="id">
-            <motion.div
-              className="transition"
-              initial="initial"
-              animate="animate"
-              variants={blackBox}
-            />
             <Chat
               name={localStorage.getItem("name")}
               room={localStorage.getItem("chat-room")}
             />
-          </Route>
-          <Route exact path="/chat">
-            <motion.div
-              className="transition"
-              initial="initial"
-              animate="animate"
-              variants={blackBox}
-            />
-            <Join />
           </Route>
           <Route exact path="/public-discussions">
             <motion.div
