@@ -57,8 +57,7 @@ export default function ActiveMeets() {
                 marginLeft: "17.5%",
                 maxWidth: "50vw",
                 maxHeight: "10vh",
-                paddingTop: "4%",
-                paddingBottom: "75px",
+                paddingBottom: "17%",
               }}
             >
               <Card

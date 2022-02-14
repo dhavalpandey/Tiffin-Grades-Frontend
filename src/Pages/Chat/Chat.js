@@ -9,10 +9,17 @@ import io from "socket.io-client";
 import { useHistory } from "react-router-dom";
 import useSound from "use-sound";
 import notification from "./notification.mp3";
+import Switch from "@mui/material/Switch";
+import FormControlLabel from "@mui/material/FormControlLabel";
 
 const socketIO = io.connect("https://tiffingrades-api.herokuapp.com/");
 
 export default function Chat({ name, room }) {
+  const [mute, setMute] = useState(
+    localStorage.getItem("mute") === "true" ? true : false,
+  );
+
+  localStorage.setItem("chat-room", window.location.pathname.slice(6));
   const history = useHistory();
   const socket = socketIO;
   const joinRoom = () => {
@@ -43,17 +50,26 @@ export default function Chat({ name, room }) {
   useEffect(() => {
     socket.on("receive-message", (data) => {
       setMessageList((list) => [...list, data]);
-      play();
+      if (localStorage.getItem("mute") === "false") {
+        play();
+      }
     });
     // eslint-disable-next-line
   }, [socket]);
 
   useEffect(() => {
     socket.on("receive-message", (data) => {
-      play();
+      if (localStorage.getItem("mute") === "false") {
+        play();
+      }
     });
     // eslint-disable-next-line
   }, [play]);
+
+  const handleMuteChange = (event) => {
+    setMute(event.target.checked);
+    localStorage.setItem("mute", event.target.checked);
+  };
 
   return (
     <>
@@ -70,6 +86,20 @@ export default function Chat({ name, room }) {
         >
           Discussion - {room}
         </h1>
+        <div style={{ marginLeft: "40%", marginTop: "2%" }}>
+          <FormControlLabel
+            control={
+              <Switch
+                style={{
+                  color: "white",
+                }}
+                checked={mute}
+                onChange={handleMuteChange}
+              />
+            }
+            label="Mute Notifications"
+          />
+        </div>
         <div className="chat-body">
           <ScrollToBottom className="message-container">
             {messageList.map((messageContent) => {

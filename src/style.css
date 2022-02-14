@@ -19,6 +19,16 @@ body {
   background-color: var(--body) !important;
 }
 
+.overflow-hidden {
+  overflow: hidden;
+}
+
+.transition {
+  background-color: #537895;
+  background-image: linear-gradient(315deg, #537895 0%, #09203f 74%);
+  border-radius: 20px;
+}
+
 .App {
   text-align: center;
 }
@@ -69,8 +79,40 @@ code {
 .active {
   color: var(--white);
 }
+
 .divider {
   background-color: var(--divider);
   position: fixed;
   z-index: 100;
+}
+
+::-webkit-scrollbar {
+  width: 17px;
+  transition: 0.3s;
+}
+
+::-webkit-scrollbar-track {
+  background-color: #14283b;
+  box-shadow: inset 0 0 5px var(--components);
+  border-radius: 10px;
+  transition: 0.3s;
+}
+
+::-webkit-scrollbar-thumb {
+  background-color: #6b0f1a;
+  background-image: linear-gradient(315deg, #6b0f1a 0%, #b91372 74%);
+  transition: 0.3s;
+  background-clip: content-box;
+  border-radius: 10px;
+  border: 4px solid transparent;
+}
+
+::-webkit-scrollbar-corner {
+  background-color: transparent;
+}
+
+::-webkit-scrollbar-button {
+  width: 0;
+  height: 0;
+  display: none;
 }
