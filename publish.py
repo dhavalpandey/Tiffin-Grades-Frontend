@@ -49,7 +49,7 @@ def frontend_deploy():
 
         success()
     except:
-        error()
+        sys.exit()
 
 try:
     frontend_deploy()
