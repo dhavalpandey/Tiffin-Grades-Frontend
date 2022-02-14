@@ -18,11 +18,9 @@ const Transition = React.forwardRef(function Transition(props, ref) {
 
 export default function Join() {
   const [open, setOpen] = React.useState(false);
-  const [room, setRoom] = useState();
+  const [room, setRoom] = useState("");
   const [checked, setChecked] = React.useState(false);
   const history = useHistory();
-
-  localStorage.setItem("chat-room", localStorage.getItem("chat-room"));
 
   const link = global.config.development.status
     ? "http://localhost:5000"
@@ -70,9 +68,11 @@ export default function Join() {
     setOpen(false);
   };
 
+  localStorage.setItem("chat-room", localStorage.getItem("chat-room"));
+
   const regex = /^[a-zA-Z0-9]*$/gm;
 
-  if (localStorage.getItem("chat-room") === "null") {
+  if (!localStorage.getItem("chat-room")) {
     return (
       <div className="createBtn">
         <Helmet>
@@ -110,6 +110,7 @@ export default function Join() {
                   setRoom(event.target.value);
                 }}
                 onKeyPress={(event) => {
+                  event.key === "Enter" && joinRoom();
                   if (!regex.test(event.key)) {
                     event.preventDefault();
                   }
