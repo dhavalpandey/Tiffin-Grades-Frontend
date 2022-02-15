@@ -27,6 +27,9 @@ function App() {
   const [adjUploaded, setAdjUploaded] = useState(getUploaded);
   // eslint-disable-next-line
   const [year, setYear] = useState(getYear);
+  // eslint-disable-next-line
+  const [room, setRoom] = useState(localStorage.getItem("chat-room"));
+  localStorage.setItem("chat-room", room);
 
   let isSafari = window.safari !== undefined;
 
@@ -62,10 +65,6 @@ function App() {
             <Meet />
           </Route>
           <Route exact path="/chat/:id" id="id">
-            {localStorage.setItem(
-              "chat-room",
-              window.location.pathname.slice(6),
-            )}
             <Chat
               name={localStorage.getItem("name")}
               room={localStorage.getItem("chat-room")}
