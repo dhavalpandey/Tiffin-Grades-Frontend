@@ -30,17 +30,6 @@ def remove_extra_scripts():
     a_file.close()
 
 
-def add_extra_scripts():
-    a_file = open("package.json", "r")
-    json_object = json.load(a_file)
-    json_object["scripts"]["start"] = "react-scripts --openssl-legacy-provider start"
-    json_object["scripts"]["build"] = "react-scripts --openssl-legacy-provider build"
-
-    a_file = open("package.json", "w")
-    json.dump(json_object, a_file)
-    a_file.close()
-
-
 def frontend_deploy():
     try:
         os.system("npm run build")
@@ -50,8 +39,6 @@ def frontend_deploy():
         os.system("git add .")
         os.system(f"git commit -m {git_commit_message}")
         os.system("git push")
-
-        add_extra_scripts()
 
         success()
     except:

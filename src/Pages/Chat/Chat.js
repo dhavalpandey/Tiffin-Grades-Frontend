@@ -6,11 +6,12 @@ import SendIcon from "@mui/icons-material/Send";
 import Button from "@mui/material/Button";
 import "./Chat.css";
 import io from "socket.io-client";
-import { useHistory } from "react-router-dom";
+import { useHistory, useParams } from "react-router-dom";
 import useSound from "use-sound";
 import notification from "./notification.mp3";
 import Switch from "@mui/material/Switch";
 import FormControlLabel from "@mui/material/FormControlLabel";
+import Filter from "bad-words";
 
 const socketIO = io.connect("https://tiffingrades-api.herokuapp.com/");
 
@@ -19,7 +20,11 @@ export default function Chat({ name, room }) {
     localStorage.getItem("mute") === "true" ? true : false,
   );
 
-  localStorage.setItem("chat-room", window.location.pathname.slice(6));
+  let { id } = useParams();
+
+  const filter = new Filter();
+
+  localStorage.setItem("chat-room", id);
 
   const history = useHistory();
   const socket = socketIO;
@@ -37,7 +42,7 @@ export default function Chat({ name, room }) {
       const messageData = {
         room: room,
         name,
-        message: currentMessage,
+        message: filter.clean(currentMessage),
       };
 
       await socket.emit("send-message", messageData);

@@ -156,6 +156,91 @@ export default function Join() {
       </div>
     );
   } else {
-    window.location.replace("/chat/" + localStorage.getItem("chat-room"));
+    if (localStorage.getItem("chat-room") !== "null") {
+      window.location.replace("/chat/" + localStorage.getItem("chat-room"));
+    } else {
+      return (
+        <div className="createBtn">
+          <Helmet>
+            <title>Join a Discussion</title>
+          </Helmet>
+          <div
+            className="joinDisscussion"
+            style={{ marginTop: "60%", marginLeft: "35%", width: "100%" }}
+          >
+            <Button variant="contained" onClick={handleClickOpen} size="large">
+              Join a Discussion
+            </Button>
+          </div>
+          <Dialog
+            open={open}
+            TransitionComponent={Transition}
+            keepMounted
+            onClose={handleClose}
+            aria-describedby="alert-dialog-slide-description"
+          >
+            <h1 className="heading3">Join a Discussion</h1>
+            <DialogContent>
+              <DialogContentText id="alert-dialog-slide-description">
+                <TextField
+                  value={room}
+                  required
+                  id="filled-name"
+                  label="Discussion Code"
+                  variant="filled"
+                  margin="dense"
+                  style={{ color: "#00ff00", width: "100%" }}
+                  fullWidth
+                  autoComplete="off"
+                  onChange={(event) => {
+                    setRoom(event.target.value);
+                  }}
+                  onKeyPress={(event) => {
+                    event.key === "Enter" && joinRoom();
+                    if (!regex.test(event.key)) {
+                      event.preventDefault();
+                    }
+                    if (room !== "") {
+                      event.key === "Enter" && joinRoom();
+                    }
+                  }}
+                />
+                <FormControlLabel
+                  style={{ marginTop: "5%" }}
+                  control={
+                    <Switch checked={checked} onChange={handleSwitchChange} />
+                  }
+                  label="Make it public"
+                />
+              </DialogContentText>
+            </DialogContent>
+            <DialogActions>
+              <Button onClick={handleClose}>Cancel</Button>
+              <Button disabled={room === "" ? true : false} onClick={joinRoom}>
+                Join
+              </Button>
+            </DialogActions>
+          </Dialog>
+          <Button
+            variant="contained"
+            color="secondary"
+            onClick={() => {
+              history.push("/public-discussions");
+            }}
+            size="large"
+            style={{
+              marginTop: "15%",
+              display: "flex",
+              justifyContent: "center",
+              alignItems: "center",
+              marginLeft: "25%",
+              width: "100%",
+            }}
+          >
+            Join a Public Discussion
+          </Button>
+        </div>
+      );
+    }
   }
 }

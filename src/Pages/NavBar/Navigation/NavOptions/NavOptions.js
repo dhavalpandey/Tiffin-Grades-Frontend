@@ -51,7 +51,11 @@ export default function NavOptions() {
         <div
           className="icon-container"
           onClick={() => {
-            routerHistory.push("/chat");
+            if (localStorage.getItem("chat-room") !== "null") {
+              routerHistory.push("/chat/" + localStorage.getItem("chat-room"));
+            } else {
+              routerHistory.push("/chat");
+            }
           }}
         >
           <ChatOutlinedIcon fontSize="large" />
