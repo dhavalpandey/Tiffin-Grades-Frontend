@@ -65,10 +65,12 @@ function App() {
             <Meet />
           </Route>
           <Route exact path="/chat/:id" id="id">
-            {localStorage.setItem(
-              "chat-room",
-              window.location.pathname.slice(6),
-            )}
+            {window.location.pathname.slice(6) !== ""
+              ? localStorage.setItem(
+                  "chat-room",
+                  window.location.pathname.slice(6),
+                )
+              : console.log(window.location.pathname.slice(6))}
             <Chat
               name={localStorage.getItem("name")}
               room={localStorage.getItem("chat-room")}

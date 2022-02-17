@@ -1,4 +1,10 @@
 # https://www.robotstxt.org/robotstxt.html
+User-agent: Googlebot
+Disallow: /nogooglebot/
+
+User-agent: *
 User-agent: *
 Disallow:
+Allow:
+
 Sitemap: https://tiffingrades.netlify.app
