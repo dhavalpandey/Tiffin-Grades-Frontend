@@ -13,10 +13,9 @@ import Switch from "@mui/material/Switch";
 import FormControlLabel from "@mui/material/FormControlLabel";
 import Filter from "bad-words";
 
-const socketIO = io.connect("http://localhost:5000/");
+const socketIO = io.connect("http/");
 
 export default function Chat({ name, room }) {
-  const [numberOfUsers, setNumberOfUsers] = useState([]);
   const [mute, setMute] = useState(
     localStorage.getItem("mute") === "true" ? true : false,
   );
@@ -65,24 +64,6 @@ export default function Chat({ name, room }) {
       setMessageList((list) => [...list, data]);
       if (localStorage.getItem("mute") === "false") {
         play();
-      }
-    });
-    // eslint-disable-next-line
-  }, [socket]);
-
-  useEffect(() => {
-    socket.on("new-user", (data) => {
-      if (numberOfUsers.length == 0) {
-        setNumberOfUsers((numberOfUsers) => [...numberOfUsers, data.googleId]);
-      } else {
-        for (let i = 0; i < numberOfUsers; i++) {
-          if (numberOfUsers[i] !== data.googleId) {
-            setNumberOfUsers((numberOfUsers) => [
-              ...numberOfUsers,
-              data.googleId,
-            ]);
-          }
-        }
       }
     });
     // eslint-disable-next-line
@@ -222,7 +203,6 @@ export default function Chat({ name, room }) {
         >
           Join a Public Discussion
         </Button>
-        <h1 style={{ color: "white" }}>{numberOfUsers}</h1>
       </div>
     </>
   );
