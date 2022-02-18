@@ -13,7 +13,7 @@ import Switch from "@mui/material/Switch";
 import FormControlLabel from "@mui/material/FormControlLabel";
 import Filter from "bad-words";
 
-const socketIO = io.connect("http/");
+const socketIO = io.connect("https://tiffingrades-api.herokuapp.com/");
 
 export default function Chat({ name, room }) {
   const [mute, setMute] = useState(
@@ -29,13 +29,7 @@ export default function Chat({ name, room }) {
   const history = useHistory();
   const socket = socketIO;
   const joinRoom = () => {
-    socket.emit("join-room", {
-      chatRoom: localStorage.getItem("chat-room"),
-      name: localStorage.getItem("name"),
-      image: localStorage.getItem("image"),
-      googleId: localStorage.getItem("google_id"),
-      year: localStorage.getItem("year"),
-    });
+    socket.emit("join-room", localStorage.getItem("chat-room"));
   };
 
   joinRoom();
