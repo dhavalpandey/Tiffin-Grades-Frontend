@@ -11,6 +11,8 @@ import { Helmet } from "react-helmet";
 import Switch from "@mui/material/Switch";
 import FormControlLabel from "@mui/material/FormControlLabel";
 import { useHistory } from "react-router-dom";
+import LinkIcon from "@mui/icons-material/Link";
+import IconButton from "@mui/material/IconButton";
 
 const Transition = React.forwardRef(function Transition(props, ref) {
   return <Slide direction="up" ref={ref} {...props} />;
@@ -20,6 +22,7 @@ export default function Join() {
   const [open, setOpen] = React.useState(false);
   const [room, setRoom] = useState("");
   const [checked, setChecked] = React.useState(false);
+  const [copyText, setCopyText] = useState("Copy shareable Link");
   const history = useHistory();
 
   const link = global.config.development.status
@@ -68,6 +71,10 @@ export default function Join() {
     setOpen(false);
   };
 
+  const sleep = (time) => {
+    return new Promise((resolve) => setTimeout(resolve, time));
+  };
+
   localStorage.setItem("chat-room", localStorage.getItem("chat-room"));
 
   const regex = /^[a-zA-Z0-9]*$/gm;
@@ -80,10 +87,16 @@ export default function Join() {
         </Helmet>
         <div
           className="joinDisscussion"
-          style={{ marginTop: "60%", marginLeft: "35%", width: "100%" }}
+          style={{
+            width: "100vw",
+            marginTop: "30%",
+            marginLeft: "10%",
+            // eslint-disable-next-line
+            width: "100%",
+          }}
         >
           <Button variant="contained" onClick={handleClickOpen} size="large">
-            Join a Discussion
+            Join or Create a Discussion
           </Button>
         </div>
         <Dialog
@@ -103,7 +116,7 @@ export default function Join() {
                 label="Discussion Code"
                 variant="filled"
                 margin="dense"
-                style={{ color: "#00ff00", width: "100%" }}
+                style={{ color: "#00ff00" }}
                 fullWidth
                 autoComplete="off"
                 onChange={(event) => {
@@ -120,11 +133,33 @@ export default function Join() {
                 }}
               />
               <FormControlLabel
-                style={{ marginTop: "5%" }}
+                style={{ marginLeft: "25%", marginTop: "3%" }}
                 control={
                   <Switch checked={checked} onChange={handleSwitchChange} />
                 }
                 label="Make it public"
+              />
+              <br></br>
+              <FormControlLabel
+                style={{ marginLeft: "25%", marginTop: "2%" }}
+                control={
+                  <IconButton
+                    disabled={room === "" ? true : false}
+                    onClick={() => {
+                      navigator.clipboard.writeText(
+                        `https://tiffingrades.netlify.app/chat/${room}`,
+                      );
+                      setCopyText("Copied to Clipboard ✔️");
+                      sleep(1300).then(() => {
+                        setCopyText("Copy shareable Link");
+                      });
+                    }}
+                    aria-label="Copy link"
+                  >
+                    <LinkIcon />
+                  </IconButton>
+                }
+                label={copyText}
               />
             </DialogContentText>
           </DialogContent>
@@ -147,7 +182,7 @@ export default function Join() {
             display: "flex",
             justifyContent: "center",
             alignItems: "center",
-            marginLeft: "25%",
+            marginLeft: "10%",
             width: "100%",
           }}
         >
@@ -166,10 +201,16 @@ export default function Join() {
           </Helmet>
           <div
             className="joinDisscussion"
-            style={{ marginTop: "60%", marginLeft: "35%", width: "100%" }}
+            style={{
+              width: "100vw",
+              marginTop: "30%",
+              marginLeft: "10%",
+              // eslint-disable-next-line
+              width: "100%",
+            }}
           >
             <Button variant="contained" onClick={handleClickOpen} size="large">
-              Join a Discussion
+              Join or Create a Discussion
             </Button>
           </div>
           <Dialog
@@ -189,7 +230,7 @@ export default function Join() {
                   label="Discussion Code"
                   variant="filled"
                   margin="dense"
-                  style={{ color: "#00ff00", width: "100%" }}
+                  style={{ color: "#00ff00" }}
                   fullWidth
                   autoComplete="off"
                   onChange={(event) => {
@@ -206,11 +247,33 @@ export default function Join() {
                   }}
                 />
                 <FormControlLabel
-                  style={{ marginTop: "5%" }}
+                  style={{ marginLeft: "25%", marginTop: "3%" }}
                   control={
                     <Switch checked={checked} onChange={handleSwitchChange} />
                   }
                   label="Make it public"
+                />
+                <br></br>
+                <FormControlLabel
+                  style={{ marginLeft: "25%", marginTop: "2%" }}
+                  control={
+                    <IconButton
+                      disabled={room === "" ? true : false}
+                      onClick={() => {
+                        navigator.clipboard.writeText(
+                          `https://tiffingrades.netlify.app/chat/${room}`,
+                        );
+                        setCopyText("Copied to Clipboard ✔️");
+                        sleep(1300).then(() => {
+                          setCopyText("Copy shareable Link");
+                        });
+                      }}
+                      aria-label="Copy link"
+                    >
+                      <LinkIcon />
+                    </IconButton>
+                  }
+                  label={copyText}
                 />
               </DialogContentText>
             </DialogContent>
@@ -233,7 +296,7 @@ export default function Join() {
               display: "flex",
               justifyContent: "center",
               alignItems: "center",
-              marginLeft: "25%",
+              marginLeft: "10%",
               width: "100%",
             }}
           >

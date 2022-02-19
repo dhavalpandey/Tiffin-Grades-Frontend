@@ -12,10 +12,13 @@ import notification from "./notification.mp3";
 import Switch from "@mui/material/Switch";
 import FormControlLabel from "@mui/material/FormControlLabel";
 import Filter from "bad-words";
+import LinkIcon from "@mui/icons-material/Link";
+import IconButton from "@mui/material/IconButton";
 
 const socketIO = io.connect("https://tiffingrades-api.herokuapp.com/");
 
 export default function Chat({ name, room }) {
+  const [copyText, setCopyText] = useState("Copy shareable Link");
   const [mute, setMute] = useState(
     localStorage.getItem("mute") === "true" ? true : false,
   );
@@ -23,6 +26,10 @@ export default function Chat({ name, room }) {
   let { id } = useParams();
 
   const filter = new Filter();
+
+  const sleep = (time) => {
+    return new Promise((resolve) => setTimeout(resolve, time));
+  };
 
   localStorage.setItem("chat-room", id);
 
@@ -92,7 +99,7 @@ export default function Chat({ name, room }) {
         >
           Discussion - {localStorage.getItem("chat-room")}
         </h1>
-        <div style={{ marginLeft: "40%", marginTop: "2%" }}>
+        <div style={{ marginLeft: "25%", marginTop: "2%" }}>
           <FormControlLabel
             control={
               <Switch
@@ -104,6 +111,31 @@ export default function Chat({ name, room }) {
               />
             }
             label="Mute Notifications"
+          />
+          <FormControlLabel
+            style={{ marginLeft: "0%", marginTop: "0%" }}
+            control={
+              <IconButton
+                disabled={room === "" ? true : false}
+                onClick={() => {
+                  navigator.clipboard.writeText(
+                    `https://tiffingrades.netlify.app/chat/${room}`,
+                  );
+                  setCopyText("Copied to Clipboard ✔️");
+                  sleep(1300).then(() => {
+                    setCopyText("Copy shareable Link");
+                  });
+                }}
+                aria-label="Copy link"
+              >
+                <LinkIcon
+                  style={{
+                    color: "white",
+                  }}
+                />
+              </IconButton>
+            }
+            label={copyText}
           />
         </div>
         <div className="chat-body">
