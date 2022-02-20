@@ -1,5 +1,5 @@
 import { useState } from "react";
-import React, { Suspense } from "react";
+import React from "react";
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 
 import { getStatus, getUploaded, getYear } from "./Global/Constants";
@@ -10,6 +10,7 @@ import Login from "./Pages/Login/Login";
 import Options from "./Pages/Options/Options";
 import Discover from "./Pages/Discover/Discover";
 import Results from "./Pages/Results/Results";
+// eslint-disable-next-line
 import isMobile from "./Mobile.config";
 import Meet from "./Pages/Meet/Meet";
 import ActiveMeets from "./Pages/Meet/ActiveMeets";
@@ -31,16 +32,17 @@ function App() {
   const [room, setRoom] = useState(localStorage.getItem("chat-room"));
   localStorage.setItem("chat-room", room);
 
+  // eslint-disable-next-line
   let isSafari = window.safari !== undefined;
 
-  if (isMobile.any() || isSafari) {
-    const Mobile = React.lazy(() => import("./Pages/Mobile/Mobile"));
-    return (
-      <Suspense fallback={<div>Loading...</div>}>
-        <Mobile />
-      </Suspense>
-    );
-  } else if (!loggedIn) {
+  // if (isMobile.any() || isSafari) {
+  //   const Mobile = React.lazy(() => import("./Pages/Mobile/Mobile"));
+  //   return (
+  //     <Suspense fallback={<div>Loading...</div>}>
+  //       <Mobile />
+  //     </Suspense>
+  //   );
+  if (!loggedIn) {
     return <Login />;
   } else if ((loggedIn && !adjUploaded) || !year) {
     return <Adjectives />;
