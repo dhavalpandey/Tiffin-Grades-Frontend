@@ -15,6 +15,7 @@ import IconButton from "@mui/material/IconButton";
 import Filter from "leo-profanity";
 import Tooltip from "@mui/material/Tooltip";
 import { makeStyles } from "@mui/styles";
+import SupervisedUserCircleIcon from "@mui/icons-material/SupervisedUserCircle";
 
 import wordFilter from "./Filter";
 import "./Chat.css";
@@ -55,6 +56,8 @@ function ValidURL(str) {
 }
 
 export default function Chat({ name, room }) {
+  let users = [];
+  const [num, setNum] = useState(1);
   const classes = useStyles();
   const [copyText, setCopyText] = useState("Copy shareable Link");
   const [mute, setMute] = useState(
@@ -74,7 +77,11 @@ export default function Chat({ name, room }) {
   const history = useHistory();
   const socket = socketIO;
   const joinRoom = () => {
-    socket.emit("join-room", localStorage.getItem("chat-room"));
+    socket.emit("join-room", {
+      chatRoom: localStorage.getItem("chat-room"),
+      name: localStorage.getItem("name"),
+      googleId: localStorage.getItem("google_id"),
+    });
   };
 
   joinRoom();
@@ -87,6 +94,7 @@ export default function Chat({ name, room }) {
     if (currentMessage !== "") {
       const messageData = {
         room: room,
+        googleId: localStorage.getItem("google_id"),
         name,
         message: /[a-z]/i.test(currentMessage)
           ? filter.clean(wordFilter(currentMessage))
@@ -112,7 +120,21 @@ export default function Chat({ name, room }) {
   }, [socket]);
 
   useEffect(() => {
+    socket.on("new-user", (data) => {
+      if (!users.includes(data.googleId)) {
+        users.push(data.googleId);
+      }
+      setNum(users.length);
+    });
+    // eslint-disable-next-line
+  }, [socket]);
+
+  useEffect(() => {
     socket.on("receive-message", (data) => {
+      if (!users.includes(data.googleId)) {
+        users.push(data.googleId);
+      }
+      setNum(users.length);
       divRef.current.scrollIntoView({ behavior: "smooth" });
       if (localStorage.getItem("mute") === "false") {
         play();
@@ -130,17 +152,26 @@ export default function Chat({ name, room }) {
     <>
       <div className="chat-window">
         <Helmet>
-          <title>Discussions - {localStorage.getItem("chat-room")}</title>
+          <title>
+            {`Discussions - ${localStorage.getItem("chat-room")} - With ${
+              num + 1
+            }
+            people`}
+          </title>
         </Helmet>
-        <h1
+        <div
           style={{
             height: "5%",
             justifyContent: "center",
             alignItems: "center",
           }}
         >
-          Discussion - {localStorage.getItem("chat-room")}
-        </h1>
+          <h1>
+            Discussion - {localStorage.getItem("chat-room")} - {num + 1}
+            {" people "}
+            <SupervisedUserCircleIcon fontSize="large" />
+          </h1>
+        </div>
         <div style={{ marginLeft: "25%", marginTop: "2%" }}>
           <FormControlLabel
             control={
