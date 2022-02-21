@@ -182,7 +182,7 @@ export default function Adjectives() {
                       name="techincal"
                     />
                   }
-                  label="Techincal"
+                  label="Technical"
                 />
                 <FormControlLabel
                   control={
