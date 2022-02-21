@@ -57,7 +57,7 @@ function ValidURL(str) {
 
 export default function Chat({ name, room }) {
   let users = [];
-  const [num, setNum] = useState(1);
+  const [num, setNum] = useState(0);
   const classes = useStyles();
   const [copyText, setCopyText] = useState("Copy shareable Link");
   const [mute, setMute] = useState(
@@ -154,9 +154,8 @@ export default function Chat({ name, room }) {
         <Helmet>
           <title>
             {`Discussions - ${localStorage.getItem("chat-room")} - With ${
-              num + 1
-            }
-            people`}
+              num + 1 === 1 ? "yourself" : num + 1 + " people"
+            }`}
           </title>
         </Helmet>
         <div
@@ -167,8 +166,8 @@ export default function Chat({ name, room }) {
           }}
         >
           <h1>
-            Discussion - {localStorage.getItem("chat-room")} - {num + 1}
-            {" people "}
+            Discussion - {localStorage.getItem("chat-room")} -{" "}
+            {num + 1 === 1 ? "Just you " : num + 1 + " people "}
             <SupervisedUserCircleIcon fontSize="large" />
           </h1>
         </div>
