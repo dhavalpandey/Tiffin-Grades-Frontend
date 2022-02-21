@@ -4,20 +4,58 @@ import TextField from "@mui/material/TextField";
 import ScrollToBottom from "react-scroll-to-bottom";
 import SendIcon from "@mui/icons-material/Send";
 import Button from "@mui/material/Button";
-import "./Chat.css";
 import io from "socket.io-client";
 import { useHistory, useParams } from "react-router-dom";
 import useSound from "use-sound";
 import notification from "./notification.mp3";
 import Switch from "@mui/material/Switch";
 import FormControlLabel from "@mui/material/FormControlLabel";
-import Filter from "bad-words";
 import LinkIcon from "@mui/icons-material/Link";
 import IconButton from "@mui/material/IconButton";
+import Filter from "leo-profanity";
+import Tooltip from "@mui/material/Tooltip";
+import { makeStyles } from "@mui/styles";
+
+import wordFilter from "./Filter";
+import "./Chat.css";
 
 const socketIO = io.connect("https://tiffingrades-api.herokuapp.com/");
 
+const useStyles = makeStyles((theme) => ({
+  tooltip: {
+    backgroundColor: "#D1D5DB",
+    color: "#18191A",
+    fontSize: 14.2,
+    fontFamily: "Segoe UI Historic, Segoe UI, Helvetica, Arial, sans-serif",
+    borderRadius: 7,
+    height: 28,
+  },
+}));
+
+function ValidURL(str) {
+  var pattern = new RegExp(
+    "^((ft|htt)ps?:\\/\\/)?" + // protocol
+      "((([a-z\\d]([a-z\\d-]*[a-z\\d])*)\\.)+[a-z]{2,}|" + // domain name and extension
+      "((\\d{1,3}\\.){3}\\d{1,3}))" + // OR ip (v4) address
+      "(\\:\\d+)?" + // port
+      "(\\/[-a-z\\d%@_.~+&:]*)*" + // path
+      "(\\?[;&a-z\\d%@_.,~+&:=-]*)?" + // query string
+      "(\\#[-a-z\\d_]*)?$",
+    "i",
+  );
+
+  const regex =
+    // eslint-disable-next-line
+    /(?:https?):\/\/(\w+:?\w*)?(\S+)(:\d+)?(\/|\/([\w#!:.?+=&%!\-\/]))?/;
+  if (regex.test(str) || pattern.test(str)) {
+    return true;
+  } else {
+    return false;
+  }
+}
+
 export default function Chat({ name, room }) {
+  const classes = useStyles();
   const [copyText, setCopyText] = useState("Copy shareable Link");
   const [mute, setMute] = useState(
     localStorage.getItem("mute") === "true" ? true : false,
@@ -25,7 +63,7 @@ export default function Chat({ name, room }) {
 
   let { id } = useParams();
 
-  const filter = new Filter();
+  const filter = Filter;
 
   const sleep = (time) => {
     return new Promise((resolve) => setTimeout(resolve, time));
@@ -43,13 +81,16 @@ export default function Chat({ name, room }) {
 
   const [currentMessage, setCurrentMessage] = useState("");
   const [messageList, setMessageList] = useState([]);
+  const divRef = React.useRef(null);
 
   const sendMessage = async () => {
     if (currentMessage !== "") {
       const messageData = {
         room: room,
         name,
-        message: filter.clean(currentMessage),
+        message: /[a-z]/i.test(currentMessage)
+          ? filter.clean(wordFilter(currentMessage))
+          : currentMessage,
       };
 
       await socket.emit("send-message", messageData);
@@ -72,6 +113,7 @@ export default function Chat({ name, room }) {
 
   useEffect(() => {
     socket.on("receive-message", (data) => {
+      divRef.current.scrollIntoView({ behavior: "smooth" });
       if (localStorage.getItem("mute") === "false") {
         play();
       }
@@ -143,10 +185,25 @@ export default function Chat({ name, room }) {
             {messageList.map((messageContent) => {
               if (localStorage.getItem("name") === messageContent.name) {
                 return (
-                  <div className="message" id="other">
+                  <div className="message" id="other" ref={divRef}>
                     <div>
                       <div className="message-content">
-                        <p>{messageContent.message}</p>
+                        {ValidURL(messageContent.message) ? (
+                          <a
+                            href={
+                              messageContent.message.substring(0, 8) !==
+                              "https://"
+                                ? "https://" + messageContent.message
+                                : messageContent.message
+                            }
+                            target="_blank"
+                            rel="noreferrer"
+                          >
+                            {messageContent.message}
+                          </a>
+                        ) : (
+                          <p>{messageContent.message}</p>
+                        )}
                       </div>
                       <div className="message-meta">
                         <p id="author">
@@ -158,12 +215,62 @@ export default function Chat({ name, room }) {
                     </div>
                   </div>
                 );
+              } else if (messageContent.name === "Dhaval") {
+                return (
+                  <div className="message" id="leader" ref={divRef}>
+                    <Tooltip
+                      className="tooltip"
+                      placement="right"
+                      classes={{ tooltip: classes.tooltip }}
+                      title="This message was sent by the app creator."
+                    >
+                      <div>
+                        <div className="message-content">
+                          {ValidURL(messageContent.message) ? (
+                            <a
+                              href={
+                                messageContent.message.substring(0, 8) !==
+                                "https://"
+                                  ? "https://" + messageContent.message
+                                  : messageContent.message
+                              }
+                              target="_blank"
+                              rel="noreferrer"
+                            >
+                              {messageContent.message}
+                            </a>
+                          ) : (
+                            <p>{messageContent.message}</p>
+                          )}
+                        </div>
+                        <div className="message-meta">
+                          <p id="author">Dhaval</p>
+                        </div>
+                      </div>
+                    </Tooltip>
+                  </div>
+                );
               } else {
                 return (
-                  <div className="message" id="you">
+                  <div className="message" id="you" ref={divRef}>
                     <div>
                       <div className="message-content">
-                        <p>{messageContent.message}</p>
+                        {ValidURL(messageContent.message) ? (
+                          <a
+                            href={
+                              messageContent.message.substring(0, 8) !==
+                              "https://"
+                                ? "https://" + messageContent.message
+                                : messageContent.message
+                            }
+                            target="_blank"
+                            rel="noreferrer"
+                          >
+                            {messageContent.message}
+                          </a>
+                        ) : (
+                          <p>{messageContent.message}</p>
+                        )}
                       </div>
                       <div className="message-meta">
                         <p id="author">{messageContent.name}</p>
@@ -178,6 +285,7 @@ export default function Chat({ name, room }) {
         <div className="chat-footer">
           <TextField
             required
+            cleanOnEnter
             autoComplete="off"
             id="filled-required"
             label="Your message"

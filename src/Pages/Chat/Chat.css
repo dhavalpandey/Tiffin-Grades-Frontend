@@ -97,6 +97,14 @@
   margin-right: 5px;
 }
 
+#leader .message-content {
+  background-color: #064e3b;
+}
+
+#leader .message-meta {
+  margin-right: 5px;
+}
+
 .message-meta #author {
   margin-left: 10px;
   font-weight: bold;
@@ -130,4 +138,17 @@
 
 .hide {
   opacity: 0 !important;
+}
+
+a {
+  color: #3b82f6;
+  text-decoration: none;
+}
+
+a:hover {
+  text-decoration: underline;
+}
+
+a:active {
+  color: black;
 }

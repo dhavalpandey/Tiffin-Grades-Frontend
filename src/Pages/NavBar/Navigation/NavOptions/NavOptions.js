@@ -1,5 +1,4 @@
 import React from "react";
-
 import "./NavOptions.css";
 import Tooltip from "@mui/material/Tooltip";
 import { makeStyles } from "@mui/styles";
