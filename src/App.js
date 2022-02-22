@@ -67,7 +67,8 @@ function App() {
             <Meet />
           </Route>
           <Route exact path="/chat/:id" id="id">
-            {window.location.pathname.slice(6) !== ""
+            {window.location.pathname.slice(6) !== "" &&
+            window.location.pathname.toString().includes("chat")
               ? localStorage.setItem(
                   "chat-room",
                   window.location.pathname.slice(6),

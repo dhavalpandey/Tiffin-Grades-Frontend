@@ -57,7 +57,10 @@ function ValidURL(str) {
 
 export default function Chat({ name, room }) {
   let users = [];
+  let usersNames = [];
   const [num, setNum] = useState(0);
+  const [names, setnames] = useState("You");
+
   const classes = useStyles();
   const [copyText, setCopyText] = useState("Copy shareable Link");
   const [mute, setMute] = useState(
@@ -123,7 +126,9 @@ export default function Chat({ name, room }) {
     socket.on("new-user", (data) => {
       if (!users.includes(data.googleId)) {
         users.push(data.googleId);
+        usersNames.push(data.name);
       }
+      setnames(usersNames.join(", "));
       setNum(users.length);
     });
     // eslint-disable-next-line
@@ -164,14 +169,21 @@ export default function Chat({ name, room }) {
             justifyContent: "center",
             alignItems: "center",
           }}
+          className="chattitle"
         >
-          <h1>
-            Discussion - {localStorage.getItem("chat-room")} -{" "}
-            {num + 1 === 1 ? "Just you " : num + 1 + " people "}
-            <SupervisedUserCircleIcon fontSize="large" />
-          </h1>
+          <Tooltip
+            className="tooltip"
+            classes={{ tooltip: classes.tooltip }}
+            title={"With " + names}
+          >
+            <h1>
+              Discussion - {localStorage.getItem("chat-room")} -{" "}
+              {num + 1 === 1 ? "Just you " : num + 1 + " people "}
+              <SupervisedUserCircleIcon fontSize="large" />
+            </h1>
+          </Tooltip>
         </div>
-        <div style={{ marginLeft: "25%", marginTop: "2%" }}>
+        <div style={{ marginLeft: "32%", marginTop: "2%" }}>
           <FormControlLabel
             control={
               <Switch
@@ -213,7 +225,9 @@ export default function Chat({ name, room }) {
         <div className="chat-body">
           <ScrollToBottom className="message-container">
             {messageList.map((messageContent) => {
-              if (localStorage.getItem("name") === messageContent.name) {
+              if (
+                localStorage.getItem("google_id") === messageContent.googleId
+              ) {
                 return (
                   <div className="message" id="other" ref={divRef}>
                     <div>
@@ -245,7 +259,10 @@ export default function Chat({ name, room }) {
                     </div>
                   </div>
                 );
-              } else if (messageContent.name === "Dhaval") {
+              } else if (
+                messageContent.name === "Dhaval" &&
+                messageContent.googleId === "111912170440804641372"
+              ) {
                 return (
                   <div className="message" id="leader" ref={divRef}>
                     <Tooltip
@@ -347,7 +364,7 @@ export default function Chat({ name, room }) {
           </Button>
         </div>
         <Button
-          style={{ marginTop: "5%", marginLeft: "35%" }}
+          style={{ marginTop: "2.5%", marginLeft: "40%" }}
           onClick={(event) => {
             localStorage.removeItem("chat-room");
             window.location.replace("/chat");
@@ -358,7 +375,7 @@ export default function Chat({ name, room }) {
           Leave this Discussion
         </Button>
         <Button
-          style={{ marginTop: "4%", marginLeft: "33.5%" }}
+          style={{ marginTop: "2.5%", marginLeft: "39%" }}
           onClick={(event) => {
             history.push("/public-discussions");
           }}
