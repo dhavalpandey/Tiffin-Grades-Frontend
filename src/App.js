@@ -31,6 +31,8 @@ function App() {
   // eslint-disable-next-line
   const [room, setRoom] = useState(localStorage.getItem("chat-room"));
   localStorage.setItem("chat-room", room);
+  // eslint-disable-next-line
+  let name;
 
   // eslint-disable-next-line
   let isSafari = window.safari !== undefined;
@@ -73,7 +75,8 @@ function App() {
                   "chat-room",
                   window.location.pathname.slice(6),
                 )
-              : console.log(window.location.pathname.slice(6))}
+              : // eslint-disable-next-line
+                (name = window.location.pathname.slice(6))}
             <Chat
               name={localStorage.getItem("name")}
               room={localStorage.getItem("chat-room")}

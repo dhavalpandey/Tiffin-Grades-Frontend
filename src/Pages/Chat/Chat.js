@@ -124,7 +124,10 @@ export default function Chat({ name, room }) {
 
   useEffect(() => {
     socket.on("new-user", (data) => {
-      if (!users.includes(data.googleId)) {
+      if (
+        !users.includes(data.googleId) &&
+        data.googleId !== localStorage.getItem("google_id")
+      ) {
         users.push(data.googleId);
         usersNames.push(data.name);
       }
@@ -136,7 +139,10 @@ export default function Chat({ name, room }) {
 
   useEffect(() => {
     socket.on("receive-message", (data) => {
-      if (!users.includes(data.googleId)) {
+      if (
+        !users.includes(data.googleId) &&
+        data.googleId !== localStorage.getItem("google_id")
+      ) {
         users.push(data.googleId);
       }
       setNum(users.length);
@@ -222,14 +228,14 @@ export default function Chat({ name, room }) {
             label={copyText}
           />
         </div>
-        <div className="chat-body">
+        <div className="chat-body" ref={divRef}>
           <ScrollToBottom className="message-container">
             {messageList.map((messageContent) => {
               if (
                 localStorage.getItem("google_id") === messageContent.googleId
               ) {
                 return (
-                  <div className="message" id="other" ref={divRef}>
+                  <div className="message" id="other">
                     <div>
                       <div className="message-content">
                         {ValidURL(messageContent.message) ? (
@@ -341,7 +347,7 @@ export default function Chat({ name, room }) {
             style={{
               borderColor: "white",
               backgroundColor: "#f8fafc",
-              width: "78%",
+              width: "80%",
               height: "100%",
             }}
             onChange={(event) => {
@@ -357,7 +363,7 @@ export default function Chat({ name, room }) {
             onClick={(event) => {
               sendMessage();
             }}
-            style={{ width: "22%", height: "100%" }}
+            style={{ width: "20%", height: "100%" }}
             endIcon={<SendIcon />}
           >
             Send
