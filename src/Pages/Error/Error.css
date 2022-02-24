@@ -182,10 +182,17 @@ textarea {
   font-family: "Montserrat", Helvetica, sans-serif;
   color: #bbb;
 }
+
 h1 {
   text-align: center;
   margin: 30px 15px;
 }
+
+h4 {
+  text-align: center;
+  margin: 30px 15px;
+}
+
 .zoom-area {
   max-width: 490px;
   margin: 30px auto 30px;

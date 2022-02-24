@@ -146,7 +146,6 @@ export default function Chat({ name, room }) {
         users.push(data.googleId);
       }
       setNum(users.length);
-      divRef.current.scrollIntoView({ behavior: "smooth" });
       if (localStorage.getItem("mute") === "false") {
         play();
       }
@@ -154,10 +153,36 @@ export default function Chat({ name, room }) {
     // eslint-disable-next-line
   }, [play]);
 
+  useEffect(() => {
+    const messageData = {
+      room: room,
+      googleId: localStorage.getItem("google_id"),
+      name,
+      message: localStorage.getItem("name") + " has joined this discussion",
+    };
+
+    socket.emit("send-message", messageData);
+    setCurrentMessage("");
+    // eslint-disable-next-line
+  }, []);
+
   const handleMuteChange = (event) => {
     setMute(event.target.checked);
     localStorage.setItem("mute", event.target.checked);
   };
+
+  window.addEventListener("beforeunload", (e) => {
+    e.preventDefault();
+    const messageData = {
+      room: room,
+      googleId: localStorage.getItem("google_id"),
+      name,
+      message: localStorage.getItem("name") + " has left this discussion",
+    };
+
+    socket.emit("send-message", messageData);
+    setCurrentMessage("");
+  });
 
   return (
     <>
@@ -264,6 +289,14 @@ export default function Chat({ name, room }) {
                       </div>
                     </div>
                   </div>
+                );
+              } else if (
+                messageContent.message.includes("has joined this discussion")
+              ) {
+                return (
+                  <i>
+                    <h4>{messageContent.message}</h4>
+                  </i>
                 );
               } else if (
                 messageContent.name === "Dhaval" &&
