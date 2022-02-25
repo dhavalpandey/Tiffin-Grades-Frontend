@@ -85,6 +85,7 @@ export default function ActiveMeets() {
                   Ending in: {timeSince(meet.expiringAt)}
                 </h2>
                 <img
+                  referrerPolicy="no-referrer"
                   style={{ float: "right", margin: "-18% 4% 15px 0px" }}
                   src={meet.profilePicture}
                   alt="Host PFP"
@@ -113,7 +114,7 @@ export default function ActiveMeets() {
     } else {
       return (
         <h2
-          style={{ marginTop: "2%", textAlign: "center", overflow: "hidden" }}
+          style={{ marginTop: "10%", textAlign: "center", overflow: "hidden" }}
         >
           There are no active meets
         </h2>

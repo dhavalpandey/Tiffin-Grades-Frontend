@@ -6,6 +6,7 @@ import CircularProgress from "@mui/material/CircularProgress";
 import Card from "@mui/material/Card";
 import Button from "@mui/material/Button";
 import { Link } from "react-router-dom";
+import "./Chat.css";
 
 export default function PublicChat() {
   const [Discussions, setDiscussions] = React.useState([]);
@@ -35,21 +36,10 @@ export default function PublicChat() {
     return (
       <div key={index} className="item">
         <>
-          <Box
-            sx={{
-              marginLeft: "17.5%",
-              maxWidth: "50vw",
-              maxHeight: "10vh",
-              paddingTop: "4%",
-              marginBottom: "3%",
-            }}
-          >
+          <Box>
             <Card
               style={{ backgroundColor: "#14283b" }}
               sx={{
-                marginLeft: "40%",
-                maxWidth: "30vw",
-                maxHeight: "60vh",
                 paddingTop: "0%",
                 paddingLeft: "2.5%",
                 borderRadius: "35px",
@@ -142,7 +132,7 @@ export default function PublicChat() {
           </Box>
         ) : (
           <div>
-            <div className="container">
+            <div className="chat-container">
               {
                 // eslint-disable-next-line
                 (discussion, index) => {}

@@ -156,3 +156,22 @@ a:hover {
 a:active {
   color: black;
 }
+
+.chat-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.item {
+  min-width: 30vw;
+  min-height: 10vh;
+  padding-top: 4%;
+  margin-bottom: 3%;
+  padding-top: 0%;
+}
+
+.item:hover {
+  cursor: pointer;
+}

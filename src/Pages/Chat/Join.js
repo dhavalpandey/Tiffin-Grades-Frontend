@@ -83,7 +83,7 @@ export default function Join() {
     return (
       <div className="createBtn">
         <Helmet>
-          <title>Join a Discussion</title>
+          <title>Discussions</title>
         </Helmet>
         <div
           className="joinDisscussion"
@@ -106,7 +106,7 @@ export default function Join() {
           onClose={handleClose}
           aria-describedby="alert-dialog-slide-description"
         >
-          <h1 className="heading3">Join a Discussion</h1>
+          <h1 className="heading3">Join or Create a Discussion</h1>
           <DialogContent>
             <DialogContentText id="alert-dialog-slide-description">
               <TextField
@@ -120,7 +120,11 @@ export default function Join() {
                 fullWidth
                 autoComplete="off"
                 onChange={(event) => {
-                  setRoom(event.target.value);
+                  if (event.target.value.length !== 16) {
+                    setRoom(event.target.value);
+                  } else {
+                    event.preventDefault();
+                  }
                 }}
                 onKeyPress={(event) => {
                   event.key === "Enter" && joinRoom();
@@ -197,7 +201,7 @@ export default function Join() {
       return (
         <div className="createBtn">
           <Helmet>
-            <title>Join a Discussion</title>
+            <title>Discussions</title>
           </Helmet>
           <div
             className="joinDisscussion"
@@ -220,7 +224,7 @@ export default function Join() {
             onClose={handleClose}
             aria-describedby="alert-dialog-slide-description"
           >
-            <h1 className="heading3">Join a Discussion</h1>
+            <h1 className="heading3">Join or Create a Discussion</h1>
             <DialogContent>
               <DialogContentText id="alert-dialog-slide-description">
                 <TextField
@@ -234,7 +238,11 @@ export default function Join() {
                   fullWidth
                   autoComplete="off"
                   onChange={(event) => {
-                    setRoom(event.target.value);
+                    if (event.target.value.length !== 16) {
+                      setRoom(event.target.value);
+                    } else {
+                      event.preventDefault();
+                    }
                   }}
                   onKeyPress={(event) => {
                     event.key === "Enter" && joinRoom();
