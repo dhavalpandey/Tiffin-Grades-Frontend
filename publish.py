@@ -32,7 +32,7 @@ def remove_extra_scripts():
 
 def frontend_deploy():
     try:
-        # os.system("npm run build")
+        os.system("npm run build")
 
         remove_extra_scripts()
 

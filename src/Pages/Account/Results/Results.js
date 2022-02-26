@@ -181,6 +181,25 @@ export default function Results() {
       );
     }
   } else {
-    window.location.replace("/");
+    return (
+      <>
+        <Helmet>
+          <title>Please Submit your Options to view this page.</title>
+        </Helmet>
+        <h1 style={{ marginTop: "20%" }}>
+          Please submit your options first to view this setting
+        </h1>
+        <Link
+          to="/options"
+          style={{
+            color: "inherit",
+            textDecoration: "inherit",
+            marginLeft: "45%",
+          }}
+        >
+          <Button variant="contained">Submit your Options</Button>
+        </Link>
+      </>
+    );
   }
 }

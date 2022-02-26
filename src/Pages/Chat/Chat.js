@@ -465,7 +465,11 @@ export default function Chat({ name, room }) {
               height: "100%",
             }}
             onChange={(event) => {
-              setCurrentMessage(event.target.value);
+              if (event.target.value.length <= 20) {
+                setCurrentMessage(event.target.value);
+              } else {
+                event.preventDefault();
+              }
             }}
             onKeyPress={(event) => {
               event.key === "Enter" && sendMessage();

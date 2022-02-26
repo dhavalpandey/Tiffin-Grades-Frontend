@@ -8,13 +8,11 @@ export default function SideBar() {
     <>
       <Divider />
       <FadeIn>
-        <Panel title="Teachers" locked={true} link="teachers" />
-        <Panel title="Find your Options" locked={false} link="options" />
-        <Panel title="Popular Subjects" locked={false} link="discover" />
-        <Panel title="Study Sessions" locked={false} link="meet" />
-        <Panel title="Classroom" locked={true} link="class" />
-        <Panel title="Calendar" locked={true} link="calender" />
-        <Panel title="Help" locked={true} link="help" />
+        <Panel title="options" locked={true} link="teachers" />
+        <Panel title="Your Options" locked={false} link="account/results" />
+        <Panel title="Account Details" locked={true} link="discover" />
+        <Panel title="Logout" locked={false} link="account/logout" />
+        <Panel title="Delete Account" locked={true} link="options" />
       </FadeIn>
     </>
   );
