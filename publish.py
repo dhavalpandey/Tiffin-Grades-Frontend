@@ -4,7 +4,7 @@ import webbrowser
 import json
 
 length_of_arguments = len(sys.argv)
-git_commit_message = str(sys.argv[1])
+git_commit_message = " ".join(sys.argv[1:])
 
 
 def error():
@@ -32,7 +32,7 @@ def remove_extra_scripts():
 
 def frontend_deploy():
     try:
-        os.system("npm run build")
+        # os.system("npm run build")
 
         remove_extra_scripts()
 

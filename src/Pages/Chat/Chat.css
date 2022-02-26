@@ -175,3 +175,7 @@ a:active {
 .item:hover {
   cursor: pointer;
 }
+
+.left {
+  color: #ef4444;
+}

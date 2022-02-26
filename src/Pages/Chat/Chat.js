@@ -115,6 +115,12 @@ export default function Chat({ name, room }) {
   useEffect(() => {
     socket.on("receive-message", (data) => {
       setMessageList((list) => [...list, data]);
+      if (
+        !users.includes(data.googleId) &&
+        data.googleId !== localStorage.getItem("google_id")
+      ) {
+        users.push(data.googleId);
+      }
       if (localStorage.getItem("mute") === "false") {
         play();
       }
@@ -124,13 +130,53 @@ export default function Chat({ name, room }) {
 
   useEffect(() => {
     socket.on("new-user", (data) => {
+      const valueArr = userIds.map((item) => {
+        return item.name;
+      });
+
+      const isDuplicate = valueArr.some((item, idx) => {
+        return valueArr.indexOf(item) !== idx;
+      });
+
       if (
-        !users.includes(data.googleId) &&
-        data.googleId !== localStorage.getItem("google_id")
+        !isDuplicate &&
+        data.data.chatRoom === localStorage.getItem("chat-room")
       ) {
-        users.push(data.googleId);
-        usersNames.push(data.name);
+        userIds = [
+          ...userIds,
+          {
+            name: data.data.name,
+            id: data.id,
+          },
+        ];
+      } else {
+        if (userIds.length !== 0) {
+          userIds = userIds.map((obj) =>
+            obj.name === data.data.name ? { ...obj, id: data.id } : obj,
+          );
+        }
       }
+
+      const ids = userIds.map((o) => o.id);
+      // eslint-disable-next-line
+      userIds = userIds.filter(
+        ({ name }, index) => !ids.includes(name, index + 1),
+      );
+
+      userIds = [
+        ...new Map(
+          userIds.map((item) => [JSON.stringify(item), item]),
+        ).values(),
+      ];
+
+      if (
+        !users.includes(data.data.googleId) &&
+        data.data.googleId !== localStorage.getItem("google_id")
+      ) {
+        users.push(data.data.googleId);
+        usersNames.push(data.data.name);
+      }
+
       setnames(usersNames.join(", "));
       setNum(users.length);
     });
@@ -145,7 +191,6 @@ export default function Chat({ name, room }) {
       ) {
         users.push(data.googleId);
       }
-      setNum(users.length);
       if (localStorage.getItem("mute") === "false") {
         play();
       }
@@ -166,23 +211,45 @@ export default function Chat({ name, room }) {
     // eslint-disable-next-line
   }, []);
 
+  let userIds = [];
+
+  useEffect(() => {
+    socket.on("disconnect-user", (data) => {
+      const checkExists = (obj) => obj.id === data;
+      let temp;
+      if (userIds.some(checkExists)) {
+        for (let i = 0; i < userIds.length; i++) {
+          if (userIds[i].id === data) {
+            temp = userIds[i].name;
+
+            const messageData = {
+              room: localStorage.getItem("chat-room"),
+              googleId: localStorage.getItem("google_id"),
+              name: localStorage.getItem("name"),
+              message: temp + " has left this discussion",
+            };
+            setMessageList((list) => [...list, messageData]);
+
+            // eslint-disable-next-line
+            userIds = userIds.filter((person) => person.id !== data);
+            let index = usersNames.indexOf(temp);
+            // eslint-disable-next-line
+            usersNames = usersNames.filter((person) => person !== temp);
+            users.splice(index, 1);
+
+            setnames(usersNames.join(", "));
+            setNum(num - 1);
+          }
+        }
+      }
+    });
+    // eslint-disable-next-line
+  }, [play]);
+
   const handleMuteChange = (event) => {
     setMute(event.target.checked);
     localStorage.setItem("mute", event.target.checked);
   };
-
-  window.addEventListener("beforeunload", (e) => {
-    e.preventDefault();
-    const messageData = {
-      room: room,
-      googleId: localStorage.getItem("google_id"),
-      name,
-      message: localStorage.getItem("name") + " has left this discussion",
-    };
-
-    socket.emit("send-message", messageData);
-    setCurrentMessage("");
-  });
 
   return (
     <>
@@ -190,7 +257,7 @@ export default function Chat({ name, room }) {
         <Helmet>
           <title>
             {`Discussions - ${localStorage.getItem("chat-room")} - With ${
-              num + 1 === 1 ? "yourself" : num + 1 + " people"
+              num + 1 <= 1 ? "yourself" : num + 1 + " people"
             }`}
           </title>
         </Helmet>
@@ -205,11 +272,12 @@ export default function Chat({ name, room }) {
           <Tooltip
             className="tooltip"
             classes={{ tooltip: classes.tooltip }}
-            title={"With " + names}
+            title={names.length >= 1 ? "With " + names : "With You"}
           >
             <h1>
-              Discussion - {localStorage.getItem("chat-room")} -{" "}
-              {num + 1 === 1 ? "Just you " : num + 1 + " people "}
+              {`Discussions - ${localStorage.getItem("chat-room")} - ${
+                num + 1 <= 1 ? "Just you" : "With " + (num + 1) + " people"
+              }`}
               <SupervisedUserCircleIcon fontSize="large" />
             </h1>
           </Tooltip>
@@ -257,6 +325,27 @@ export default function Chat({ name, room }) {
           <ScrollToBottom className="message-container">
             {messageList.map((messageContent) => {
               if (
+                messageContent.message.includes("has joined this discussion") ||
+                messageContent.message.includes("has left this discussion")
+              ) {
+                return (
+                  <i>
+                    <b>
+                      <h4
+                        className={
+                          messageContent.message.includes(
+                            "has left this discussion",
+                          )
+                            ? "left"
+                            : "joined"
+                        }
+                      >
+                        {messageContent.message}
+                      </h4>
+                    </b>
+                  </i>
+                );
+              } else if (
                 localStorage.getItem("google_id") === messageContent.googleId
               ) {
                 return (
@@ -289,14 +378,6 @@ export default function Chat({ name, room }) {
                       </div>
                     </div>
                   </div>
-                );
-              } else if (
-                messageContent.message.includes("has joined this discussion")
-              ) {
-                return (
-                  <i>
-                    <h4>{messageContent.message}</h4>
-                  </i>
                 );
               } else if (
                 messageContent.name === "Dhaval" &&
