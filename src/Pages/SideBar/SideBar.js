@@ -10,9 +10,13 @@ export default function SideBar() {
       <FadeIn>
         <Panel title="options" locked={true} link="teachers" />
         <Panel title="Your Options" locked={false} link="account/results" />
-        <Panel title="Account Details" locked={true} link="discover" />
+        <Panel title="Account Details" locked={true} link="account/details" />
         <Panel title="Logout" locked={false} link="account/logout" />
-        <Panel title="Delete Account" locked={true} link="options" />
+        <Panel
+          title="Delete Account"
+          locked={false}
+          link="account/delete-account"
+        />
       </FadeIn>
     </>
   );

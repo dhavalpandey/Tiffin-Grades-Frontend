@@ -4,3 +4,9 @@
   margin-left: 24%;
   margin-bottom: 10%;
 }
+
+.warning {
+  text-align: center;
+  justify-content: center;
+  align-items: center;
+}

@@ -87,7 +87,9 @@ export default function Chat({ name, room }) {
     });
   };
 
-  joinRoom();
+  const isBlank = (str) => {
+    return !str || /^\s*$/.test(str);
+  };
 
   const [currentMessage, setCurrentMessage] = useState("");
   const [messageList, setMessageList] = useState([]);
@@ -130,6 +132,7 @@ export default function Chat({ name, room }) {
 
   useEffect(() => {
     socket.on("new-user", (data) => {
+      joinRoom();
       const valueArr = userIds.map((item) => {
         return item.name;
       });
@@ -199,6 +202,7 @@ export default function Chat({ name, room }) {
   }, [play]);
 
   useEffect(() => {
+    joinRoom();
     const messageData = {
       room: room,
       googleId: localStorage.getItem("google_id"),
@@ -465,21 +469,25 @@ export default function Chat({ name, room }) {
               height: "100%",
             }}
             onChange={(event) => {
-              if (event.target.value.length <= 20) {
+              if (event.target.value.length <= 40) {
                 setCurrentMessage(event.target.value);
               } else {
                 event.preventDefault();
               }
             }}
             onKeyPress={(event) => {
-              event.key === "Enter" && sendMessage();
+              if (!isBlank(event.target.value)) {
+                event.key === "Enter" && sendMessage();
+              }
             }}
           />
           <Button
-            disabled={currentMessage === "" ? true : false}
+            disabled={isBlank(currentMessage) ? true : false}
             variant="contained"
             onClick={(event) => {
-              sendMessage();
+              if (!isBlank(event.target.value)) {
+                sendMessage();
+              }
             }}
             style={{ width: "20%", height: "100%" }}
             endIcon={<SendIcon />}

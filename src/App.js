@@ -20,6 +20,8 @@ import PublicChat from "./Pages/Chat/PublicChat";
 import Account from "./Pages/Account/Account";
 import Results from "./Pages/Account/Results/Results";
 import Logout from "./Pages/Account/Logout";
+import Delete from ".//Pages/Account/Delete";
+import Details from ".//Pages/Account/Details";
 
 function App() {
   // eslint-disable-next-line
@@ -83,6 +85,12 @@ function App() {
           </Route>
           <Route exact path="/account/logout">
             <Logout />
+          </Route>
+          <Route exact path="/account/delete-account">
+            <Delete />
+          </Route>
+          <Route exact path="/account/details">
+            <Details />
           </Route>
           <Route exact path="/account">
             <Account />
