@@ -4,25 +4,24 @@ import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 
 import { getStatus, getUploaded, getYear } from "./Global/Constants";
 
-//Components
-const Dashboard = React.lazy(() => import("./Pages/Dashboard/Dashboard"));
-const Adjectives = React.lazy(() => import("./Pages/Adjectives/Adjectives"));
-const Login = React.lazy(() => import("./Pages/Login/Login"));
-const Options = React.lazy(() => import("./Pages/Options/Options"));
-const Discover = React.lazy(() => import("./Pages/Discover/Discover"));
+import Dashboard from "./Pages/Dashboard/Dashboard";
+import Adjectives from "./Pages/Adjectives/Adjectives";
+import Login from "./Pages/Login/Login";
+import Options from "./Pages/Options/Options";
+import Discover from "./Pages/Discover/Discover";
 // eslint-disable-next-line
-const Meet = React.lazy(() => import("./Pages/Meet/Meet"));
-const ActiveMeets = React.lazy(() => import("./Pages/Meet/ActiveMeets"));
-const Navbar = React.lazy(() => import("./Pages/NavBar/NavBar"));
-const Error = React.lazy(() => import("./Pages/Error/Error"));
-const Join = React.lazy(() => import("./Pages/Chat/Join"));
-const Chat = React.lazy(() => import("./Pages/Chat/Chat"));
-const PublicChat = React.lazy(() => import("./Pages/Chat/PublicChat"));
-const Account = React.lazy(() => import("./Pages/Account/Account"));
-const Results = React.lazy(() => import("./Pages/Account/Results/Results"));
-const Logout = React.lazy(() => import("./Pages/Account/Logout"));
-const Delete = React.lazy(() => import("./Pages/Account/Delete"));
-const Details = React.lazy(() => import("./Pages/Account/Details"));
+import Meet from "./Pages/Meet/Meet";
+import ActiveMeets from "./Pages/Meet/ActiveMeets";
+import Navbar from "./Pages/NavBar/NavBar";
+import Error from "./Pages/Error/Error";
+import Join from "./Pages/Chat/Join";
+import Chat from "./Pages/Chat/Chat";
+import PublicChat from "./Pages/Chat/PublicChat";
+import Account from "./Pages/Account/Account";
+import Results from "./Pages/Account/Results/Results";
+import Logout from "./Pages/Account/Logout";
+import Delete from ".//Pages/Account/Delete";
+import Details from ".//Pages/Account/Details";
 
 function App() {
   // eslint-disable-next-line
