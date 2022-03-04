@@ -119,9 +119,7 @@ export default function Meet() {
     setIsDisabled(isDisabled >= 2 ? 2 : isDisabled + 1);
   };
 
-  const link = global.config.development.status
-    ? "http://localhost:5000"
-    : "https://tiffingrades-api.herokuapp.com";
+  const link = global.config.url;
 
   const handleCreate = async () => {
     window.open(`https://g.co/meet/${code}`);

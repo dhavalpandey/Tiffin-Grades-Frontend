@@ -20,8 +20,9 @@ import PublicChat from "./Pages/Chat/PublicChat";
 import Account from "./Pages/Account/Account";
 import Results from "./Pages/Account/Results/Results";
 import Logout from "./Pages/Account/Logout";
-import Delete from ".//Pages/Account/Delete";
-import Details from ".//Pages/Account/Details";
+import Delete from "./Pages/Account/Delete";
+import Details from "./Pages/Account/Details";
+import Predict from "./Pages/Predict/Predict";
 
 function App() {
   // eslint-disable-next-line
@@ -94,6 +95,9 @@ function App() {
           </Route>
           <Route exact path="/account">
             <Account />
+          </Route>
+          <Route exact path="/predict">
+            <Predict />
           </Route>
           <Route exact path="/">
             <Dashboard />

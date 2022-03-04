@@ -20,8 +20,6 @@ import SupervisedUserCircleIcon from "@mui/icons-material/SupervisedUserCircle";
 import wordFilter from "./Filter";
 import "./Chat.css";
 
-const socketIO = io.connect("https://tiffingrades-api.herokuapp.com/");
-
 const useStyles = makeStyles((theme) => ({
   tooltip: {
     backgroundColor: "#D1D5DB",
@@ -55,7 +53,29 @@ function ValidURL(str) {
   }
 }
 
+let socketIO;
+if (
+  window.location.pathname.slice(6) !== "" &&
+  window.location.pathname.toString().includes("chat")
+) {
+  socketIO = io.connect("https://tiffingrades-api.azurewebsites.net/");
+}
+
 export default function Chat({ name, room }) {
+  useEffect(() => {
+    joinRoom();
+    const messageData = {
+      room: room,
+      googleId: localStorage.getItem("google_id"),
+      name,
+      message: localStorage.getItem("name") + " has joined this discussion",
+    };
+
+    socket.emit("send-message", messageData);
+    setCurrentMessage("");
+    // eslint-disable-next-line
+  }, []);
+
   let users = [];
   let usersNames = [];
   const [num, setNum] = useState(0);
@@ -200,20 +220,6 @@ export default function Chat({ name, room }) {
     });
     // eslint-disable-next-line
   }, [play]);
-
-  useEffect(() => {
-    joinRoom();
-    const messageData = {
-      room: room,
-      googleId: localStorage.getItem("google_id"),
-      name,
-      message: localStorage.getItem("name") + " has joined this discussion",
-    };
-
-    socket.emit("send-message", messageData);
-    setCurrentMessage("");
-    // eslint-disable-next-line
-  }, []);
 
   let userIds = [];
 

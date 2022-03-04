@@ -23,9 +23,7 @@ export default function Login() {
     localStorage.setItem("name", successResponse.profileObj.givenName);
     localStorage.setItem("image", successResponse.profileObj.imageUrl);
 
-    const link = global.config.development.status
-      ? "http://localhost:5000"
-      : "https://tiffingrades-api.herokuapp.com";
+    const link = global.config.url;
 
     await fetch(link + "/signup", {
       method: "POST",

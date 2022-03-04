@@ -25,9 +25,7 @@ export default function Join() {
   const [copyText, setCopyText] = useState("Copy shareable Link");
   const history = useHistory();
 
-  const link = global.config.development.status
-    ? "http://localhost:5000"
-    : "https://tiffingrades-api.herokuapp.com";
+  const link = global.config.url;
 
   const joinRoom = async () => {
     if (checked) {

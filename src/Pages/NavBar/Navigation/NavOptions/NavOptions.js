@@ -51,7 +51,14 @@ export default function NavOptions() {
           className="icon-container"
           onClick={() => {
             if (localStorage.getItem("chat-room") !== "null") {
-              routerHistory.push("/chat/" + localStorage.getItem("chat-room"));
+              if (
+                !window.location.pathname.slice(6) !== "" &&
+                !window.location.pathname.toString().includes("chat")
+              ) {
+                window.location.replace(
+                  "/chat/" + localStorage.getItem("chat-room"),
+                );
+              }
             } else {
               routerHistory.push("/chat");
             }

@@ -19,9 +19,7 @@ export default function ActiveMeets() {
 
   const [noMeets, setNoMeets] = React.useState(false);
 
-  const link = global.config.development.status
-    ? "http://localhost:5000"
-    : "https://tiffingrades-api.herokuapp.com";
+  const link = global.config.url;
 
   useEffect(() => {
     const variables = {

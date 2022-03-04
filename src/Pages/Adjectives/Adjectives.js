@@ -38,9 +38,7 @@ export default function Adjectives() {
     console.log("clicked");
   };
 
-  const link = global.config.development.status
-    ? "http://localhost:5000"
-    : "https://tiffingrades-api.herokuapp.com";
+  const link = global.config.url;
 
   const handleSubmit = async (event) => {
     if (!error && year !== 0) {

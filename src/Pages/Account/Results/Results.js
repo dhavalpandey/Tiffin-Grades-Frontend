@@ -26,9 +26,7 @@ export default function Results() {
   const [fetched, setFetched] = useState(false);
   const [loading, setLoading] = useState(false);
 
-  const link = global.config.development.status
-    ? "http://localhost:5000"
-    : "https://tiffingrades-api.herokuapp.com";
+  const link = global.config.url;
 
   const fetchData = async () => {
     setLoading(true);

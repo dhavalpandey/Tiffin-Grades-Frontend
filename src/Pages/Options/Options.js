@@ -240,13 +240,10 @@ export default function Options() {
   const [item10, setitem10] = useState([]);
 
   const [fetchingData, setFetchingData] = useState(false);
-  const link = global.config.development.status
-    ? "http://localhost:5000"
-    : "https://tiffingrades-api.herokuapp.com";
 
   const fetchData = async () => {
     setLoading(true);
-    await fetch(link + "/results", {
+    await fetch(global.config.url + "/results", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -310,7 +307,7 @@ export default function Options() {
       ", " +
       Object.keys(data)[2].toString();
 
-    await fetch(link + "/options", {
+    await fetch(global.config.url + "/options", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",

@@ -6,6 +6,7 @@ import Button from "@mui/material/Button";
 import WorkSvg from "./work.svg";
 import DisoverSvg from "./discover.svg";
 import Meet from "./meet.svg";
+import AI from "./ai.svg";
 import { CardActionArea } from "@mui/material";
 import "./Dashboard.css";
 import { Helmet } from "react-helmet";
@@ -126,7 +127,7 @@ export default function Dashboard() {
           </Card>
         </div>
       </div>
-      {/* <div className="card4">
+      <div className="card4">
         <Card
           style={{ backgroundColor: "#14283b" }}
           color="black"
@@ -135,33 +136,28 @@ export default function Dashboard() {
           <CardActionArea style={{ backgroundColor: "#f8fafc" }}>
             <CardMedia
               component="img"
-              alt="optionsSelector"
+              alt="AI Tss Predictor"
               height="230"
               width="100"
-              image={Results}
+              image={AI}
             />
           </CardActionArea>
           <h2 className="h2" style={{ color: "#f8fafc" }}>
-            Your Results
+            AI TSS Predictor
           </h2>
           <CardActions>
-            <Tooltip title={title} placement="bottom">
-              <div className="btn">
-                <Button
-                  disabled={!hasOptions}
-                  onClick={() => {
-                    history.push("/results");
-                  }}
-                  variant="contained"
-                  color="primary"
-                >
-                  Take me there
-                </Button>
-              </div>
-            </Tooltip>
+            <Button
+              onClick={() => {
+                history.push("/predict");
+              }}
+              variant="contained"
+              color="primary"
+            >
+              Take me there
+            </Button>
           </CardActions>
         </Card>
-      </div> */}
+      </div>
     </div>
   );
 }

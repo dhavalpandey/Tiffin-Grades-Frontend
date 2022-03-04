@@ -11,9 +11,7 @@ const Transition = React.forwardRef(function Transition(props, ref) {
 });
 
 export default function Delete() {
-  const link = global.config.development.status
-    ? "http://localhost:5000"
-    : "https://tiffingrades-api.herokuapp.com";
+  const link = global.config.url;
 
   const [open, setOpen] = useState(false);
   const handleClickOpen = () => {
