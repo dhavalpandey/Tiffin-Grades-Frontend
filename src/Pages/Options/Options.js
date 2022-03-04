@@ -15,7 +15,6 @@ import TableHead from "@mui/material/TableHead";
 import TableRow from "@mui/material/TableRow";
 import Paper from "@mui/material/Paper";
 import { Helmet } from "react-helmet";
-import { useHistory } from "react-router-dom";
 import Button from "@mui/material/Button";
 
 import "./Option.css";
@@ -45,7 +44,6 @@ function CircularProgressWithLabel(props) {
 }
 
 export default function Options() {
-  const history = useHistory();
   const [loading, setLoading] = useState(false);
 
   //Art
@@ -1322,11 +1320,12 @@ export default function Options() {
         </TableContainer>
         <div className="backButton">
           <Button
+            variant="contained"
             onClick={() => {
-              history.push("/options");
+              window.location.reload();
             }}
           >
-            Back to Home
+            Try it again?
           </Button>
         </div>
       </div>

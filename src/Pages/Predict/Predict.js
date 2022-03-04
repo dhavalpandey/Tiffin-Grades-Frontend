@@ -2,6 +2,8 @@ import React, { useState } from "react";
 import TextField from "@mui/material/TextField";
 import MenuItem from "@mui/material/MenuItem";
 import Button from "@mui/material/Button";
+import LoadingButton from "@mui/lab/LoadingButton";
+import { Helmet } from "react-helmet";
 
 export default function Predict() {
   const [subject, setSubject] = useState("");
@@ -11,6 +13,7 @@ export default function Predict() {
   const [prediction, setPrediction] = useState("");
 
   const getPrediction = async (variables) => {
+    setLoading(true);
     await fetch(
       link + "/" + grades,
       {
@@ -40,6 +43,8 @@ export default function Predict() {
       setDisabled(false);
     }
   };
+
+  const [loading, setLoading] = useState(false);
 
   const regex = /^[1-9,]*$/;
 
@@ -105,6 +110,12 @@ export default function Predict() {
         }}
       >
         <div>
+          <Helmet>
+            <title>
+              Our AI thinks you will get {prediction} in your next {subject}{" "}
+              test
+            </title>
+          </Helmet>
           <h1>Our Machine Learning Model predicts that you will recieve</h1>
           <h1 style={{ color: "yellow" }}>{prediction} TSS</h1>
           <h2 style={{ display: "flex", justifyContent: "center" }}>
@@ -119,6 +130,7 @@ export default function Predict() {
             setSubject("");
             setGrades("");
             setDisabled(true);
+            setLoading(false);
           }}
           style={{ marginLeft: "47%" }}
         >
@@ -139,6 +151,9 @@ export default function Predict() {
           width: "10%",
         }}
       >
+        <Helmet>
+          <title>AI Grade Predictor</title>
+        </Helmet>
         <div>
           <TextField
             style={{
@@ -187,7 +202,7 @@ export default function Predict() {
           />
         </div>
         <div>
-          <Button
+          <LoadingButton
             style={{
               marginTop: "20%",
               width: "200%",
@@ -196,9 +211,10 @@ export default function Predict() {
             variant="contained"
             disabled={disabled}
             onClick={getPrediction}
+            loading={loading}
           >
             Predict Grade
-          </Button>
+          </LoadingButton>
         </div>
       </div>
     );
