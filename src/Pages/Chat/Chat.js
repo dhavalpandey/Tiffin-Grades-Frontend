@@ -58,7 +58,7 @@ if (
   window.location.pathname.slice(6) !== "" &&
   window.location.pathname.toString().includes("chat")
 ) {
-  socketIO = io.connect("https://tiffingrades-api.azurewebsites.net/");
+  socketIO = io.connect("https://tiffingrades-api.herokuapp.com/");
 }
 
 export default function Chat({ name, room }) {
@@ -115,18 +115,18 @@ export default function Chat({ name, room }) {
   const [messageList, setMessageList] = useState([]);
   const divRef = React.useRef(null);
 
-  const sendMessage = async () => {
+  const sendMessage = () => {
     if (currentMessage !== "") {
       const messageData = {
         room: room,
         googleId: localStorage.getItem("google_id"),
         name,
-        message: /[a-z]/i.test(currentMessage)
+        message: /[a-z]/i.test()
           ? filter.clean(wordFilter(currentMessage))
           : currentMessage,
       };
 
-      await socket.emit("send-message", messageData);
+      socket.emit("send-message", messageData);
       setMessageList((list) => [...list, messageData]);
       setCurrentMessage("");
     }

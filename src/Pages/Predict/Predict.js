@@ -32,21 +32,24 @@ export default function Predict() {
         setPrediction(res.prediction);
       })
       .catch((error) => {
-        alert(error);
-        window.location.reload();
+        alert(
+          "Please ensure that the grades you entered are between 0 and 100",
+        );
+        setPrediction("");
+        setSubject("");
+        setGrades("");
+        setDisabled(true);
+        setLoading(false);
       });
   };
 
   const handleChange = (event) => {
     setGrades(event.target.value);
-    if (subject) {
-      setDisabled(false);
-    }
   };
 
   const [loading, setLoading] = useState(false);
 
-  const regex = /^[1-9,]*$/;
+  const regex = /^[0-9,]*$/;
 
   const subjects = [
     {
@@ -99,6 +102,8 @@ export default function Predict() {
     setSubject(event.target.value);
     if (grades) {
       setDisabled(false);
+    } else {
+      setDisabled(true);
     }
   };
 
@@ -147,7 +152,7 @@ export default function Predict() {
           justifyContent: "center",
           flexFlow: "row wrap",
           flexBasis: "100%",
-          marginLeft: "43%",
+          marginLeft: "42%",
           width: "10%",
         }}
       >
@@ -159,7 +164,7 @@ export default function Predict() {
             style={{
               marginTop: "20%",
               backgroundColor: "white",
-              width: "200%",
+              width: "230%",
             }}
             variant="filled"
             required
@@ -185,18 +190,30 @@ export default function Predict() {
             style={{
               marginTop: "20%",
               backgroundColor: "white",
-              width: "190%",
+              width: "220%",
             }}
             variant="filled"
             id="outlined-grades"
             autoComplete="off"
-            label="Grades"
+            label="Enter 3 or more past TSS grades or Percentages"
+            helperText="Seperate your grades with commas (e.g. 70, 89, 85)"
             value={grades}
             onChange={(event) => {
               if (regex.test(event.target.value)) {
                 handleChange(event);
               } else {
                 event.preventDefault();
+              }
+              if (
+                event.target.value.split(",").map((i) => Number(i)).length >=
+                  3 &&
+                event.target.value.split(",").map((i) => Number(i))[
+                  event.target.value.split(",").map((i) => Number(i)).length - 1
+                ] !== 0
+              ) {
+                if (subject) setDisabled(false);
+              } else {
+                setDisabled(true);
               }
             }}
           />
@@ -206,14 +223,14 @@ export default function Predict() {
             style={{
               marginTop: "20%",
               width: "200%",
-              marginLeft: "3%",
+              marginLeft: "20%",
             }}
             variant="contained"
             disabled={disabled}
             onClick={getPrediction}
             loading={loading}
           >
-            Predict Grade
+            Predict Next TSS
           </LoadingButton>
         </div>
       </div>

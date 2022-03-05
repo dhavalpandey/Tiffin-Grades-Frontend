@@ -3,6 +3,7 @@ html {
 }
 
 body {
+  scroll-behavior: smooth;
   background-size: cover;
   background-position: center;
   margin: 0;
