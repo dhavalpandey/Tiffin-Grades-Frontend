@@ -491,9 +491,7 @@ export default function Chat({ name, room }) {
             disabled={isBlank(currentMessage) ? true : false}
             variant="contained"
             onClick={(event) => {
-              if (!isBlank(event.target.value)) {
-                sendMessage();
-              }
+              sendMessage();
             }}
             style={{ width: "20%", height: "100%" }}
             endIcon={<SendIcon />}
