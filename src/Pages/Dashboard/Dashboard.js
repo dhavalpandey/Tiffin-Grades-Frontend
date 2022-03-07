@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React from "react";
 import Card from "@mui/material/Card";
 import CardActions from "@mui/material/CardActions";
 import CardMedia from "@mui/material/CardMedia";
@@ -14,13 +14,6 @@ import { useHistory } from "react-router-dom";
 
 export default function Dashboard() {
   const history = useHistory();
-
-  useEffect(() => {
-    document.body.classList.add("overflow-hidden");
-    return () => {
-      document.body.classList.remove("overflow-hidden");
-    };
-  }, []);
 
   return (
     <div>
@@ -129,7 +122,7 @@ export default function Dashboard() {
       </div>
       <div className="card4">
         <Card
-          style={{ backgroundColor: "#14283b" }}
+          style={{ backgroundColor: "#14283b", marginBottom: "10%" }}
           color="black"
           sx={{ minHeight: 360, width: "25vw" }}
         >
