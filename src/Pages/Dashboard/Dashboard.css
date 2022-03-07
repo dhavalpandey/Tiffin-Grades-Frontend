@@ -1,7 +1,7 @@
 .body-div {
   margin-top: 10%;
   text-align: center;
-  overflow: hidden;
+  overflow-x: hidden;
   margin-top: 6.5%;
 }
 
@@ -15,6 +15,7 @@
 
 .card4 {
   margin-left: 50%;
+  margin-bottom: 3%;
   position: absolute;
   transform: translate(-50%, 8%);
 }
