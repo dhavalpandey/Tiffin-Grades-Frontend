@@ -97,6 +97,42 @@
   margin-right: 5px;
 }
 
+#leader-me {
+  justify-content: flex-end;
+}
+
+#leader-me .message-content {
+  justify-content: flex-end;
+  background-color: #064e3b;
+}
+
+#leader-me .message-meta {
+  justify-content: flex-end;
+  margin-right: 5px;
+}
+
+#admin-me {
+  justify-content: flex-end;
+}
+
+#admin-me .message-content {
+  justify-content: flex-end;
+  background-color: #a16207;
+}
+
+#admin-me .message-meta {
+  justify-content: flex-end;
+  margin-right: 5px;
+}
+
+#admin .message-content {
+  background-color: #a16207;
+}
+
+#admin .message-meta {
+  margin-right: 5px;
+}
+
 #leader .message-content {
   background-color: #064e3b;
 }
