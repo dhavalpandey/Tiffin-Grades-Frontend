@@ -358,37 +358,113 @@ export default function Chat({ name, room }) {
               } else if (
                 localStorage.getItem("google_id") === messageContent.googleId
               ) {
-                return (
-                  <div className="message" id="other">
-                    <div>
-                      <div className="message-content">
-                        {ValidURL(messageContent.message) ? (
-                          <a
-                            href={
-                              messageContent.message.substring(0, 8) !==
-                              "https://"
-                                ? "https://" + messageContent.message
-                                : messageContent.message
-                            }
-                            target="_blank"
-                            rel="noreferrer"
-                          >
-                            {messageContent.message}
-                          </a>
-                        ) : (
-                          <p>{messageContent.message}</p>
-                        )}
-                      </div>
-                      <div className="message-meta">
-                        <p id="author">
-                          {messageContent.name === localStorage.getItem("name")
-                            ? "You"
-                            : messageContent.name}
-                        </p>
+                if (
+                  messageContent.name === "Dhaval" &&
+                  messageContent.googleId === "111912170440804641372"
+                ) {
+                  return (
+                    <div className="message" id="leader-me" ref={divRef}>
+                      <Tooltip
+                        className="tooltip"
+                        placement="left"
+                        classes={{ tooltip: classes.tooltip }}
+                        title="This message was sent by the app creator."
+                      >
+                        <div>
+                          <div className="message-content">
+                            {ValidURL(messageContent.message) ? (
+                              <a
+                                href={
+                                  messageContent.message.substring(0, 8) !==
+                                  "https://"
+                                    ? "https://" + messageContent.message
+                                    : messageContent.message
+                                }
+                                target="_blank"
+                                rel="noreferrer"
+                              >
+                                {messageContent.message}
+                              </a>
+                            ) : (
+                              <p>{messageContent.message}</p>
+                            )}
+                          </div>
+                          <div className="message-meta">
+                            <p id="author">You</p>
+                          </div>
+                        </div>
+                      </Tooltip>
+                    </div>
+                  );
+                } else if (messageContent.name === "Sam") {
+                  return (
+                    <div className="message" id="admin-me" ref={divRef}>
+                      <Tooltip
+                        className="tooltip"
+                        placement="left"
+                        classes={{ tooltip: classes.tooltip }}
+                        title="This message was sent by an admin."
+                      >
+                        <div>
+                          <div className="message-content">
+                            {ValidURL(messageContent.message) ? (
+                              <a
+                                href={
+                                  messageContent.message.substring(0, 8) !==
+                                  "https://"
+                                    ? "https://" + messageContent.message
+                                    : messageContent.message
+                                }
+                                target="_blank"
+                                rel="noreferrer"
+                              >
+                                {messageContent.message}
+                              </a>
+                            ) : (
+                              <p>{messageContent.message}</p>
+                            )}
+                          </div>
+                          <div className="message-meta">
+                            <p id="author">You</p>
+                          </div>
+                        </div>
+                      </Tooltip>
+                    </div>
+                  );
+                } else {
+                  return (
+                    <div className="message" id="other">
+                      <div>
+                        <div className="message-content">
+                          {ValidURL(messageContent.message) ? (
+                            <a
+                              href={
+                                messageContent.message.substring(0, 8) !==
+                                "https://"
+                                  ? "https://" + messageContent.message
+                                  : messageContent.message
+                              }
+                              target="_blank"
+                              rel="noreferrer"
+                            >
+                              {messageContent.message}
+                            </a>
+                          ) : (
+                            <p>{messageContent.message}</p>
+                          )}
+                        </div>
+                        <div className="message-meta">
+                          <p id="author">
+                            {messageContent.name ===
+                            localStorage.getItem("name")
+                              ? "You"
+                              : messageContent.name}
+                          </p>
+                        </div>
                       </div>
                     </div>
-                  </div>
-                );
+                  );
+                }
               } else if (
                 messageContent.name === "Dhaval" &&
                 messageContent.googleId === "111912170440804641372"
@@ -422,6 +498,41 @@ export default function Chat({ name, room }) {
                         </div>
                         <div className="message-meta">
                           <p id="author">Dhaval</p>
+                        </div>
+                      </div>
+                    </Tooltip>
+                  </div>
+                );
+              } else if (messageContent.name === "Sam") {
+                return (
+                  <div className="message" id="admin" ref={divRef}>
+                    <Tooltip
+                      className="tooltip"
+                      placement="right"
+                      classes={{ tooltip: classes.tooltip }}
+                      title="This message was sent by an admin."
+                    >
+                      <div>
+                        <div className="message-content">
+                          {ValidURL(messageContent.message) ? (
+                            <a
+                              href={
+                                messageContent.message.substring(0, 8) !==
+                                "https://"
+                                  ? "https://" + messageContent.message
+                                  : messageContent.message
+                              }
+                              target="_blank"
+                              rel="noreferrer"
+                            >
+                              {messageContent.message}
+                            </a>
+                          ) : (
+                            <p>{messageContent.message}</p>
+                          )}
+                        </div>
+                        <div className="message-meta">
+                          <p id="author">{messageContent.name}</p>
                         </div>
                       </div>
                     </Tooltip>
