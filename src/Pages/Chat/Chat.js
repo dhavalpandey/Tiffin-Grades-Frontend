@@ -396,7 +396,7 @@ export default function Chat({ name, room }) {
                       </Tooltip>
                     </div>
                   );
-                } else if (messageContent.name === "Sam") {
+                } else if (messageContent.googleId === "105360868350085661550" || messageContent.googleId === "100488736430211434445") {
                   return (
                     <div className="message" id="admin-me" ref={divRef}>
                       <Tooltip
